@@ -35,3 +35,36 @@ Produkte - Individuelle Erfassung | X | X | ?
 Produkte - Globale Verwaltung (Suche etc.) | - | - | X
 Produktkategorien - Fix in App hinterlegt | X | ? | -
 Produktkategorien - Online hinterlegt und updatebar | - | ? | X
+
+## Ratings
+Für jede Produktkategorie (z. B. Whisky) wird ein Template für alle Ratings definiert, damit diese vergleichbar sind. Ein Rating-Template kann aus mehreren Sub-Ratings bestehen (z.B. Allgemein / Nase / Geschmack / Abgang) bestehen. Jedes Sub-Rating kann dabei eine Auswahl der folgenden Felder/Eigenschaften enthalten:
+- Bewertung in Sternen
+  - 1-5 Sterne
+- Freitext
+  - Beliebiger Text
+- Eigenschafts-Spinne 
+  - bis zu 8 Eigenschaften
+  - je Eigenschaft einen Bezeichner für Min und Max
+  - umsetzungsabhängig können diese je Sub-Rating individuell definiert werden oder nur einmalig pro Kategorie definiert werden
+- Tags
+  - Stichwörter nach denen gesucht werden kann
+  - vorzugsweise Auswahl aus Liste
+
+So könnte man beispielsweise eine Whisky-Kategorie wie folgt anlegen (Ist nur ein Beispiel um mal zu zeigen, was so möglich ist. Man kann natürlich auch überall alle Felder/Eigenschaften aufnehmen, dann wird es aber eben immer komplexer und auch aufwändiger das zu befüllen...):
+- Overall-Rating
+  - Bewertung in Sternen
+  - Freitext
+  - Eigenschaftsspinne
+    - Rauchigkeit: gar nicht <-> intensiv
+    - Eiche: mild <-> intensiv
+    - Farbe: hell <-> dunkel
+    - Aromenvielfalt: gering <-> komplex
+- Nase
+  - Freitext
+  - Tags
+- Geschmack
+  - Freitext
+  - Tags
+- Abgang
+  - Freitext
+  - Tags
