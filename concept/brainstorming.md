@@ -1,9 +1,24 @@
-# Konzept für die Umsetzung einer "Tasting-App"
-## Übersicht
+Konzept für die Umsetzung einer "Tasting-App"
+
+Inhaltsverzeichnis
+==================
+
+* [Übersicht](#idee)
+* [Ausbaustufen](#ausbaustufen)
+* [Umsetzungsideen](#umsetzungsideen)
+  * [Ratings](#ratings)
+  * [Tags](#tags)
+  
+Idee
+====
+
 Idee ist es eine App zu entwickeln, mit der man seine persönlichen Tastings Raten (z. B. Whisky, Rum, ...) erfassen und die erfassten Ratings von Freunden / anderen einsehen kann. Dabei wird unterschieden nach:
 - Persönliches Rating ("was habe ich geschmeckt")
 - Globales Rating ("Zusammenfassung aller erfassten persönlichen Ratings aller Nutzer zu einem Produkt")
-## Ausbaustufen
+
+Ausbaustufen
+============
+
 Die nachfolgenden Features lassen sich in unterschiedliche Ausbaustufen clustern. Diese Ausbaustufen unterscheiden sich danach, "wieviel Backend vorhanden sein muss".
 
 1. Reine Single-User-Offline-Funktion
@@ -36,15 +51,25 @@ Produkte - Globale Verwaltung (Suche etc.) | - | - | X
 Produktkategorien - Fix in App hinterlegt | X | ? | -
 Produktkategorien - Online hinterlegt und updatebar | - | ? | X
 
-## Ratings
+Umsetzungsideen
+===============
+
+Alles was nachfolgend beschrieben wird, geht schon ziemlich konkret in Richtung Umsetzung und hat meist auch einen Hintergedanken, warum so und nicht anders. Ich versuche das so gut es geht zu beschreiben, damit es nachvollziehbar ist.
+
+Ansonsten sind die Ideen hier wild durcheinander, wie sie mir gerade eingefallen sind. Sie hängen teilweise aber zusammen und sind u. U. auch voneinander abhängig...
+
+Ratings
+-------
+
 Für jede Produktkategorie (z. B. Whisky) wird ein Template für alle Ratings definiert, damit diese vergleichbar sind. Ein Rating-Template kann aus mehreren Sub-Ratings bestehen (z.B. Allgemein / Nase / Geschmack / Abgang) bestehen. Jedes Sub-Rating kann dabei eine Auswahl der folgenden Felder/Eigenschaften enthalten:
 - Bewertung in Sternen
   - 1-5 Sterne
 - Freitext
   - Beliebiger Text
 - Eigenschafts-Spinne 
-  - bis zu 8 Eigenschaften
+  - bis zu X Eigenschaften (X ist umsetzungsabhängig festgelegt, z. B. 8)
   - je Eigenschaft einen Bezeichner für Min und Max
+  - bewertung auf Skala von 1-5 (oder mehr?)
   - umsetzungsabhängig können diese je Sub-Rating individuell definiert werden oder nur einmalig pro Kategorie definiert werden
 - Tags
   - Stichwörter nach denen gesucht werden kann
@@ -68,3 +93,9 @@ So könnte man beispielsweise eine Whisky-Kategorie wie folgt anlegen (Ist nur e
 - Abgang
   - Freitext
   - Tags
+
+Idee ist, dass man auf diese Weise nicht zu komplexe Datenstrukturen erhält. Es gibt dann eine Datenstruktur für Sub-Rating-Einträge. Je Rating wird dann pro Sub-Rating ein "Sub-Rating-Eintrag" gespeichert, in welchem jeweils nur die definierten Felder befüllt sind (der Rest wir dem Nutzer gar nicht erst zum Befüllen angezeigt und bleibt entsprechend leer).
+
+Tags
+====
+
