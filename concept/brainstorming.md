@@ -5,6 +5,7 @@ Idee ist es eine App zu entwickeln, mit der man seine persönlichen Tastings Rat
 - Globales Rating ("Zusammenfassung aller erfassten persönlichen Ratings aller Nutzer zu einem Produkt")
 ## Ausbaustufen
 Die nachfolgenden Features lassen sich in unterschiedliche Ausbaustufen clustern. Diese Ausbaustufen unterscheiden sich danach, "wieviel Backend vorhanden sein muss".
+
 1. Reine Single-User-Offline-Funktion
    - Nutzer kann seine persönlichen Tastings erfassen
    - KEINE Online-Anbindung
@@ -23,3 +24,14 @@ Die nachfolgenden Features lassen sich in unterschiedliche Ausbaustufen clustern
    - Zugriff auf Ratings von Freunden und auf globale Ratings
    - Produktkategorien (Whisky, Rum, ...) müssen auf Server hinterlegt sein
    
+Feature | Single-User-Mode | Friend-Mode | Global-Mode
+------- | ---------------- | ----------- | -----------
+Ratings - Persönlich / Offline-Erfassung | X | X | X 
+Ratings - Persönlich / Teilen mit Freunden | - | X | X 
+Ratings - Persönlich / Online Backup | - | ? | X
+Ratings - Persönlich & Global (Vergleichbar und durchsuchbar) | - | - | X
+Ratings - Zuordnung zu Produkten | - | - | X
+Produkte - Individuelle Erfassung | X | X | ?
+Produkte - Globale Verwaltung (Suche etc.) | - | - | X
+Produktkategorien - Fix in App hinterlegt | X | ? | -
+Produktkategorien - Online hinterlegt und updatebar | - | ? | X
