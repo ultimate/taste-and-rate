@@ -92,8 +92,9 @@ Nutzerfunktionen
     - neue Übersetzungen
     - ...
   - **Sprache (online)**<br>Auch die Sprachdateien können über in-App-Online-Dienste verteilt werden, z. B. immer dann, wenn auch inhaltliche Änderungen verteilt werden.
-
-
+- **Ausbaustufenunabhängig**
+  - **Umgebungskarte**<br>... mit Feinkostläden, Restaurants, Bars, die Produkte aus den Produktkategorien anbieten.
+  - **Eventkalender**<br>Veranstalter, Läden, etc. können für Tastings bei sich Werben.
 
 Umsetzungsideen
 ===============
