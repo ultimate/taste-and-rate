@@ -64,6 +64,8 @@ Nutzerfunktionen
   - **Rating ändern (offline)**<br>Vorhandene Ratings muss man ändern können. Dabei sollten die Tasting-Zeitpunkte erhalten bleiben. Man fügt also einen weiteren Zeitpunkt/Ort zum Rating hinzu, es wird aber kein komplett neues Rating erfasst, sondern das alte bei Bedarf geändert.
   - **Tasting anlegen/verwalten**<br>Gruppe über mehrere Ratings anlegen, denen die Ratings zugeordnet werden können. Zuordnung müsste am Besten mit Reihenfolge erfolgen
   - **Ratings/Tastings durchsuchen**<br>Verschiedene Ansichten (z. B. Listenansicht nach Produkt, nach Datum, oder als Kalenderansicht) in denen alle (eigenen) Ratings/Tastings sichtbar sind
+  - **Produktkategorien (offline)**<br>Werden über App-Updates verteilt. Dem Nutzer steht eine einfache Art von Verwaltung zur Verfügung (z. B. sortieren/priorisieren, einblenden/ausblenden oder Favoriten)
+  - **Sprache**<br>Alle nicht-Freitext-Eigenschaften sollten so weit wie möglich mehrsprachig sein, damit von Anfang an einer Vergleichbarkeit und Suche nichts im Weg steht (z. B. feste Tag-Listen, etc.). Die Sprach-Informationen sind in-App hinterlegt
 - **Ausbaustufe 2**
   - **Nutzerkonto anlegen**<br>Registrierung mit Nutzername, E-Mail-Adresse & Passwort (mehr brauchen wir eigentlich nicht)
   - **Einstellungen: Nutzerkonto**<br>In den Einstellungen kann man sein Nutzerkonto angeben, die App loggt einen dann bei Bedarf automatisch ein
@@ -74,9 +76,22 @@ Nutzerfunktionen
     - Nur Freigabe von Ratings, aber ohne Zeit/Ort/Tastings
     - Zeit/Ort/Tasting kann (für ausgewählte?) Freunde optional mit freigegeben werden
     - ...
+  - **Produktkategorien (online)**<br>Können über In-App-Aktualisierung verteilt werden. D.h. Nutzer kann zu der Liste seiner Kategorien im Online-Modus weitere Kategorien hinzufügen. Die eigene Priorisierung wird dem Nutzerkonto zugeordnet und gespeichert.
 - **Ausbaustufe 3**  
   - **Rating erfassen/ändern (online)**<br>Zusätzlich zum Freitext-Produkt kann man Produkte aus einer Liste (Produkt-Datenbank) auswählen
-  - **Rating hochladen (online)**<br>Falls noch nicht geschehen, muss das Rating einem konkreten Produkt (aus der Produkt-Datenbank) zugeordnet werden. Dann kann das Rating dazu hochgeladen werden und in das globale Rating einfließen.
+  - **Rating hochladen (online)**<br>Falls noch nicht geschehen, muss das Rating nun einem konkreten Produkt (aus der Produkt-Datenbank) zugeordnet werden. Dann kann das Rating dazu hochgeladen werden und in das globale Rating einfließen.
+  - **Globale Ratings**<br>Alle hochgeladenen Ratings sind zwangsläufig einem Produkt zugeordnet. Dadurch können für die Produkte globale Durchschnittsratings erstellt werden. Diese können durchsucht werden. Ratings von Freunden werden in globalen Ratings hervorgehoben. Durch die Produktzuordnung kann man zu eigenen (hochgeladenen) Ratings auch weitere Ratings anzeigen lassen...
+  - **Bookmarking**<br>Globale Ratings für Produkte können gebookmarkt werden, damit man sie leichter wieder findet.
+  - **Inhaltliche Erweiterungen**<br>Nutzer können inhaltliche Änderungen in-App vorschlagen. Einige Änderungen können dabei in-App online verteilt werden, andere erfordern ggf. App-Updates: 
+    - neue Produkte
+    - neue Produktkategorien
+    - Erweiterungen von Produktkategorien um neue Bewertungskriterien
+    - Erweiterungen von Tag-Listen, etc.
+    - neue Features
+    - Bugs
+    - neue Übersetzungen
+    - ...
+  - **Sprache (online)**<br>Auch die Sprachdateien können über in-App-Online-Dienste verteilt werden, z. B. immer dann, wenn auch inhaltliche Änderungen verteilt werden.
 
 
 
