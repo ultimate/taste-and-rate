@@ -95,6 +95,7 @@ Nutzerfunktionen
 - **Ausbaustufenunabhängig**
   - **Umgebungskarte**<br>... mit Feinkostläden, Restaurants, Bars, die Produkte aus den Produktkategorien anbieten.
   - **Eventkalender**<br>Veranstalter, Läden, etc. können für Tastings bei sich Werben.
+  - **Bewertung von Lokalitäten & Events**<br>Die oben beschriebenen Einträge können dann am besten noch von den Nutzern bewertet werden nach verschiedenen Kriterien (ggf. kann hier das Rating-Prinzip 1:1 übernommen werden...)
 
 Umsetzungsideen
 ===============
