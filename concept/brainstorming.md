@@ -5,6 +5,8 @@ Inhaltsverzeichnis
 
 * [Übersicht](#idee)
 * [Ausbaustufen](#ausbaustufen)
+* [Funktionsbeschreibung](#funktionsbeschreibung)
+  * [Nutzerfunktionen](#nutzerfunktionen)
 * [Umsetzungsideen](#umsetzungsideen)
   * [Ratings](#ratings)
   * [Tags](#tags)
@@ -50,6 +52,33 @@ Produkte - Individuelle Erfassung | X | X | ?
 Produkte - Globale Verwaltung (Suche etc.) | - | - | X
 Produktkategorien - Fix in App hinterlegt | X | ? | -
 Produktkategorien - Online hinterlegt und updatebar | - | ? | X
+
+Funktionsbeschreibung
+=====================
+
+Nutzerfunktionen
+----------------
+
+- Ausbaustufe 1
+  - Rating erfassen (offline)<br>Der Nutzer kann zu einem beliebigen Produkt (Freitext) sein Rating abgeben (z. B. mit verschiedenen Skalen, Freitext, Tags, etc.). Dabei kann man auch Zeit und ggf. auch Ort angeben, wann/wo das Tasting stattfand.
+  - Rating ändern (offline)<br>Vorhandene Ratings muss man ändern können. Dabei sollten die Tasting-Zeitpunkte erhalten bleiben. Man fügt also einen weiteren Zeitpunkt/Ort zum Rating hinzu, es wird aber kein komplett neues Rating erfasst, sondern das alte bei Bedarf geändert.
+  - Tasting anlegen/verwalten<br>Gruppe über mehrere Ratings anlegen, denen die Ratings zugeordnet werden können. Zuordnung müsste am Besten mit Reihenfolge erfolgen
+  - Ratings/Tastings durchsuchen<br>Verschiedene Ansichten (z. B. Listenansicht nach Produkt, nach Datum, oder als Kalenderansicht) in denen alle (eigenen) Ratings/Tastings sichtbar sind
+- Ausbaustufe 2
+  - Nutzerkonto anlegen<br>Registrierung mit Nutzername, E-Mail-Adresse & Passwort (mehr brauchen wir eigentlich nicht)
+  - Einstellungen: Nutzerkonto<br>In den Einstellungen kann man sein Nutzerkonto angeben, die App loggt einen dann bei Bedarf automatisch ein
+  - Ratings/Tastings hochladen<br>Ratings/Tastings werden optional hochgeladen. Dabei findet eine Zuordnung zum Nutzerkonto statt, mehr aber auch nicht (keine Produktzuordnung)
+  - Freunde<br>Man kann andere Nutzer zu seinen Freunden hinzufügen (erfordert gegenseitige Bestätigung)
+  - Ratings von Freunden einsehen<br>Man hat Zugriff auf die Ratings von Freunden. Hier kann man sich unterschiedliche Rechtemechanismen überlegen (Kombinationen möglich):
+    - Jedes Rating muss einzeln freigegeben werden (gilt dann für alle Freunde)
+    - Nur Freigabe von Ratings, aber ohne Zeit/Ort/Tastings
+    - Zeit/Ort/Tasting kann (für ausgewählte?) Freunde optional mit freigegeben werden
+    - ...
+- Ausbaustufe 3  
+  - Rating erfassen/ändern (online)<br>Zusätzlich zum Freitext-Produkt kann man Produkte aus einer Liste (Produkt-Datenbank) auswählen
+  - Rating hochladen (online)<br>Falls noch nicht geschehen, muss das Rating einem konkreten Produkt (aus der Produkt-Datenbank) zugeordnet werden. Dann kann das Rating dazu hochgeladen werden und in das globale Rating einfließen.
+
+
 
 Umsetzungsideen
 ===============
