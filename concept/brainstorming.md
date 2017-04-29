@@ -144,3 +144,10 @@ Idee ist, dass man auf diese Weise nicht zu komplexe Datenstrukturen erhält. Es
 Tags
 ====
 
+Für die Tags wird am besten eine feste Liste hinterlegt (kein Freitext). Dadurch entstehen viele Vorteile:
+- Es entsteht kein Wildwuchs (unterschiedliche Schreibweisen)
+- Man kann die Tags mehrsprachig machen und sie dennoch durchsuchen
+- Es können beziehungen zwischen Tag abgebildet werden (Suche nach "nussig" liefert auch Einträge mit Tag "Haselnuss")
+- Populäre Tags zu einem Produkt können direkt als Auswahl angeboten werden. Der Nutzer muss diese nur anklicken. Weitere Tags können per Textsuche ergänzt werden.
+
+Als Absprungbasis können die Tasticons der [whisky.de-Datenbank](https://www.whisky.de/flaschen-db/flaschen-db0.html) genutzt werden:
