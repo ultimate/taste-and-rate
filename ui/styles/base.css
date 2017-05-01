@@ -1,0 +1,48 @@
+body {
+	cursor: default;
+}
+
+#frame {
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	right: 0px;
+	left: 0px;
+	width: auto;
+	height: auto;
+	display: flex;
+	flex-direction: column
+}
+
+#frame > .bar {
+	height: 2em;
+	line-height: 2em;
+	padding: 0.5em;
+}
+
+#frame > #content {
+	flex: 1;
+}
+
+#top {
+	display: flex;
+	flex-direction: row;
+}
+
+#top > .button {
+	width: 2em;
+}
+
+#top > #search {
+	flex: 1;
+	text-align: center;
+}
+
+#top > #search > * {
+	display: inline;
+}
+
+#search_textfield {
+	width: 80%;
+	max-width: 30em;
+}
