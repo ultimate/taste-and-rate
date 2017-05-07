@@ -11,6 +11,8 @@ body input {
 	top: 0.1em;
 }
 
+/* main layout with top & bottom bar etc. */
+
 #main {
 	position: absolute;
 	top: 0px;
@@ -40,7 +42,7 @@ body input {
 	border-color: rgba(0,0,0,0.5) rgba(43,27,0,0.5) rgba(43,27,0,0.5) rgba(0,0,0,0.5);
 }
 
-#main > #content {
+#main > #center {
 	flex: 1;
 }
 
@@ -101,6 +103,27 @@ body input {
 	top: -0.05em;
 }
 
+#center {
+	background: black;
+	position: relative;
+}
+
 #bottom {
 	background-image: url("../images/wood-pattern-03.jpg");
 }
+
+/* now the content */
+
+#content {
+	background: white;
+	padding: 0.5em;
+	border-radius: 0.5em;
+	border: 0.2em solid;
+	border-color: rgb(78,48,0) rgb(102,64,0) rgb(102,64,0) rgb(78,48,0);
+	position: absolute;
+	top: 0.5em;
+	bottom: 0.5em;
+	right: 0.5em;
+	left: 0.5em;
+}
+
