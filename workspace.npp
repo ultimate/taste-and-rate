@@ -1,0 +1,47 @@
+<NotepadPlus>
+    <Project name="ui">
+        <Folder name="lang">
+            <Folder name="de">
+                <File name="ui\lang\de\about.html" />
+                <File name="ui\lang\de\contact.html" />
+                <File name="ui\lang\de\disclaimer.html" />
+                <File name="ui\lang\de\lang.js" />
+            </Folder>
+            <Folder name="en">
+                <File name="ui\lang\en\about.html" />
+                <File name="ui\lang\en\contact.html" />
+                <File name="ui\lang\en\disclaimer.html" />
+                <File name="ui\lang\en\lang.js" />
+            </Folder>
+            <Folder name="fr">
+                <File name="ui\lang\fr\disclaimer.html" />
+            </Folder>
+        </Folder>
+        <Folder name="scripts">
+            <Folder name="lib">
+                <File name="ui\scripts\lib\date.format.js" />
+                <File name="ui\scripts\lib\json2.js" />
+            </Folder>
+            <Folder name="util">
+                <File name="ui\scripts\util\Arrays.js" />
+                <File name="ui\scripts\util\Console.js" />
+                <File name="ui\scripts\util\Elements.js" />
+                <File name="ui\scripts\util\Events.js" />
+                <File name="ui\scripts\util\Proxies.js" />
+                <File name="ui\scripts\util\Reflections.js" />
+                <File name="ui\scripts\util\Requests.js" />
+                <File name="ui\scripts\util\Storage.js" />
+                <File name="ui\scripts\util\Strings.js" />
+                <File name="ui\scripts\util\UI.js" />
+            </Folder>
+        </Folder>
+        <Folder name="styles">
+            <File name="ui\styles\base.css" />
+        </Folder>
+        <File name="ui\index.html" />
+        <Folder name="images">
+            <File name="ui\images\wood-pattern-01-full.jpg" />
+        </Folder>
+        <File name="ui\index.html" />
+    </Project>
+</NotepadPlus>
