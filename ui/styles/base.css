@@ -28,9 +28,7 @@ body input {
 	line-height: 1.8em;
 	padding: 0.5em;
 	background-color: #AA6600;
-	background-image: url("../images/wood-pattern-01-full.jpg");
-	background-size: auto 364%;
-	background-position-y: -108%;
+	background-size: auto 100%;
 }
 
 #main > #content {
@@ -40,6 +38,7 @@ body input {
 #top {
 	display: flex;
 	flex-direction: row;
+	background-image: url("../images/wood-pattern-01.jpg");
 }
 
 #top > .button {
@@ -62,4 +61,8 @@ body input {
 #search_textfield {
 	width: 70%;
 	max-width: 30em;
+}
+
+#bottom {
+	background-image: url("../images/wood-pattern-03.jpg");
 }
