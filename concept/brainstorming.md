@@ -151,5 +151,5 @@ Für die Tags wird am besten eine feste Liste hinterlegt (kein Freitext). Dadurc
 - Es können beziehungen zwischen Tag abgebildet werden (Suche nach "nussig" liefert auch Einträge mit Tag "Haselnuss")
 - Populäre Tags zu einem Produkt können direkt als Auswahl angeboten werden. Der Nutzer muss diese nur anklicken. Weitere Tags können per Textsuche ergänzt werden.
 
-Als Absprungbasis können die Tasticons der [whisky.de-Datenbank](https://www.whisky.de/flaschen-db/flaschen-db0.html) genutzt werden. Erweiterung der Liste unter #1 :
+Als Absprungbasis können die Tasticons der [whisky.de-Datenbank](https://www.whisky.de/flaschen-db/flaschen-db0.html) genutzt werden. Erweiterung der Liste unter [taste-and-rate#1](../../../issues/1) :
 > Früchte, Beeren, Tropische, Früchte, Ananas, Zitrone, Sherry, Vanille, Schokolade, Nüsse, Mandeln, Kräuter, Eiche, Gewürze, Chili, Rauch, Salz, Apfel, Trauben, Pflaume, Banane, Orange, Getrocknete, Früchte, Heide, Dunkle, Schokolade, Walnuss, Haselnüsse, Minze, Leder, Pfeffer, Kaffee, Medizinischer, Rauch, Jod, Grüner, Apfel, Brombeere, Kokosnuss, Melone, Limette, Dattel, Floral, Karamell, Honig, Gerste, Gras, Ingwer, Muskat, Schinken, Lagerfeuer, Seetang, Birne, Kirsche, Pfirsich, Kiwi, Grapefruit, Feige, Rosine, Süße, Kuchen, Weizen, Heu, Nelke, Zimt, Käse, Tabak, Alkohol, Malz, Öl, Anis
