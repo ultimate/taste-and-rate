@@ -114,7 +114,7 @@ body input {
 
 /* now the content */
 
-#content {
+#content_frame {
 	background: white;
 	padding: 0.5em;
 	border-radius: 0.5em;
@@ -125,5 +125,11 @@ body input {
 	bottom: 0.5em;
 	right: 0.5em;
 	left: 0.5em;
+	overflow: hidden;
+}
+
+#content {
+	overflow-y: auto;
+	height: 100%;
 }
 
