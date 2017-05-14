@@ -2,6 +2,7 @@ body {
 	cursor: default;
 	font-size: 1em;
 	font-family: Arial;
+	background: white;
 }
 
 body input {
@@ -9,6 +10,11 @@ body input {
 	font-family: Arial;
 	position: relative;
 	top: 0.1em;
+}
+
+/* general properties */
+.image {
+	/*shape-rendering: crispEdges;*/
 }
 
 /* main layout with top & bottom bar etc. */
@@ -29,14 +35,10 @@ body input {
 	height: 2em;
 	line-height: 1.8em;
 	padding: 0.5em;
-	/*background-color: #AA6600;
-	background-size: auto 100%;*/
-	color: white;
 }
 
 #main > .bar input[type=text] {
 	background: rgba(172, 107, 0, 0.7);
-	color: white;
 	border-radius: 0.5em;
 	border: 0.2em solid;
 	border-color: rgba(0,0,0,0.5) rgba(43,27,0,0.5) rgba(43,27,0,0.5) rgba(0,0,0,0.5);
@@ -44,23 +46,18 @@ body input {
 
 #main > #center {
 	flex: 1;
+	overflow: hidden;
 }
 
 #top {
 	display: flex;
 	flex-direction: row;
-	/*background-image: url("../images/wood-pattern-01.jpg");*/
-	background-position: bottom;
 	border-bottom: rgb(150,85,0) solid 0.2em;
 }
 
 #main > .bar > .button {
 	width: 2em;
 	text-align: center;
-	background: rgba(172, 107, 0, 0.5);
-	border-radius: 0.5em;
-	border: 0.2em solid;
-	border-color: rgba(43,27,0,0.5) rgba(0,0,0,0.5) rgba(0,0,0,0.5) rgba(43,27,0,0.5);
 }
 
 #main > .bar > .button:active {
@@ -87,6 +84,7 @@ body input {
 	max-width: 30em;
 }
 
+/*
 #search_button {
 	font-size: 1.5em;
 	line-height: 1em;
@@ -99,6 +97,7 @@ body input {
 	text-shadow: 0.0em 0.0em 0.1em white, 0.0em 0.0em 0.2em white;
 	/*text-shadow: 0.0em 0.0em 0.1em rgba(172, 107, 0, 1), 0.0em 0.0em 0.2em white;*/
 }
+*/
 
 #add_button > span {
 	position: relative;
@@ -106,36 +105,51 @@ body input {
 }
 
 #center {
-	background: white;
 	position: relative;
 }
 
 #bottom {
-	/*background-image: url("../images/wood-pattern-03.jpg");*/
-	background-image: url("../images/wood-plank-small.jpg");
-	background-size: 8%;
-	background-repeat: repeat-x;
-	background-position: top;
+	border-top: rgb(150,85,0) solid 0.2em;
 }
 
 /* now the content */
 
 #content_frame {
-	background: white;
-	padding: 0.5em;
-	border-radius: 0.5em;
-	border: 0.2em solid;
-	border-color: rgb(78,48,0) rgb(102,64,0) rgb(102,64,0) rgb(78,48,0);
 	position: absolute;
-	top: 0.5em;
-	bottom: 0.5em;
-	right: 0.5em;
-	left: 0.5em;
-	overflow: hidden;
-}
-
-#content {
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
 	overflow-y: auto;
-	height: 100%;
 }
 
+#content_frame > div {
+	padding: 0.5em;
+}
+
+#content_frame > div > div {
+	z-index: -2;	
+}
+
+/* fade content on scroll */
+/*
+#content_frame > div::before,
+#content_frame > div::after {
+	height: 2em;
+	background: red;
+	position: fixed;
+	left: 0;
+	right: 0;
+	content: ' ';
+}
+
+#content_frame > div::before {
+	top: 3.2em;
+	background: linear-gradient(white, transparent);
+}
+
+#content_frame > div::after {
+	bottom: 3.2em;
+	background: linear-gradient(transparent, white);
+}
+*/

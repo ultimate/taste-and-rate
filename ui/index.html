@@ -23,24 +23,56 @@
 </script>
 </head>
 <body onload="">
+	<div id="defines">
+		<svg xmlns="http://www.w3.org/2000/svg"	xmlns:xlink="http://www.w3.org/1999/xlink">
+			<filter id="colorScheme">
+				<!--																						r     g     b     a   -->
+				<feColorMatrix in="SourceGraphic" type="matrix" color-interpolation-filters="sRGB"  values="0.588 0.0   0.0   0.0 0.0
+																											0.0   0.333 0.0   0.0 0.0
+																											0.0   0.0   0.0   0.0 0.0
+																											0.0   0.0   0.0   1.0 0.0"/>
+			</filter>
+			<defs>
+				<g id="img_menu" filter="url(#colorScheme)">
+					<line x1="20%" y1="25%" x2="80%" y2="25%" style="stroke: #FFFFFF; stroke-width: 10%"/>
+					<line x1="20%" y1="50%" x2="80%" y2="50%" style="stroke: #FFFFFF; stroke-width: 10%;"/>
+					<line x1="20%" y1="75%" x2="80%" y2="75%" style="stroke: #FFFFFF; stroke-width: 10%;"/>
+				</g>
+				<g id="img_search" filter="url(#colorScheme)">
+					<circle cx="60%" cy="40%" r="20%" style="fill: none; stroke: #FFFFFF; stroke-width: 10%;"/>
+					<line x1="20%" y1="80%" x2="45%" y2="55%" style="stroke: #FFFFFF; stroke-width: 10%;"/>
+				</g>
+				<g id="img_add" filter="url(#colorScheme)">
+					<line x1="50%" y1="20%" x2="50%" y2="80%" style="stroke: #FFFFFF; stroke-width: 10%;"/>
+					<line x1="20%" y1="50%" x2="80%" y2="50%" style="stroke: #FFFFFF; stroke-width: 10%;"/>
+				</g>
+			</defs>
+		</svg>
+	</div>
 	<div id="main">
 		<div id="top" class="bar">
 			<div id="menu_button" class="button">
-				<span class="symbol">&#x2261;</span>
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" class="image">
+					<use xlink:href="#img_menu"/>
+				</svg>
 			</div>
 			<div id="search">
 				<input type="text" id="search_textfield"/>
-				<div id="search_button" class="button">
-					<span class="symbol">&#x2315;</span>
-				</div>
+			</div>
+			<div id="search_button" class="button">
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" class="image">
+					<use xlink:href="#img_search"/>
+				</svg>
 			</div>
 			<div id="add_button" class="button">
-				<span class="symbol">+</span>
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" class="image">
+					<use xlink:href="#img_add"/>
+				</svg>
 			</div>
 		</div>
 		<div id="center">
 			<div id="content_frame">
-				<div id="content">
+				<div id="test">
 					Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.   
 
 					Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.   
