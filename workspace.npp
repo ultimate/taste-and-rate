@@ -1,5 +1,8 @@
 <NotepadPlus>
     <Project name="ui">
+        <Folder name="images">
+            <File name="ui\images\wood-pattern-01-full.jpg" />
+        </Folder>
         <Folder name="lang">
             <Folder name="de">
                 <File name="ui\lang\de\about.html" />
@@ -34,13 +37,10 @@
                 <File name="ui\scripts\util\Strings.js" />
                 <File name="ui\scripts\util\UI.js" />
             </Folder>
+            <File name="ui\scripts\index.js" />
         </Folder>
         <Folder name="styles">
             <File name="ui\styles\base.css" />
-        </Folder>
-        <File name="ui\index.html" />
-        <Folder name="images">
-            <File name="ui\images\wood-pattern-01-full.jpg" />
         </Folder>
         <File name="ui\index.html" />
     </Project>

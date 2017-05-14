@@ -17,6 +17,10 @@ body input {
 	/*shape-rendering: crispEdges;*/
 }
 
+.hidden {
+	opacity: 0;
+}
+
 /* main layout with top & bottom bar etc. */
 
 #main {
@@ -61,7 +65,8 @@ body input {
 }
 
 #main > .bar > .button:active {
-	border-color: rgba(0,0,0,0.5) rgba(43,27,0,0.5) rgba(43,27,0,0.5) rgba(0,0,0,0.5);
+	filter: url(#highlight);
+	/*box-shadow: 0.0em 0.0em 0.1em red, 0.0em 0.0em 0.2em red;*/
 }
 
 #main > .bar > .button > span {
@@ -83,21 +88,6 @@ body input {
 	width: 70%;
 	max-width: 30em;
 }
-
-/*
-#search_button {
-	font-size: 1.5em;
-	line-height: 1em;
-	position: relative;
-	top: 0.15em;
-	margin-left: 0.25em;
-}
-
-#search_button:active {
-	text-shadow: 0.0em 0.0em 0.1em white, 0.0em 0.0em 0.2em white;
-	/*text-shadow: 0.0em 0.0em 0.1em rgba(172, 107, 0, 1), 0.0em 0.0em 0.2em white;*/
-}
-*/
 
 #add_button > span {
 	position: relative;
