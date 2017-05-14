@@ -29,8 +29,8 @@ body input {
 	height: 2em;
 	line-height: 1.8em;
 	padding: 0.5em;
-	background-color: #AA6600;
-	background-size: auto 100%;
+	/*background-color: #AA6600;
+	background-size: auto 100%;*/
 	color: white;
 }
 
@@ -49,7 +49,9 @@ body input {
 #top {
 	display: flex;
 	flex-direction: row;
-	background-image: url("../images/wood-pattern-01.jpg");
+	/*background-image: url("../images/wood-pattern-01.jpg");*/
+	background-position: bottom;
+	border-bottom: rgb(150,85,0) solid 0.2em;
 }
 
 #main > .bar > .button {
@@ -104,12 +106,16 @@ body input {
 }
 
 #center {
-	background: black;
+	background: white;
 	position: relative;
 }
 
 #bottom {
-	background-image: url("../images/wood-pattern-03.jpg");
+	/*background-image: url("../images/wood-pattern-03.jpg");*/
+	background-image: url("../images/wood-plank-small.jpg");
+	background-size: 8%;
+	background-repeat: repeat-x;
+	background-position: top;
 }
 
 /* now the content */
