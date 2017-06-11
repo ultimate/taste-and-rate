@@ -56,3 +56,8 @@ Storage.loadLocalObject = function(key)
 	else
 		return null;
 };
+
+Storage.clear = function()
+{
+	localStorage.clear();
+};

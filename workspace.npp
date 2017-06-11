@@ -33,13 +33,19 @@
                 <File name="ui\scripts\syncnapsis\Proxies.js" />
                 <File name="ui\scripts\syncnapsis\Reflections.js" />
                 <File name="ui\scripts\syncnapsis\Requests.js" />
-                <File name="ui\scripts\syncnapsis\Storage.js" />
                 <File name="ui\scripts\syncnapsis\Strings.js" />
                 <File name="ui\scripts\syncnapsis\UI.js" />
+            </Folder>
+            <Folder name="test">
+                <File name="I:\taste-and-rate\ui\scripts\test\app.js" />
+            </Folder>
+            <Folder name="types">
+                <File name="I:\taste-and-rate\ui\scripts\types\Rating.js" />
             </Folder>
             <Folder name="util">
                 <File name="ui\scripts\util\autohide.js" />
                 <File name="ui\scripts\util\hide.js" />
+                <File name="I:\taste-and-rate\ui\scripts\util\storage.js" />
             </Folder>
             <File name="ui\scripts\index.js" />
         </Folder>
