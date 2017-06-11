@@ -49,5 +49,5 @@ var AutoHide = function(element, hideAfter, delayOn, debug)
 		this.autoHide();
 	};			
 	
-	this.element.bind(delayOn, function(a) { return function() { a.delayAutoHide() }; }(this) );
+	this.element.bind(delayOn, function(a) { return function(event) { a.delayAutoHide() }; }(this) );
 };

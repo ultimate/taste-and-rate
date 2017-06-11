@@ -25,17 +25,20 @@
                 <File name="ui\scripts\lib\date.format.js" />
                 <File name="ui\scripts\lib\json2.js" />
             </Folder>
+            <Folder name="syncnapsis">
+                <File name="ui\scripts\syncnapsis\Arrays.js" />
+                <File name="ui\scripts\syncnapsis\Console.js" />
+                <File name="ui\scripts\syncnapsis\Elements.js" />
+                <File name="ui\scripts\syncnapsis\Events.js" />
+                <File name="ui\scripts\syncnapsis\Proxies.js" />
+                <File name="ui\scripts\syncnapsis\Reflections.js" />
+                <File name="ui\scripts\syncnapsis\Requests.js" />
+                <File name="ui\scripts\syncnapsis\Storage.js" />
+                <File name="ui\scripts\syncnapsis\Strings.js" />
+                <File name="ui\scripts\syncnapsis\UI.js" />
+            </Folder>
             <Folder name="util">
-                <File name="ui\scripts\util\Arrays.js" />
-                <File name="ui\scripts\util\Console.js" />
-                <File name="ui\scripts\util\Elements.js" />
-                <File name="ui\scripts\util\Events.js" />
-                <File name="ui\scripts\util\Proxies.js" />
-                <File name="ui\scripts\util\Reflections.js" />
-                <File name="ui\scripts\util\Requests.js" />
-                <File name="ui\scripts\util\Storage.js" />
-                <File name="ui\scripts\util\Strings.js" />
-                <File name="ui\scripts\util\UI.js" />
+                <File name="ui\scripts\util\autohide.js" />
             </Folder>
             <File name="ui\scripts\index.js" />
         </Folder>
