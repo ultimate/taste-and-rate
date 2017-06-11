@@ -38,6 +38,9 @@
             </Folder>
             <Folder name="test">
                 <File name="I:\taste-and-rate\ui\scripts\test\app.js" />
+                <File name="I:\taste-and-rate\ui\scripts\test\rum.json" />
+                <File name="I:\taste-and-rate\ui\scripts\test\whisky.json" />
+                <File name="I:\taste-and-rate\ui\scripts\test\beer.json" />
             </Folder>
             <Folder name="types">
                 <File name="I:\taste-and-rate\ui\scripts\types\Rating.js" />

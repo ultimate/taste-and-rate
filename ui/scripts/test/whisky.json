@@ -1,0 +1,68 @@
+/*
+ * NOT TRUE JSON... JUST FOR TESTING
+ */
+var TEST_CAT_WHISKY = {
+	id: 2,
+	name: "Whisky",
+	active: true,
+	criteria: [
+		{
+			id: 201,
+			name: "Overall",
+			stars: true,
+			text: true,
+			spider: true,
+			tags: false,
+		},
+		{
+			id: 202,
+			name: "Nose",
+			stars: false,
+			text: true,
+			spider: false,
+			tags: true,
+		},
+		{
+			id: 203,
+			name: "Taste",
+			stars: false,
+			text: true,
+			spider: false,
+			tags: true,
+		},
+		{
+			id: 204,
+			name: "Finish",
+			stars: false,
+			text: true,
+			spider: false,
+			tags: true,
+		},
+	],
+	spider: [
+		{
+			id: 211,
+			name: "Smoke",
+			min: "not at all",
+			max: "intensive"
+		},
+		{
+			id: 212,
+			name: "Oak",
+			min: "mild",
+			max: "intensive"
+		},
+		{
+			id: 213,
+			name: "Color",
+			min: "bright",
+			max: "dark"
+		},
+		{
+			id: 214,
+			name: "Complexity",
+			min: "simple",
+			max: "complex"
+		}
+	]
+};

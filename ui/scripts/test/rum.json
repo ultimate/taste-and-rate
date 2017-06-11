@@ -1,0 +1,68 @@
+/*
+ * NOT TRUE JSON... JUST FOR TESTING
+ */
+var TEST_CAT_RUM = {
+	id: 1,
+	name: "Rum",
+	active: true,
+	criteria: [
+		{
+			id: 101,
+			name: "Overall",
+			stars: true,
+			text: true,
+			spider: true,
+			tags: false,
+		},
+		{
+			id: 102,
+			name: "Nose",
+			stars: false,
+			text: true,
+			spider: false,
+			tags: true,
+		},
+		{
+			id: 103,
+			name: "Taste",
+			stars: false,
+			text: true,
+			spider: false,
+			tags: true,
+		},
+		{
+			id: 104,
+			name: "Finish",
+			stars: false,
+			text: true,
+			spider: false,
+			tags: true,
+		},
+	],
+	spider: [
+		{
+			id: 111,
+			name: "Sweetness",
+			min: "not at all",
+			max: "intensive"
+		},
+		{
+			id: 112,
+			name: "Oak",
+			min: "mild",
+			max: "intensive"
+		},
+		{
+			id: 113,
+			name: "Color",
+			min: "bright",
+			max: "dark"
+		},
+		{
+			id: 114,
+			name: "Complexity",
+			min: "simple",
+			max: "complex"
+		}
+	]
+};

@@ -1,0 +1,62 @@
+/*
+ * NOT TRUE JSON... JUST FOR TESTING
+ */
+var TEST_CAT_BEER = {
+	id: 3,
+	name: "Beer",
+	active: false,
+	criteria: [
+		{
+			id: 301,
+			name: "Overall",
+			stars: true,
+			text: true,
+			spider: true,
+			tags: false,
+		},
+		{
+			id: 302,
+			name: "Nose",
+			stars: false,
+			text: true,
+			spider: false,
+			tags: true,
+		},
+		{
+			id: 303,
+			name: "Taste",
+			stars: false,
+			text: true,
+			spider: false,
+			tags: true,
+		},
+		{
+			id: 304,
+			name: "Finish",
+			stars: false,
+			text: true,
+			spider: false,
+			tags: true,
+		},
+	],
+	spider: [
+		{
+			id: 311,
+			name: "Bitterness",
+			min: "not at all",
+			max: "very bitter"
+		},
+		{
+			id: 312,
+			name: "Head",
+			min: "short lasting",
+			max: "long lasting"
+		},
+		{
+			id: 313,
+			name: "Color",
+			min: "bright",
+			max: "dark"
+		}
+	]
+};

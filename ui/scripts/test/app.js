@@ -1,5 +1,9 @@
 var app = function() {
 	
+	this.getString = function(key) {
+		return key;
+	};
+	
 	this.RATING_X = "rating_"
 	this.RATING_ID = RATING_X + "id";
 	
@@ -15,20 +19,9 @@ var app = function() {
 	
 	this.getCategories = function() {
 		return [
-			{
-				name: "Rum",
-				active: true,
-				
-				
-			},
-			{		
-				name: "Whisky",		
-				active: true,
-			},
-			{	
-				name: "Beer",		
-				active: false,				
-			}
+			TEST_CAT_RUM,
+			TEST_CAT_WHISKY,
+			TEST_CAT_BEER,
 		]
 	};
 	
