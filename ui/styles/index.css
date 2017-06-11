@@ -1,0 +1,156 @@
+/* main layout with top & bottom bar etc. */
+
+#main {
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	right: 0px;
+	left: 0px;
+	width: auto;
+	height: auto;
+	display: flex;
+	flex-direction: column
+}
+
+#main > .bar {
+	height: 2em;
+	line-height: 1.8em;
+	padding: 0.5em;
+}
+
+#main > .bar input[type=text] {
+}
+
+#main > #center {
+	flex: 1;
+	overflow: hidden;
+}
+
+#top {
+	display: flex;
+	flex-direction: row;
+	border-bottom: 0.2em solid rgb(150,85,0);
+}
+
+#main > .bar > .button {
+	width: 2em;
+	text-align: center;
+}
+
+#main > .bar > .button:active {
+	filter: url(#highlight);
+	/*box-shadow: 0.0em 0.0em 0.1em red, 0.0em 0.0em 0.2em red;*/
+}
+
+#main > .bar > .button > span {
+	font-size: 1.5em;
+}
+
+#top > #logo_search {
+	flex: 1;
+	text-align: center;
+	margin-left: 10%;
+	margin-right: 10%;
+	background-image: url("../images/logo-placeholder.svg");
+	background-size: auto 100%;
+	background-repeat: no-repeat;
+	background-position: center;
+	position: relative;
+}
+
+#top > #logo_search > * {
+	display: inline;
+}
+
+#search {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	left: 0;
+	background: white;	
+	transition: opacity 0.2s;
+	z-index: 1;
+}
+
+#search.hidden {
+	transition: opacity 2s, z-index 4s;
+	z-index: -1;
+}
+
+#search_textfield {
+	width: 90%;
+	max-width: 30em;
+	border: none;
+	border-bottom: 0.05em solid rgb(150,85,0);
+}
+
+#add_button > span {
+	position: relative;
+	top: -0.05em;
+}
+
+#menu {
+	position: absolute;
+	top: 3.2em;
+	z-index: 1;
+	background: white;
+	padding: 0.5em;
+	border-right: 0.05em solid rgb(150,85,0);
+	border-left: 0.05em solid rgb(150,85,0);
+	border-bottom: 0.2em solid rgb(150,85,0);
+	height: auto;
+}
+
+#menu.hidden {
+	height: 0px;
+}
+
+#center {
+	position: relative;
+}
+
+#bottom {
+	border-top: 0.2em solid rgb(150,85,0);
+}
+
+/* now the content */
+
+#content_frame {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	overflow-y: auto;
+}
+
+#content_frame > div {
+	padding: 0.5em;
+}
+
+#content_frame > div > div {
+	z-index: -2;	
+}
+
+/* fade content on scroll */
+/*
+#content_frame > div::before,
+#content_frame > div::after {
+	height: 2em;
+	background: red;
+	position: fixed;
+	left: 0;
+	right: 0;
+	content: ' ';
+}
+
+#content_frame > div::before {
+	top: 3.2em;
+	background: linear-gradient(white, transparent);
+}
+
+#content_frame > div::after {
+	bottom: 3.2em;
+	background: linear-gradient(transparent, white);
+}
+*/
