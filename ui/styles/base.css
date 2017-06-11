@@ -42,10 +42,6 @@ body input {
 }
 
 #main > .bar input[type=text] {
-	background: rgba(172, 107, 0, 0.7);
-	border-radius: 0.5em;
-	border: 0.2em solid;
-	border-color: rgba(0,0,0,0.5) rgba(43,27,0,0.5) rgba(43,27,0,0.5) rgba(0,0,0,0.5);
 }
 
 #main > #center {
@@ -85,8 +81,15 @@ body input {
 }
 
 #search_textfield {
-	width: 70%;
+	width: 90%;
 	max-width: 30em;
+	border: none;
+	border-bottom: 0.05em solid rgb(150,85,0);
+	transition: opacity 0.2s;
+}
+
+#search_textfield.hidden {
+	transition: opacity 2s;
 }
 
 #add_button > span {

@@ -9,6 +9,7 @@
 <meta name="viewport" content="width=device-width; initial-scale=1.0; user-scalable=0" /> 
 <link rel="stylesheet" type="text/css" href="styles/base.css" />
 <script type="text/javascript" src="scripts/lib/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="scripts/util/autohide.js"></script>
 <script type="text/javascript" src="scripts/index.js"></script>
 <!--
 <script type="text/javascript" src="lang/de/lang.js"></script>
@@ -19,12 +20,17 @@
 -->
 <script type="text/javascript">
 	// init
+	var init = function() {
+		UI.initialize();
+	};
+	
+	//document.addEventListener("DOM")
 </script>
 <script type="text/javascript">
 	// debug-js
 </script>
 </head>
-<body onload="">
+<body onload="init();">
 	<div id="defines">
 		<svg xmlns="http://www.w3.org/2000/svg"	xmlns:xlink="http://www.w3.org/1999/xlink">
 			<filter id="colorScheme">
