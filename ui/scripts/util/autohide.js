@@ -1,23 +1,27 @@
-var AutoHide = function(element, hideAfter, delayOn)
+var AutoHide = function(element, hideAfter, delayOn, debug)
 {	
 	this.hideAfter = hideAfter;
 	this.element = element;
 	this.timeout = null;
+	this.debug = debug;
 	
 	this.showInput = function() {
-		//console.log("AutoHide[" + element.attr("id") + "].showInput()");
+		if(this.debug)
+			console.log("AutoHide[" + element.attr("id") + "].showInput()");
 		element.removeClass("hidden");
 		element.focus();
 		this.autoHide();
 	};	
 	
 	this.hideInput = function() {			
-		//console.log("AutoHide[" + element.attr("id") + "].hideInput()");
+		if(this.debug)
+			console.log("AutoHide[" + element.attr("id") + "].hideInput()");
 		element.addClass("hidden");
 	};
 	
 	this.autoHide = function() {
-		console.log("AutoHide[" + element.attr("id") + "].autoHide()");
+		if(this.debug)
+			console.log("AutoHide[" + element.attr("id") + "].autoHide()");
 		if(this.timeout)
 			return;
 		this.timeout = setTimeout(function(a) {
@@ -29,7 +33,8 @@ var AutoHide = function(element, hideAfter, delayOn)
 	};
 	
 	this.cancelAutoHide = function() {
-		console.log("AutoHide[" + element.attr("id") + "].cancelAutoHide()");
+		if(this.debug)
+			console.log("AutoHide[" + element.attr("id") + "].cancelAutoHide()");
 		if(this.timeout)
 		{
 			clearTimeout(this.timeout);
@@ -38,7 +43,8 @@ var AutoHide = function(element, hideAfter, delayOn)
 	};	
 	
 	this.delayAutoHide = function() {
-		console.log("AutoHide[" + element.attr("id") + "].delayAutoHide()");
+		if(this.debug)
+			console.log("AutoHide[" + element.attr("id") + "].delayAutoHide()");
 		this.cancelAutoHide();
 		this.autoHide();
 	};			
