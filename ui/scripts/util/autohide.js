@@ -5,17 +5,17 @@ var AutoHide = function(element, hideAfter, delayOn, debug)
 	this.timeout = null;
 	this.debug = debug;
 	
-	this.showInput = function() {
+	this.show = function() {
 		if(this.debug)
-			console.log("AutoHide[" + element.attr("id") + "].showInput()");
+			console.log("AutoHide[" + element.attr("id") + "].show()");
 		element.removeClass("hidden");
 		element.focus();
 		this.autoHide();
 	};	
 	
-	this.hideInput = function() {			
+	this.hide = function() {			
 		if(this.debug)
-			console.log("AutoHide[" + element.attr("id") + "].hideInput()");
+			console.log("AutoHide[" + element.attr("id") + "].hide()");
 		element.addClass("hidden");
 	};
 	
@@ -26,7 +26,7 @@ var AutoHide = function(element, hideAfter, delayOn, debug)
 			return;
 		this.timeout = setTimeout(function(a) {
 			return function() {
-				a.hideInput();
+				a.hide();
 				a.timeout = null;
 			};
 		}(this), this.hideAfter);
