@@ -12,6 +12,7 @@
 <script type="text/javascript" src="scripts/lib/jquery-3.2.1.js"></script>
 <script type="text/javascript" src="scripts/util/autohide.js"></script>
 <script type="text/javascript" src="scripts/util/hide.js"></script>
+<script type="text/javascript" src="scripts/util/labels.js"></script>
 <script type="text/javascript" src="scripts/index.js"></script>
 <script type="text/javascript">
 	// init
@@ -22,6 +23,7 @@
 	//document.addEventListener("DOM")
 </script>
 <!-- Scripts included for testing only -->
+<script type="text/javascript" src="scripts/util/storage.js"></script>
 <script type="text/javascript" src="scripts/test/app.js"></script>
 <script type="text/javascript" src="scripts/test/rum.json"></script>
 <script type="text/javascript" src="scripts/test/whisky.json"></script>
@@ -123,9 +125,12 @@
 	</div>
 	<div id="menu" class="">
 		<ul>
-			<li>Option 1</li>
-			<li>Option 2</li>
-			<li>Option 3</li>
+			<li><label key="categories"></label>
+				<ul id="menu_categories">
+					<!-- will be populated by script -->
+					<li id="menu_select_categories"><label key="select categories"></label></li>
+				</ul>
+			</li>
 		</ul>
 	</menu>
 </body>

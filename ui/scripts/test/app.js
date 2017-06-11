@@ -22,20 +22,7 @@ var app = function() {
 			TEST_CAT_RUM,
 			TEST_CAT_WHISKY,
 			TEST_CAT_BEER,
-		]
-	};
-	
-	this.newRating = function(category) {
-		if(category == "Rum") {
-			return {
-				
-			};
-		}
-		else if(category == "Whisky") {
-			return {
-				
-			};
-		}
+		];
 	};
 	
 	this.saveRating = function(rating) {

@@ -3,12 +3,12 @@
  */
 var TEST_CAT_WHISKY = {
 	id: 2,
-	name: "Whisky",
+	key: "Whisky",
 	active: true,
 	criteria: [
 		{
 			id: 201,
-			name: "Overall",
+			key: "Overall",
 			stars: true,
 			text: true,
 			spider: true,
@@ -16,7 +16,7 @@ var TEST_CAT_WHISKY = {
 		},
 		{
 			id: 202,
-			name: "Nose",
+			key: "Nose",
 			stars: false,
 			text: true,
 			spider: false,
@@ -24,7 +24,7 @@ var TEST_CAT_WHISKY = {
 		},
 		{
 			id: 203,
-			name: "Taste",
+			key: "Taste",
 			stars: false,
 			text: true,
 			spider: false,
@@ -32,7 +32,7 @@ var TEST_CAT_WHISKY = {
 		},
 		{
 			id: 204,
-			name: "Finish",
+			key: "Finish",
 			stars: false,
 			text: true,
 			spider: false,
@@ -42,25 +42,25 @@ var TEST_CAT_WHISKY = {
 	spider: [
 		{
 			id: 211,
-			name: "Smoke",
+			key: "Smoke",
 			min: "not at all",
 			max: "intensive"
 		},
 		{
 			id: 212,
-			name: "Oak",
+			key: "Oak",
 			min: "mild",
 			max: "intensive"
 		},
 		{
 			id: 213,
-			name: "Color",
+			key: "Color",
 			min: "bright",
 			max: "dark"
 		},
 		{
 			id: 214,
-			name: "Complexity",
+			key: "Complexity",
 			min: "simple",
 			max: "complex"
 		}

@@ -3,12 +3,12 @@
  */
 var TEST_CAT_RUM = {
 	id: 1,
-	name: "Rum",
+	key: "Rum",
 	active: true,
 	criteria: [
 		{
 			id: 101,
-			name: "Overall",
+			key: "Overall",
 			stars: true,
 			text: true,
 			spider: true,
@@ -16,7 +16,7 @@ var TEST_CAT_RUM = {
 		},
 		{
 			id: 102,
-			name: "Nose",
+			key: "Nose",
 			stars: false,
 			text: true,
 			spider: false,
@@ -24,7 +24,7 @@ var TEST_CAT_RUM = {
 		},
 		{
 			id: 103,
-			name: "Taste",
+			key: "Taste",
 			stars: false,
 			text: true,
 			spider: false,
@@ -32,7 +32,7 @@ var TEST_CAT_RUM = {
 		},
 		{
 			id: 104,
-			name: "Finish",
+			key: "Finish",
 			stars: false,
 			text: true,
 			spider: false,
@@ -42,25 +42,25 @@ var TEST_CAT_RUM = {
 	spider: [
 		{
 			id: 111,
-			name: "Sweetness",
+			key: "Sweetness",
 			min: "not at all",
 			max: "intensive"
 		},
 		{
 			id: 112,
-			name: "Oak",
+			key: "Oak",
 			min: "mild",
 			max: "intensive"
 		},
 		{
 			id: 113,
-			name: "Color",
+			key: "Color",
 			min: "bright",
 			max: "dark"
 		},
 		{
 			id: 114,
-			name: "Complexity",
+			key: "Complexity",
 			min: "simple",
 			max: "complex"
 		}

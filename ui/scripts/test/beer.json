@@ -3,12 +3,12 @@
  */
 var TEST_CAT_BEER = {
 	id: 3,
-	name: "Beer",
+	key: "Beer",
 	active: false,
 	criteria: [
 		{
 			id: 301,
-			name: "Overall",
+			key: "Overall",
 			stars: true,
 			text: true,
 			spider: true,
@@ -16,7 +16,7 @@ var TEST_CAT_BEER = {
 		},
 		{
 			id: 302,
-			name: "Nose",
+			key: "Nose",
 			stars: false,
 			text: true,
 			spider: false,
@@ -24,7 +24,7 @@ var TEST_CAT_BEER = {
 		},
 		{
 			id: 303,
-			name: "Taste",
+			key: "Taste",
 			stars: false,
 			text: true,
 			spider: false,
@@ -32,7 +32,7 @@ var TEST_CAT_BEER = {
 		},
 		{
 			id: 304,
-			name: "Finish",
+			key: "Finish",
 			stars: false,
 			text: true,
 			spider: false,
@@ -42,19 +42,19 @@ var TEST_CAT_BEER = {
 	spider: [
 		{
 			id: 311,
-			name: "Bitterness",
+			key: "Bitterness",
 			min: "not at all",
 			max: "very bitter"
 		},
 		{
 			id: 312,
-			name: "Head",
+			key: "Head",
 			min: "short lasting",
 			max: "long lasting"
 		},
 		{
 			id: 313,
-			name: "Color",
+			key: "Color",
 			min: "bright",
 			max: "dark"
 		}

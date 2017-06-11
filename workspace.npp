@@ -48,6 +48,7 @@
             <Folder name="util">
                 <File name="ui\scripts\util\autohide.js" />
                 <File name="ui\scripts\util\hide.js" />
+                <File name="ui\scripts\util\labels.js" />
                 <File name="I:\taste-and-rate\ui\scripts\util\storage.js" />
             </Folder>
             <File name="ui\scripts\index.js" />
