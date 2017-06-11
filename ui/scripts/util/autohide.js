@@ -46,7 +46,7 @@ var AutoHide = function(element, hideAfter, delayOn, debug)
 		if(this.debug)
 			console.log("AutoHide[" + element.attr("id") + "].delayAutoHide()");
 		this.cancelAutoHide();
-		this.autoHide();
+		this.show();
 	};			
 	
 	this.element.bind(delayOn, function(a) { return function(event) { a.delayAutoHide() }; }(this) );

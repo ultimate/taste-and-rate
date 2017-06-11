@@ -69,15 +69,35 @@ body input {
 	font-size: 1.5em;
 }
 
-#top > #search {
+#top > #logo_search {
 	flex: 1;
 	text-align: center;
 	margin-left: 10%;
 	margin-right: 10%;
+	background-image: url("../images/logo-placeholder.svg");
+	background-size: auto 100%;
+	background-repeat: no-repeat;
+	background-position: center;
+	position: relative;
 }
 
-#top > #search > * {
+#top > #logo_search > * {
 	display: inline;
+}
+
+#search {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	left: 0;
+	background: white;	
+	transition: opacity 0.2s;
+	z-index: 1;
+}
+
+#search.hidden {
+	transition: opacity 2s, z-index 4s;
+	z-index: -1;
 }
 
 #search_textfield {
@@ -85,11 +105,6 @@ body input {
 	max-width: 30em;
 	border: none;
 	border-bottom: 0.05em solid rgb(150,85,0);
-	transition: opacity 0.2s;
-}
-
-#search_textfield.hidden {
-	transition: opacity 2s;
 }
 
 #add_button > span {
