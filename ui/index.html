@@ -74,6 +74,9 @@
 			<div id="search">
 				<input type="text" id="search_textfield" class="hidden"/>
 			</div>
+				<!--
+					wenn nicht sichtbar, dann tf zeigen, wenn sichtbar, dann suchen
+				-->
 			<div id="search_button" class="button" onclick="javascript: UI.search.showInput()">
 				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" class="image">
 					<use xlink:href="#img_search"/>
@@ -116,7 +119,12 @@
 			bottom
 		</div>
 	</div>
-	<div id="menu">
+	<div id="menu" class="hidden">
+		<ul>
+			<li>Option 1</li>
+			<li>Option 2</li>
+			<li>Option 3</li>
+		</ul>
 	</menu>
 </body>
 </html>

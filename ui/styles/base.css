@@ -52,7 +52,7 @@ body input {
 #top {
 	display: flex;
 	flex-direction: row;
-	border-bottom: rgb(150,85,0) solid 0.2em;
+	border-bottom: 0.2em solid rgb(150,85,0);
 }
 
 #main > .bar > .button {
@@ -97,12 +97,28 @@ body input {
 	top: -0.05em;
 }
 
+#menu {
+	position: absolute;
+	top: 3.2em;
+	z-index: 1;
+	background: white;
+	padding: 0.5em;
+	border-right: 0.05em solid rgb(150,85,0);
+	border-left: 0.05em solid rgb(150,85,0);
+	border-bottom: 0.2em solid rgb(150,85,0);
+	height: auto;
+}
+
+#menu.hidden {
+	height: 0px;
+}
+
 #center {
 	position: relative;
 }
 
 #bottom {
-	border-top: rgb(150,85,0) solid 0.2em;
+	border-top: 0.2em solid rgb(150,85,0);
 }
 
 /* now the content */
