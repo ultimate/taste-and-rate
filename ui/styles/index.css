@@ -99,13 +99,13 @@
 	/*border-left: 0.05em solid rgb(150,85,0);*/
 	height: auto;
 	left: 0%;
-	/*width: 50%;*/
+	width: 35%;
 	opacity: 1;
 	transition: all 0.5s;
 }
 
 #menu.hidden {
-	left: -53%;
+	left: -36%;
 }
 
 #menu ul {
