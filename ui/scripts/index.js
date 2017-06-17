@@ -2,16 +2,37 @@ var UI = function() {
 	
 	this.populateMenu = function()
 	{
-		$("#menu_categories li:not(:last)").remove();
+		$("#menu_categories li").remove();
 		
 		this.categories = app.getCategories();
 		
+		var element;
 		for(var c in categories)
 		{
 			console.log(categories[c]);
 			if(categories[c].active)
 			{
-				$("<li><label key='" + categories[c].key + "'/></li>").insertBefore($("#menu_select_categories"));
+				element = $("\
+					<li class='selectable'><label key='" + categories[c].key + "'/>\
+						<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='1em' height='1em' viewBox='0 0 100 100' class='image selected'>\
+							<use xlink:href='#img_filter_active'/>\
+						</svg>\
+						<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='1em' height='1em' viewBox='0 0 100 100' class='image not_selected'>\
+							<use xlink:href='#img_filter_inactive'/>\
+						</svg>\
+					</li>");
+				if(categories[c].selected)
+					element.addClass("selected");
+				element.click(function(ui, i, e) {
+					return function(event) {
+						ui.categories[i].selected = !ui.categories[i].selected;						
+						if(ui.categories[i].selected)
+							e.addClass("selected");
+						else
+							e.removeClass("selected");
+					};
+				}(this, c, element));
+				$("#menu_categories_list").append(element);
 			}
 		}
 	};
@@ -32,6 +53,7 @@ var UI = function() {
 		this.labelManager = new LabelManager(app, app.getString);
 		this.labelManager.updateLabels(document);
 		
+		$("#menu_exit").click(function(event) { window.location.reload(true); });
 	};	
 	
 	return this;

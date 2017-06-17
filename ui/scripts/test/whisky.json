@@ -5,6 +5,7 @@ var TEST_CAT_WHISKY = {
 	id: 2,
 	key: "Whisky",
 	active: true,
+	selected: false,
 	criteria: [
 		{
 			id: 201,

@@ -48,17 +48,26 @@
 			</filter>
 			<defs>
 				<g id="img_menu" filter="url(#colorScheme)">
-					<line x1="20%" y1="25%" x2="80%" y2="25%" style="stroke: #FFFFFF; stroke-width: 10%"/>
-					<line x1="20%" y1="50%" x2="80%" y2="50%" style="stroke: #FFFFFF; stroke-width: 10%;"/>
-					<line x1="20%" y1="75%" x2="80%" y2="75%" style="stroke: #FFFFFF; stroke-width: 10%;"/>
+					<line x1="20" y1="25" x2="80" y2="25" style="stroke: #FFFFFF; stroke-width: 10"/>
+					<line x1="20" y1="50" x2="80" y2="50" style="stroke: #FFFFFF; stroke-width: 10;"/>
+					<line x1="20" y1="75" x2="80" y2="75" style="stroke: #FFFFFF; stroke-width: 10;"/>
 				</g>
 				<g id="img_search" filter="url(#colorScheme)">
-					<circle cx="60%" cy="40%" r="20%" style="fill: none; stroke: #FFFFFF; stroke-width: 10%;"/>
-					<line x1="20%" y1="80%" x2="45%" y2="55%" style="stroke: #FFFFFF; stroke-width: 10%;"/>
+					<circle cx="60" cy="40" r="20" style="fill: none; stroke: #FFFFFF; stroke-width: 10;"/>
+					<line x1="20" y1="80" x2="45" y2="55" style="stroke: #FFFFFF; stroke-width: 10;"/>
 				</g>
 				<g id="img_add" filter="url(#colorScheme)">
-					<line x1="50%" y1="20%" x2="50%" y2="80%" style="stroke: #FFFFFF; stroke-width: 10%;"/>
-					<line x1="20%" y1="50%" x2="80%" y2="50%" style="stroke: #FFFFFF; stroke-width: 10%;"/>
+					<line x1="50" y1="20" x2="50" y2="80" style="stroke: #FFFFFF; stroke-width: 10;"/>
+					<line x1="20" y1="50" x2="80" y2="50" style="stroke: #FFFFFF; stroke-width: 10;"/>
+				</g>
+				<g id="filter_icon">
+					<polygon points="10,10 90,10 60,50 60,90 40,90 40,50"/>
+				</g>
+				<g id="img_filter_active" filter="url(#colorScheme)">
+					<use xlink:href="#filter_icon" style="stroke: #FFFFFF; stroke-width: 10; fill: #FFFFFF;"/>
+				</g>
+				<g id="img_filter_inactive" filter="url(#colorScheme)">
+					<use xlink:href="#filter_icon" style="stroke: #FFFFFF; stroke-width: 10; fill: none; "/>
 				</g>
 			</defs>
 		</svg>
@@ -66,7 +75,7 @@
 	<div id="main">		
 		<div id="top" class="bar">	
 			<div id="menu_button" class="button">
-				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" class="image">
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="0 0 100 100" class="image">
 					<use xlink:href="#img_menu">
 				</svg>
 			</div>
@@ -79,12 +88,12 @@
 				</div>
 			</div>
 			<div id="search_button" class="button">
-				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" class="image">
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="0 0 100 100" class="image">
 					<use xlink:href="#img_search"/>
 				</svg>
 			</div>
 			<div id="add_button" class="button">
-				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" class="image">
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="0 0 100 100" class="image">
 					<use xlink:href="#img_add"/>
 				</svg>
 			</div>
@@ -119,18 +128,23 @@
 		<!--
 			FOR DEBUGGING: clicking the bottom bar will force a reload (since this there is no Strg+F5 on Android)
 		--> 
-		<div id="bottom" class="bar" onclick="javascript: window.location.reload(true);">
+		<div id="bottom" class="bar">
 			bottom
 		</div>
 	</div>
 	<div id="menu" class="">
 		<ul>
-			<li><label key="categories"></label>
-				<ul id="menu_categories">
+			<li class="selectable" id="menu_categories"><label key="categories"></label></li>
+			<li>
+				<ul id="menu_categories_list">
 					<!-- will be populated by script -->
-					<li id="menu_select_categories"><label key="select categories"></label></li>
 				</ul>
 			</li>
+			<!--<li class="selectable" id="menu_manage_categories"><label key="select categories"></label></li>-->
+			<li class="separator"></li>
+			<li class="selectable" id="menu_profile"><label key="profile"></label></li>			
+			<li class="selectable" id="menu_settings"><label key="settings"></label></li>		
+			<li class="selectable" id="menu_exit"><label key="exit"></label></li>
 		</ul>
 	</menu>
 </body>

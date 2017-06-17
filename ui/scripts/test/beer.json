@@ -5,6 +5,7 @@ var TEST_CAT_BEER = {
 	id: 3,
 	key: "Beer",
 	active: false,
+	selected: false,
 	criteria: [
 		{
 			id: 301,

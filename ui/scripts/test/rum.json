@@ -5,6 +5,7 @@ var TEST_CAT_RUM = {
 	id: 1,
 	key: "Rum",
 	active: true,
+	selected: true,
 	criteria: [
 		{
 			id: 101,

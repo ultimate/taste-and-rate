@@ -94,15 +94,83 @@
 	top: 3.2em;
 	z-index: 1;
 	background: white;
-	padding: 0.5em;
-	border-right: 0.05em solid rgb(150,85,0);
-	border-left: 0.05em solid rgb(150,85,0);
 	border-bottom: 0.2em solid rgb(150,85,0);
+	border-right: 0.05em solid rgb(150,85,0);
+	/*border-left: 0.05em solid rgb(150,85,0);*/
 	height: auto;
+	left: 0%;
+	/*width: 50%;*/
+	opacity: 1;
+	transition: all 0.5s;
 }
 
 #menu.hidden {
-	height: 0px;
+	left: -53%;
+}
+
+#menu ul {
+	padding: 0;
+}
+
+#menu > ul {	
+	margin-top: 1px;
+	margin-bottom: 1px;
+}
+
+#menu li {
+	padding: 0.5em;
+}
+
+#menu > ul > li {
+	text-transform: uppercase;
+	color: rgb(150,85,0);
+	list-style-type: none;
+	font-size: 80%;
+}
+
+#menu > ul > li.selectable:active {
+	background: rgb(150,85,0);
+	color: white;
+}
+
+#menu .separator {
+	border-bottom: 1px solid;
+	margin: 0.5em;
+	padding: 0;
+}
+
+#menu > ul > li > ul {	
+	color: black;
+	list-style-type: none;
+	text-transform: capitalize;
+    margin: -0.5em;
+}
+
+#menu > ul > li > ul > li {
+	padding-left: 1em;
+}
+
+#menu .image {
+	float: right;
+}
+
+#menu > ul > li > ul > li.selectable:active {
+	background: rgb(85,85,85);
+	color: white;
+}
+
+#menu > ul > li > ul > li.selectable .image.selected {
+	display: none;
+}
+#menu > ul > li > ul > li.selectable .image.not_selected {
+	display: inline;
+}
+
+#menu > ul > li > ul > li.selectable.selected .image.selected {
+	display: inline;
+}
+#menu > ul > li > ul > li.selectable.selected .image.not_selected {
+	display: none;
 }
 
 #center {
