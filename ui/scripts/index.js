@@ -30,6 +30,7 @@ var UI = function() {
 							e.addClass("active");
 						else
 							e.removeClass("active");
+						app.setCategories(ui.categories);
 					};
 				}(this, c, element));
 				$("#menu_categories_list").append(element);
