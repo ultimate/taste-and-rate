@@ -10,26 +10,26 @@ var UI = function() {
 		for(var c in categories)
 		{
 			console.log(categories[c]);
-			if(categories[c].active)
+			if(categories[c].favorite)
 			{
 				element = $("\
 					<li class='selectable'><label key='" + categories[c].key + "'/>\
-						<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='1.5em' height='1em' viewBox='0 0 150 100' class='image selected'>\
+						<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='1.5em' height='1em' viewBox='0 0 150 100' class='image active'>\
 							<use xlink:href='#img_filter_active'/>\
 						</svg>\
-						<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='1.5em' height='1em' viewBox='0 0 150 100' class='image not_selected'>\
+						<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='1.5em' height='1em' viewBox='0 0 150 100' class='image not_active'>\
 							<use xlink:href='#img_filter_inactive'/>\
 						</svg>\
 					</li>");
-				if(categories[c].selected)
-					element.addClass("selected");
+				if(categories[c].active)
+					element.addClass("active");
 				element.click(function(ui, i, e) {
 					return function(event) {
-						ui.categories[i].selected = !ui.categories[i].selected;						
-						if(ui.categories[i].selected)
-							e.addClass("selected");
+						ui.categories[i].active = !ui.categories[i].active;						
+						if(ui.categories[i].active)
+							e.addClass("active");
 						else
-							e.removeClass("selected");
+							e.removeClass("active");
 					};
 				}(this, c, element));
 				$("#menu_categories_list").append(element);

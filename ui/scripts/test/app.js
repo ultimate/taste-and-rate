@@ -18,6 +18,7 @@ var app = function() {
 	};
 	
 	this.setCategories = function(categories) {
+		Storage.removeLocalObject("categories");
 		Storage.saveLocalObject("categories", categories);
 	};
 	

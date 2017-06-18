@@ -159,17 +159,17 @@
 	color: white;
 }
 
-#menu > ul > li > ul > li.selectable .image.selected {
+#menu > ul > li > ul > li.selectable .image.active {
 	display: none;
 }
-#menu > ul > li > ul > li.selectable .image.not_selected {
+#menu > ul > li > ul > li.selectable .image.not_active {
 	display: inline;
 }
 
-#menu > ul > li > ul > li.selectable.selected .image.selected {
+#menu > ul > li > ul > li.selectable.active .image.active {
 	display: inline;
 }
-#menu > ul > li > ul > li.selectable.selected .image.not_selected {
+#menu > ul > li > ul > li.selectable.active .image.not_active {
 	display: none;
 }
 

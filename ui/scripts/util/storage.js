@@ -27,13 +27,8 @@ Storage.saveLocalObject = function(key, object)
 	}
 };
 
-Storage.loadLocalObject = function(key, depth)
-{	
-	if(depth == null)
-		depth = 0;
-	else if(depth == 100)
-		return null;
-	
+Storage.loadLocalObject = function(key)
+{		
 	var value = localStorage[key];
 	if(value == "true")
 		return true;
@@ -46,9 +41,8 @@ Storage.loadLocalObject = function(key, depth)
 	else if(value != null)
 		return value;
 	
-	// not a primitive
-	
-	//console.log("loading local object: " + key + " (depth=" + depth + ")");	
+	// not a primitive	
+	//console.log("loading local object: " + key);	
 	//console.log("check if object: " + key);
 	
 	var object = {};
@@ -74,13 +68,24 @@ Storage.loadLocalObject = function(key, depth)
 	{
 		var subKey = subKeys[i];
 		//console.log("loading sub object: " + key + "." + subKey);	
-		object[subKey] = this.loadLocalObject(key + "." + subKey, depth+1)
+		object[subKey] = this.loadLocalObject(key + "." + subKey)
 	}
 	
 	if(keyFound)
 		return object;
 	else
 		null;
+};
+
+Storage.removeLocalObject = function(key)
+{
+	for(var prop in localStorage)
+	{
+		if(prop.startsWith(key + ".") || prop == key)
+		{
+			localStorage.removeItem(key);
+		}
+	}	
 };
 
 Storage.clear = function()
