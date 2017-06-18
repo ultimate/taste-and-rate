@@ -46,7 +46,19 @@
 				<feGaussianBlur in="SourceGraphic" result="blurOut" stdDeviation="2" />´
 				<feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
 			</filter>
-			<defs>
+			<defs id="shapes">
+				<g id="filter">
+					<polygon points="10,10 90,10 60,50 60,90 40,90 40,50"/>
+				</g>
+				<g id="checkmark">
+					<polygon points="20,45 50,65 90,15 50,85"/>
+				</g>
+				<g id="cross">
+					<line x1="20" y1="20" x2="80" y2="80"/>
+					<line x1="80" y1="20" x2="20" y2="80"/>
+				</g>
+			</defs>
+			<defs id="images">
 				<g id="img_menu" filter="url(#colorScheme)">
 					<line x1="20" y1="25" x2="80" y2="25" style="stroke: #FFFFFF; stroke-width: 10"/>
 					<line x1="20" y1="50" x2="80" y2="50" style="stroke: #FFFFFF; stroke-width: 10;"/>
@@ -59,15 +71,14 @@
 				<g id="img_add" filter="url(#colorScheme)">
 					<line x1="50" y1="20" x2="50" y2="80" style="stroke: #FFFFFF; stroke-width: 10;"/>
 					<line x1="20" y1="50" x2="80" y2="50" style="stroke: #FFFFFF; stroke-width: 10;"/>
+				</g>				
+				<g id="img_filter_active">
+					<use xlink:href="#filter" style="stroke: #FFFFFF; stroke-width: 10; fill: #FFFFFF;" filter="url(#colorScheme)"/>
+					<use xlink:href="#checkmark" transform="translate(50,40) scale(0.5)" style="stroke: #555555; stroke-width: 3; fill: #555555; " stroke-linejoin="round"/>
 				</g>
-				<g id="filter_icon">
-					<polygon points="10,10 90,10 60,50 60,90 40,90 40,50"/>
-				</g>
-				<g id="img_filter_active" filter="url(#colorScheme)">
-					<use xlink:href="#filter_icon" style="stroke: #FFFFFF; stroke-width: 10; fill: #FFFFFF;"/>
-				</g>
-				<g id="img_filter_inactive" filter="url(#colorScheme)">
-					<use xlink:href="#filter_icon" style="stroke: #FFFFFF; stroke-width: 10; fill: none; "/>
+				<g id="img_filter_inactive">
+					<use xlink:href="#filter" style="stroke: #FFFFFF; stroke-width: 10; fill: none; " filter="url(#colorScheme)"/>
+					<use xlink:href="#cross" transform="translate(50,45) scale(0.5)" style="stroke: #555555; stroke-width: 10; fill: #555555; " stroke-linecap="round"/>
 				</g>
 			</defs>
 		</svg>
