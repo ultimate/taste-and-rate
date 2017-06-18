@@ -14,10 +14,10 @@ var UI = function() {
 			{
 				element = $("\
 					<li class='selectable'><label key='" + categories[c].key + "'/>\
-						<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='1em' height='1em' viewBox='0 0 100 100' class='image selected'>\
+						<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='1.5em' height='1em' viewBox='0 0 150 100' class='image selected'>\
 							<use xlink:href='#img_filter_active'/>\
 						</svg>\
-						<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='1em' height='1em' viewBox='0 0 100 100' class='image not_selected'>\
+						<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='1.5em' height='1em' viewBox='0 0 150 100' class='image not_selected'>\
 							<use xlink:href='#img_filter_inactive'/>\
 						</svg>\
 					</li>");
