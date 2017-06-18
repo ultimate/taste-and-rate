@@ -17,12 +17,23 @@ var app = function() {
 		return result;
 	};
 	
+	this.setCategories = function(categories) {
+		Storage.saveLocalObject("categories", categories);
+	};
+	
 	this.getCategories = function() {
-		return [
-			TEST_CAT_RUM,
-			TEST_CAT_WHISKY,
-			TEST_CAT_BEER,
-		];
+		var categories = Storage.loadLocalObject("categories");
+		if(categories == null)
+		{	
+			console.log("no categories found in local storage - loading default")
+			categories = [
+				TEST_CAT_RUM,
+				TEST_CAT_WHISKY,
+				TEST_CAT_BEER,
+			];
+		}
+		this.setCategories(categories);
+		return categories;
 	};
 	
 	this.saveRating = function(rating) {
@@ -44,6 +55,10 @@ var app = function() {
 	
 	this.clearDatabase = function() {
 		Storage.clear();
+	};
+	
+	this.exit = function() {
+		window.location.reload(true);
 	};
 	
 	return this;

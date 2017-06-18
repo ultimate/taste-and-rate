@@ -48,12 +48,15 @@ var UI = function() {
 		
 		/* initialize menu */
 		this.populateMenu();
+		$("menu_categories").click(function(event) {});
+		$("menu_profiles").click(function(event) {});
+		$("menu_settings").click(function(event) {});
+		$("#menu_exit").click(function(event) { app.exit(); });
 		
 		/* update locale dependent labels */
 		this.labelManager = new LabelManager(app, app.getString);
 		this.labelManager.updateLabels(document);
 		
-		$("#menu_exit").click(function(event) { window.location.reload(true); });
 	};	
 	
 	return this;
