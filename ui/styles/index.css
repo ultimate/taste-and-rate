@@ -254,6 +254,21 @@
 
 /* specific windows */
 
+
+#manage_categories ul {
+	padding: 0;
+}
+
+#manage_categories ul {	
+	margin-top: 1em;
+	margin-bottom: 1px;
+}
+
+#manage_categories ul > li {
+	list-style-type: none;
+	padding: 0.5em;
+}
+
 #manage_categories .image {
 	float: right;
 }
