@@ -153,6 +153,10 @@
 
 #menu .image {
 	float: right;
+	position: relative;
+	bottom: 0.2em;
+	width: 1.8em;
+	height: 1.2em;
 }
 
 #menu > ul > li > ul > li.selectable:active {
@@ -163,6 +167,7 @@
 #menu > ul > li > ul > li.selectable .image.active {
 	display: none;
 }
+
 #menu > ul > li > ul > li.selectable .image.not_active {
 	display: inline;
 }
@@ -170,6 +175,7 @@
 #menu > ul > li > ul > li.selectable.active .image.active {
 	display: inline;
 }
+
 #menu > ul > li > ul > li.selectable.active .image.not_active {
 	display: none;
 }
@@ -247,7 +253,7 @@
 .window h3 {	
 	color: rgb(150,85,0);
 	margin-top: 0.25em;
-	margin-bottom: 0.25em;
+	margin-bottom: 0.75em;
 	border-bottom: 1px solid;
 	font-weight: unset;
 }
@@ -267,15 +273,22 @@
 #manage_categories ul > li {
 	list-style-type: none;
 	padding: 0.5em;
+	line-height: 1em;
 }
 
 #manage_categories .image {
 	float: right;
+	margin-left: 1em;
+	position: relative;
+	bottom: 0.2em;
+	width: 1.2em;
+	height: 1.2em;
 }
 
 #manage_categories ul > li.selectable .image.favorite {
 	display: none;
 }
+
 #manage_categories ul > li.selectable .image.no_favorite {
 	display: inline;
 }
@@ -283,6 +296,12 @@
 #manage_categories ul > li.selectable.favorite .image.favorite {
 	display: inline;
 }
+
 #manage_categories ul > li.selectable.favorite .image.no_favorite {
 	display: none;
+}
+
+#manage_categories ul > li.selectable:nth-child(1) .image.up,
+#manage_categories ul > li.selectable:nth-last-child(1) .image.down {
+	opacity: 0;
 }

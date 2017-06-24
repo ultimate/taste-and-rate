@@ -15,10 +15,10 @@ var UI = function() {
 			{
 				element = $("\
 					<li class='selectable'><label key='" + categories[c].key + "'/>\
-						<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='1.5em' height='1em' viewBox='0 0 150 100' class='image active'>\
+						<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 150 100' class='image active'>\
 							<use xlink:href='#img_filter_active'/>\
 						</svg>\
-						<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='1.5em' height='1em' viewBox='0 0 150 100' class='image not_active'>\
+						<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 150 100' class='image not_active'>\
 							<use xlink:href='#img_filter_inactive'/>\
 						</svg>\
 					</li>");
@@ -41,16 +41,16 @@ var UI = function() {
 			{
 				element = $("\
 					<li class='draggable selectable'><label key='" + categories[c].key + "'/>\
-						<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='1em' height='1em' viewBox='0 0 100 100' class='image star favorite'>\
+						<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 100 100' class='image star favorite'>\
 							<use xlink:href='#img_star_active'/>\
 						</svg>\
-						<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='1em' height='1em' viewBox='0 0 100 100' class='image star no_favorite'>\
+						<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 100 100' class='image star no_favorite'>\
 							<use xlink:href='#img_star_inactive'/>\
 						</svg>\
-						<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='1em' height='1em' viewBox='0 0 100 100' class='image down'>\
+						<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 100 100' class='image down'>\
 							<use xlink:href='#img_arrow_down'/>\
 						</svg>\
-						<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='1em' height='1em' viewBox='0 0 100 100' class='image up'>\
+						<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 100 100' class='image up'>\
 							<use xlink:href='#img_arrow_up'/>\
 						</svg>\
 					</li>");
