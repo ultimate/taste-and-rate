@@ -255,7 +255,7 @@
 /* specific windows */
 
 #manage_categories .image {
-	border: 1px solid;
+	float: right;
 }
 
 #manage_categories ul > li.selectable .image.favorite {
