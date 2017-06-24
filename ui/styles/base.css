@@ -20,3 +20,18 @@ body input {
 .hidden {
 	opacity: 0;
 }
+
+h1 {
+	font-size: 1.2em;
+	text-transform: uppercase;
+}
+
+h2 {
+	font-size: 1.1em;
+	text-transform: uppercase;
+}
+
+h3 {
+	font-size: 1.0em;
+	text-transform: uppercase;
+}

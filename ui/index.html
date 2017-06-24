@@ -37,14 +37,14 @@
 <body onload="init();">
 	<div id="defines">
 		<svg xmlns="http://www.w3.org/2000/svg"	xmlns:xlink="http://www.w3.org/1999/xlink">
-			<filter id="colorScheme">
+			<filter id="colorScheme" x="-0.2" y="-0.2" width="1.4" height="1.4">
 				<!--																						r     g     b     a   -->
 				<feColorMatrix in="SourceGraphic" type="matrix" color-interpolation-filters="sRGB"  values="0.588 0.0   0.0   0.0 0.0
 																											0.0   0.333 0.0   0.0 0.0
 																											0.0   0.0   0.0   0.0 0.0
 																											0.0   0.0   0.0   1.0 0.0"/>
 			</filter>
-			<filter id="highlight" filterUnits="userSpaceOnUse">
+			<filter id="highlight" x="-0.2" y="-0.2" width="1.4" height="1.4" filterUnits="userSpaceOnUse">
 				<feGaussianBlur in="SourceGraphic" result="blurOut" stdDeviation="2" />´
 				<feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
 			</filter>
@@ -85,6 +85,9 @@
 				<g id="shape_arrow">
 					<path d="m 10,40 0,20 55,0 0,15 25,-25 -25,-25 0,15 z"/>
 				</g>
+				<g id="shape_star">
+					<path d="M 50.000001,16.850071 60.828477,38.790929 85.041657,42.309326 67.520845,59.387917 71.656934,83.503263 50,72.117556 28.343064,83.503262 32.479155,59.387917 14.958344,42.309324 39.171522,38.790929 Z"/>
+				</g>
 			</defs>
 			<defs id="images">
 				<g id="img_menu" filter="url(#colorScheme)">
@@ -116,6 +119,20 @@
 				</g>
 				<g id="img_exit">
 					<use xlink:href="#shape_door" style="stroke: #FFFFFF; stroke-width: 10; fill: none;" filter="url(#colorScheme)"/>
+				</g>
+				<g id="img_arrow_up">
+					<use xlink:href="#shape_arrow" transform="translate(50,50) rotate(-90) translate(-50,-50)" style="fill: #FFFFFF;" filter="url(#colorScheme)"/>
+				</g>
+				<g id="img_arrow_down">
+					<use xlink:href="#shape_arrow" transform="translate(50,50) rotate(90) translate(-50,-50)" style="fill: #FFFFFF;" filter="url(#colorScheme)"/>
+				</g>			
+				<g id="img_star_active">
+					<use xlink:href="#shape_star" style="stroke: #FFFFFF; stroke-width: 10; fill: #FFFFFF;" filter="url(#colorScheme)"/>
+					<!--<use xlink:href="#shape_checkmark" transform="translate(60,30) scale(0.7)" style="stroke: #555555; stroke-width: 7; fill: #555555; " stroke-linejoin="round"/>-->
+				</g>
+				<g id="img_star_inactive">
+					<use xlink:href="#shape_star" style="stroke: #FFFFFF; stroke-width: 10; fill: none; " filter="url(#colorScheme)"/>
+					<!--<use xlink:href="#shape_cross" transform="translate(70,40) scale(0.6)" style="stroke: #555555; stroke-width: 15; fill: #555555; " stroke-linecap="round"/>-->
 				</g>
 			</defs>
 		</svg>
@@ -215,8 +232,9 @@
 			</li>
 		</ul>
 	</div>
-	<div id="manage_categories">
-		<h1><label key="manage categories"></label></h1>
+	<div id="manage_categories" class="window">
+		<h2><label key="manage categories"></label></h2>
+		<label key="description on how to manage categories..."></label>
 		<ul id="manage_categories_list">
 			<!-- will be populated by script -->
 		</ul>
