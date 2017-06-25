@@ -4,8 +4,6 @@
 var TEST_CAT_BEER = {
 	id: 3,
 	key: "Beer",
-	favorite: false,
-	active: false,
 	criteria: [
 		{
 			id: 301,

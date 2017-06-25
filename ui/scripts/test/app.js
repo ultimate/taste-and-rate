@@ -10,27 +10,32 @@ var app = function() {
 	this.getCategoryNames = function() {
 		var result = [];
 		var categories = getCategories();
-		for(var c in categories)
+		for(var c = 0; c < categories.length; c++)
 		{
-			result.push(c);
+			result.push(categories[c].category.key);
 		}
 		return result;
 	};
 	
 	this.setCategories = function(categories) {
+		for(var c = 0; c < categories.length; c++)
+		{
+			console.log(categories[c]);
+		}
 		Storage.removeLocalObject("categories");
 		Storage.saveLocalObject("categories", categories);
 	};
 	
 	this.getCategories = function() {
+		console.log("loading categories");
 		var categories = Storage.loadLocalObject("categories");
 		if(categories == null)
 		{	
 			console.log("no categories found in local storage - loading default")
 			categories = [
-				TEST_CAT_RUM,
-				TEST_CAT_WHISKY,
-				TEST_CAT_BEER,
+				{ position: 0, favorite: true,  active: true,  category: TEST_CAT_RUM },
+				{ position: 1, favorite: true,  active: false, category: TEST_CAT_WHISKY },
+				{ position: 2, favorite: false, active: false, category: TEST_CAT_BEER }
 			];
 		}
 		this.setCategories(categories);

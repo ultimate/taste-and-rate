@@ -4,8 +4,6 @@
 var TEST_CAT_RUM = {
 	id: 1,
 	key: "Rum",
-	favorite: true,
-	active: true,
 	criteria: [
 		{
 			id: 101,
