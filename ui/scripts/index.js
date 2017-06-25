@@ -52,10 +52,6 @@ var UI = function() {
 		
 		this.categories = app.getCategories();
 		
-		console.log("categories loaded");
-		console.log(this.categories);
-		console.log(this.categories.length);
-		
 		var element;
 		for(var c = 0; c < this.categories.length; c++)
 		{

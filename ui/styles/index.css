@@ -92,7 +92,7 @@
 #menu {
 	position: absolute;
 	top: 3.2em;
-	z-index: 1;
+	z-index: 4;
 	background: white;
 	border-bottom: 0.2em solid rgb(150,85,0);
 	border-right: 0.05em solid rgb(150,85,0);
@@ -232,7 +232,7 @@
 
 /* window */
 
-.window {
+.window .content {
     position: absolute;
 	left: 50%;
 	top: 50%;
@@ -246,16 +246,29 @@
 	border-right: 0.05em solid rgb(150,85,0);
 	border-left: 0.05em solid rgb(150,85,0);
 	padding: 0.5em;
+	z-index: 3;
 }
 
-.window h1,
-.window h2,
-.window h3 {	
+.window .content h1,
+.window .content h2,
+.window .content h3 {	
 	color: rgb(150,85,0);
 	margin-top: 0.25em;
 	margin-bottom: 0.75em;
 	border-bottom: 1px solid;
 	font-weight: unset;
+}
+
+.window.modal::after {
+	content: " ";
+	position: absolute;
+	/* TODO top & bottom 0 */
+	top: 2em;
+	bottom: 2em;
+	left: 0;
+	right: 0;
+	background: transparent;
+	z-index: 2;
 }
 
 /* specific windows */
