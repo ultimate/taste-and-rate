@@ -45,9 +45,9 @@ Storage.loadLocalObject = function(key)
 	//console.log("loading local object: " + key);	
 	//console.log("check if object: " + key);
 	
-	var object = {};
 	var subKeys = [];
 	var keyFound = false;
+	var indexFound = false;
 	for(var prop in localStorage)
 	{
 		if(prop.startsWith(key + "."))
@@ -61,8 +61,16 @@ Storage.loadLocalObject = function(key)
 			if(subKeys.indexOf(subKey) == -1)
 				subKeys.push(subKey);
 			keyFound = true;
+			if(Number(subKey).toString() == subKey)
+				indexFound = true;
 		}
 	}
+	
+	var object;
+	if(indexFound) // numerical index found -> object is an array
+		object = [];
+	else
+		object = {};
 	//console.log(subKeys);
 	for(var i = 0; i < subKeys.length; i++)
 	{
