@@ -4,17 +4,27 @@ var Hideable = function(element, visible, debug)
 	this.visible = visible;
 	this.debug = debug;
 	
-	this.show = function() {
+	this.show = function(delay) {	
 		if(this.debug)
-			console.log("Hideable[" + element.attr("id") + "].show()");
+			console.log("Hideable[" + element.attr("id") + "].show(" + (delay ? delay : "") + ")");	
+		if(delay > 0)
+		{
+			setTimeout(function(h) { return function() { h.show(); }; }(this), delay);
+			return;
+		}
 		element.removeClass("hidden");
 		element.focus();
 		this.visible = true;
 	};	
 	
-	this.hide = function() {			
+	this.hide = function(delay) {
 		if(this.debug)
-			console.log("Hideable[" + element.attr("id") + "].hide()");
+			console.log("Hideable[" + element.attr("id") + "].hide(" + (delay ? delay : "") + ")");			
+		if(delay > 0)
+		{
+			setTimeout(function(h) { return function() { h.hide(); }; }(this), delay);
+			return;
+		}
 		element.addClass("hidden");
 		this.visible = false;
 	};
