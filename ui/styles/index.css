@@ -232,7 +232,7 @@
 
 /* window */
 
-.window .content {
+.window .frame {
     position: absolute;
 	left: 50%;
 	top: 50%;
@@ -249,22 +249,30 @@
 	z-index: 3;
 }
 
-.window .content h1,
-.window .content h2,
-.window .content h3 {	
+.window .frame h1,
+.window .frame h2,
+.window .frame h3 {	
 	color: rgb(150,85,0);
 	margin-top: 0.25em;
 	margin-bottom: 0.75em;
 	border-bottom: 1px solid;
 	font-weight: unset;
+	padding-bottom: 0.2em;
+}
+
+.window .close {
+	display: inline;
+	float: right;
+	width: 1.2em;
+	height: 1.2em;
 }
 
 .window.modal::after {
 	content: " ";
 	position: absolute;
 	/* TODO top & bottom 0 */
-	top: 2em;
-	bottom: 2em;
+	top: 3em;
+	bottom: 3em;
 	left: 0;
 	right: 0;
 	background: transparent;
@@ -306,7 +314,7 @@
 #manage_categories ul > li.position9  {	top: 18em;  }
 #manage_categories ul > li.position10 {	top: 20em;  }
 
-#manage_categories .image {
+#manage_categories .content .image {
 	float: right;
 	margin-left: 1em;
 	position: relative;

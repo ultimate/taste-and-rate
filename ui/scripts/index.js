@@ -160,10 +160,13 @@ var UI = function() {
 		
 		/* initialize menu */
 		this.populateCategories();
-		$("menu_categories").click(function(event) {});
-		$("menu_profiles").click(function(event) {});
-		$("menu_settings").click(function(event) {});
-		$("#menu_exit").click(function(event) { app.exit(); });
+		$("#menu_categories").click(function(event) { console.log("click menu_categories"); UI.menu.hide(); $("#manage_categories").removeClass("hidden"); });
+		$("#menu_profile").click(   function(event) { console.log("click menu_profile"); 	UI.menu.hide(); });
+		$("#menu_settings").click(  function(event) { console.log("click menu_settings"); 	UI.menu.hide(); });
+		$("#menu_exit").click(      function(event) { console.log("click menu_exit"); 		UI.menu.hide(); app.exit(); });
+		
+		/* initialize windows */
+		$(".close").click(function(event) {	$(event.target).closest(".window").addClass("hidden"); });
 		
 		/* update locale dependent labels */
 		this.labelManager = new LabelManager(app, app.getString);
