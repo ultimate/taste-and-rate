@@ -175,10 +175,10 @@ var UI = function() {
 		$("#menu_button").click(function(event) { UI.menu.toggle(); event.stopPropagation(); });
 		$("#main").click(function(event) { if(!event.isPropagationStopped()) UI.menu.hide(); });
 		/* menu elements */
-		$("#menu_categories").click(function(event) { console.log("click menu_categories"); UI.menu.hide(); $("#manage_categories").removeClass("hidden"); });
-		$("#menu_profile").click(   function(event) { console.log("click menu_profile"); 	UI.menu.hide(); });
-		$("#menu_settings").click(  function(event) { console.log("click menu_settings"); 	UI.menu.hide(); });
-		$("#menu_exit").click(      function(event) { console.log("click menu_exit"); 		UI.menu.hide(); app.exit(); });
+		$("#menu_categories").click(function(event) { console.log("click menu_categories"); UI.menu.hide(100); $("#manage_categories").removeClass("hidden"); });
+		$("#menu_profile").click(   function(event) { console.log("click menu_profile"); 	UI.menu.hide(100); });
+		$("#menu_settings").click(  function(event) { console.log("click menu_settings"); 	UI.menu.hide(100); });
+		$("#menu_exit").click(      function(event) { console.log("click menu_exit"); 		UI.menu.hide(100); app.exit(); });
 		
 		/* initialize windows */
 		$(".close").click(function(event) {	$(event.target).closest(".window").addClass("hidden"); });
