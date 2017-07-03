@@ -17,27 +17,23 @@ var LabelManager = function(labelProvider, labelFunction) {
 	{
 		if(parent == undefined)
 			parent = document;
-		else if(parent.getElementsByTagName == undefined)
-			parent = document;
-		var elements;
-		// labels
-		elements = parent.getElementsByTagName(this.LABEL_TAGNAME);
-		for( var i = 0; i < elements.length; i++)
-		{
-			// remove all current children
-			while(elements[i].firstChild)
-				elements[i].removeChild(elements[i].firstChild);
-			elements[i].appendChild(document.createTextNode(this.getString(elements[i].getAttribute(this.KEY_ATTRIBUTE))));
-		}
-		// buttons
-		elements = document.getElementsByTagName(this.BUTTON_TAGNAME);
-		for( var i = 0; i < elements.length; i++)
-		{
-			if(elements[i].getAttribute("type") == "button")
-				elements[i].value = this.getString(elements[i].getAttribute(this.KEY_ATTRIBUTE));
-		}
-		// TODO selects
-		// static pages
-		//document.getElementById(this.constants.STATIC_FRAME_ID).contentWindow.location.reload(true)
+	
+		var elements = $(parent).find("label");
+		
+		elements.each(function(lm) {
+			return function(index, element) {
+				console.log("updating label key='" + element.getAttribute(lm.KEY_ATTRIBUTE) + "'");
+				// remove text nodes
+				$(element).contents().filter(function() {
+					return this.nodeType == 3; //Node.TEXT_NODE
+				}).remove();
+				// append new text
+				$(element).append( $(document.createTextNode(lm.getString(element.getAttribute(lm.KEY_ATTRIBUTE)))) );
+			};
+		}(this) );
+		// ToDo other element types like
+		// - buttons (set value instead of content)
+		// - selects
+		// - iframe (reload in different language)
 	};
 };
