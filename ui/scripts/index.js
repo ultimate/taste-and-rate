@@ -182,7 +182,7 @@ var UI = function() {
 		
 		/* initialize windows */
 		$(".close").click(function(event) {	$(event.target).closest(".window").addClass("hidden"); });
-		/* close window on any click outside window // interferes with hide menu, because window is still in front */
+		/* close window on any click outside window (only for non-modal windows!) */
 		$(".frame").click(function(event) { console.log("a"); event.stopPropagation(); });
 		$("#main").click(function(event) { console.log("b"); if(!event.isPropagationStopped()) $(".window").addClass("hidden"); });
 		

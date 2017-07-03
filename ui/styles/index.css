@@ -250,8 +250,7 @@
 	z-index: 3;
 }
 
-.window.hidden, 
-.window.hidden .frame {
+.window.hidden {
 	z-index: -1;
 }
 
