@@ -48,6 +48,7 @@
             <Folder name="util">
                 <File name="ui\scripts\util\arrays.js" />
                 <File name="ui\scripts\util\autohide.js" />
+                <File name="ui\scripts\util\calendar.js" />
                 <File name="ui\scripts\util\hide.js" />
                 <File name="ui\scripts\util\labels.js" />
                 <File name="ui\scripts\util\storage.js" />
