@@ -59,6 +59,7 @@
         <Folder name="styles">
             <File name="ui\styles\base.css" />
             <File name="ui\styles\index.css" />
+            <File name="ui\styles\calendar.css" />
         </Folder>
         <File name="ui\index.html" />
     </Project>

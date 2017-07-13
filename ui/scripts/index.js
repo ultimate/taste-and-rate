@@ -186,6 +186,8 @@ var UI = function() {
 		$(".frame").click(function(event) { console.log("a"); event.stopPropagation(); });
 		$("#main").click(function(event) { console.log("b"); if(!event.isPropagationStopped()) $(".window").addClass("hidden"); });
 		
+		/* initialize calendar */
+		this.calendar = new Calendar($("#calendar"), 1, []);
 
 		/* manage categories */
 		this.populateManageCategories();

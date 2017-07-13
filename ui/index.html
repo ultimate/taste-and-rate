@@ -9,13 +9,15 @@
 <meta name="viewport" content="width=device-width; initial-scale=1.0; user-scalable=0" /> 
 <link rel="stylesheet" type="text/css" href="styles/base.css" />
 <link rel="stylesheet" type="text/css" href="styles/index.css" />
+<link rel="stylesheet" type="text/css" href="styles/calendar.css" />
 <script type="text/javascript" src="scripts/lib/jquery-3.2.1.js"></script>
 <script type="text/javascript" src="scripts/lib/date.format.js"></script>
 <script type="text/javascript" src="scripts/util/autohide.js"></script>
+<script type="text/javascript" src="scripts/util/arrays.js"></script>
+<script type="text/javascript" src="scripts/util/calendar.js"></script>
 <script type="text/javascript" src="scripts/util/hide.js"></script>
 <script type="text/javascript" src="scripts/util/labels.js"></script>
 <script type="text/javascript" src="scripts/util/strings.js"></script>
-<script type="text/javascript" src="scripts/util/arrays.js"></script>
 <script type="text/javascript" src="scripts/index.js"></script>
 <script type="text/javascript">
 	// init
@@ -260,7 +262,13 @@
 		</div>
 		<div id="center">
 			<div id="content_frame">
-				<div id="test">
+				<div id="content_calendar" class="fill">
+					<div id="calendar_nav"></div>
+					<div id="calendar">
+						<!-- to be filled be calendar.js -->						
+					</div>
+				</div>
+				<div id="content_help" class="hidden">
 					Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.   
 
 					Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.   

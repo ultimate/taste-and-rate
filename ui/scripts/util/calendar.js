@@ -1,4 +1,4 @@
-var Calendar = function(firstDayOfWeek, events) {
+var Calendar = function(parent, firstDayOfWeek, events) {
 	
 	this.today = new Date();
 	if(events)
@@ -7,6 +7,7 @@ var Calendar = function(firstDayOfWeek, events) {
 		this.events = [];
 	
 	this.FIRST_DAY_OF_WEEK = firstDayOfWeek;
+	this.WEEK_DAY_LABEL = ""; // weekday";
 	// NOTE: Month is from 0 to 11
 	this.FIRST_MONTH = 0;
 	this.LAST_MONTH = 11;
@@ -15,34 +16,96 @@ var Calendar = function(firstDayOfWeek, events) {
 	this.currentYear = this.today.getFullYear();
 	this.currentMonth = this.today.getMonth() + this.MONTH_OFFSET;
 	
+	this.parent = $(parent);
+	this.parent.addClass("calendar");
+	
+	var index;
+	var element;
+	
+	var labels = $("<div class='calendar_labels'></div>");
+	for(var d = this.FIRST_DAY_OF_WEEK; d < this.FIRST_DAY_OF_WEEK + 7; d++)
+	{
+		element = $("<div class='calendar_day'><label key='" + this.WEEK_DAY_LABEL + "[" + (d % 7) + "]'></label></div>")
+		labels.append(element);
+	}	
+	this.parent.append(labels);
+	
 	this.elements = [];
 	for(var w = 0; w < 6; w++)
 	{
+		var week = $("<div class='calendar_week'></div>");
 		for(var d = 0; d < 7; d++)
 		{
-			this.elements[w*7 + d] = $("<div class='calendar_day'></div>")
+			index = w*7 + d;
+			element = $("<div class='calendar_day'></div>")
+			this.elements[index] = element;
+			week.append(element);
 		}
+		this.parent.append(week);
 	}
 	
 	this.update = function(events) {
 		if(events)
 			this.events = events;
 		// remove all items in calendar days
-		$(".calendar_day *").remove();
+		this.parent.find(".calendar_content .calendar_day *").remove();
 		
-		var startOfMonth = new Date(this.currentYear, this.currentMonth);
-		var rangeStart 	 = new Date(this.currentYear, this.currentMonth, 1 - startOfMonth.getDay() + this.FIRST_DAY_OF_WEEK).getTime();
-		var rangeEnd 	 = new Date(this.currentYear, this.currentMonth, 1 - startOfMonth.getDay() + this.FIRST_DAY_OF_WEEK + 6*7).getTime();
+		var startOfMonth 	= new Date(this.currentYear, this.currentMonth, 1);	
+		var endOfMonth   	= new Date(this.currentYear, this.currentMonth + 1, 0)
+		var endOfPrevMonth  = new Date(this.currentYear, this.currentMonth, 0)
+		var offset = startOfMonth.getDay() - this.FIRST_DAY_OF_WEEK;
+		var daysInThisMonth = endOfMonth.getDate();
+		var daysInPrevMonth = endOfPrevMonth.getDate();
+		var rangeStart 	 	= new Date(this.currentYear, this.currentMonth, 1 - offset).getTime();
+		var rangeEnd 	 	= new Date(this.currentYear, this.currentMonth, 1 - offset + 6*7).getTime();
 		
-		var eventTime;
+		console.log("offset=" + offset);
+		console.log(endOfMonth);
+		console.log("daysInThisMonth=" + daysInThisMonth);
 		var index;
-		for(var i = 0; i < events.length; i++)
+		var number;
+		for(var w = 0; w < 6; w++)
 		{
-			eventTime = events[i].date;
-			if(eventTime) >= rangeStart && eventTime < rangeEnd)
+			for(var d = 0; d < 7; d++)
 			{
-				index = 0;
-				this.elements[index].append( /**/ );
+				index = w*7 + d;
+				if(index >= offset && index < (offset + daysInThisMonth))
+				{
+					number = index - offset + 1;
+					this.elements[w*7 + d].removeClass("calendar_previous_month");
+					this.elements[w*7 + d].addClass("calendar_current_month");
+					this.elements[w*7 + d].removeClass("calendar_next_month");
+				}
+				else if(index < offset)
+				{
+					number = daysInPrevMonth - offset + index + 1;
+					this.elements[w*7 + d].addClass("calendar_previous_month");
+					this.elements[w*7 + d].removeClass("calendar_current_month");
+					this.elements[w*7 + d].removeClass("calendar_next_month");
+				}
+				else
+				{
+					number = index - offset - daysInThisMonth + 1;
+					this.elements[w*7 + d].removeClass("calendar_previous_month");
+					this.elements[w*7 + d].removeClass("calendar_current_month");
+					this.elements[w*7 + d].addClass("calendar_next_month");
+				}
+				console.log("index=" + index + " -> " + number);
+				this.elements[w*7 + d].append($("<div class='calendar_number'>" + number + "</div>"));
+			}
+		}
+		
+		// display events
+		var eventTime;
+		for(var i = 0; i < this.events.length; i++)
+		{
+			eventTime = this.events[i].date.getTime();
+			if(eventTime >= rangeStart && eventTime < rangeEnd)
+			{
+				index = this.events[i].date.getDay() + offset - 1;
+				this.elements[index].append($("<div class='calendar_event'>\
+													<span>" + this.events[i].title + "</span>\
+												</div>"));
 			}
 		}
 	};
@@ -74,4 +137,6 @@ var Calendar = function(firstDayOfWeek, events) {
 		}
 		this.update();
 	};
+	
+	this.update();
 };

@@ -1,0 +1,44 @@
+.calendar {
+	display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.calendar_labels, 
+.calendar_week {
+	display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.calendar_labels {
+	/*flex: 0.5;*/
+}
+
+.calendar_week {
+	flex: 1;
+}
+
+.calendar_labels .calendar_day {
+	color: white;
+	background: rgb(150,85,0);
+	text-transform: capitalize;
+}
+
+.calendar_day {
+	flex: 1;
+	border: 0.25em solid white;
+}
+
+.calendar_day.calendar_previous_month,
+.calendar_day.calendar_next_month {
+	color: rgb(85,85,0);
+}
+
+.calendar_day.calendar_current_month {
+	color: rgb(150,85,0);
+}
+
+.calendar_day .calendar_number {
+	/*text-align: right;*/
+}

@@ -216,6 +216,19 @@
 	padding: 0.5em;
 }
 
+#content_frame > div.fill {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	overflow: hidden;
+}
+
+#content_frame > div.hidden {
+	display: none;
+}
+
 #content_frame > div > div {
 	z-index: -2;	
 }
@@ -382,4 +395,9 @@
 #manage_categories ul > li.selectable.first .image.up,
 #manage_categories ul > li.selectable.last .image.down {
 	/*opacity: 0;*/
+}
+
+/* calendar */
+#calendar {
+	height: 100%;
 }
