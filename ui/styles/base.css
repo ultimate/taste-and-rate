@@ -1,15 +1,17 @@
 body {
 	cursor: default;
-	font-size: 1em;
-	font-family: Arial;
 	background: white;
 }
 
 body input {
-	font-size: 1em;	
-	font-family: Arial;
 	position: relative;
 	top: 0.1em;
+}
+
+body,
+body input {	
+	font-size: 1em;	
+	font-family: Arial;
 }
 
 /* general properties */
@@ -22,16 +24,16 @@ body input {
 }
 
 h1 {
-	font-size: 1.2em;
+	font-size: 120%;
 	text-transform: uppercase;
 }
 
 h2 {
-	font-size: 1.1em;
+	font-size: 110%;
 	text-transform: uppercase;
 }
 
 h3 {
-	font-size: 1.0em;
+	font-size: 100%;
 	text-transform: uppercase;
 }
