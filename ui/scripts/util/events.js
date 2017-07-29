@@ -49,9 +49,14 @@ if(document.addEventListener)
 {
 	Events.addEventListener = function(event, eventListener, component)
 	{
+		console.log("add event '" + event + "' to " + component);
 		if(!component)
 			component = document;
-		component.addEventListener(event, eventListener, false);
+		if(component instanceof Array || component instanceof HTMLCollection)
+			for(var i = 0; i < component.length; i++)
+				component[i].addEventListener(event, eventListener, false);				
+		else
+			component.addEventListener(event, eventListener, false);
 	};
 
 	Events.getKeyCode = function(event)
@@ -63,9 +68,14 @@ else
 {
 	Events.addEventListener = function(event, eventListener, component)
 	{
+		console.log("add event '" + event + "' to " + component);
 		if(!component)
-			component = document;
-		component.attachEvent(event, eventListener);
+			component = document;		
+		if(component instanceof Array || component instanceof HTMLCollection)
+			for(var i = 0; i < component.length; i++)
+				component[i].attachEvent(event, eventListener);				
+		else
+			component.attachEvent(event, eventListener);
 	};
 
 	Events.getKeyCode = function(event)

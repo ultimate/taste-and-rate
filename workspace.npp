@@ -29,8 +29,6 @@
             </Folder>
             <Folder name="syncnapsis">
                 <File name="ui\scripts\syncnapsis\Console.js" />
-                <File name="ui\scripts\syncnapsis\Elements.js" />
-                <File name="ui\scripts\syncnapsis\Events.js" />
                 <File name="ui\scripts\syncnapsis\Proxies.js" />
                 <File name="ui\scripts\syncnapsis\Reflections.js" />
                 <File name="ui\scripts\syncnapsis\Requests.js" />
@@ -50,6 +48,8 @@
                 <File name="ui\scripts\util\arrays.js" />
                 <File name="ui\scripts\util\autohide.js" />
                 <File name="ui\scripts\util\calendar.js" />
+                <File name="ui\scripts\util\elements.js" />
+                <File name="ui\scripts\util\events.js" />
                 <File name="ui\scripts\util\hide.js" />
                 <File name="ui\scripts\util\labels.js" />
                 <File name="ui\scripts\util\storage.js" />
