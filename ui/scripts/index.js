@@ -27,14 +27,14 @@ var UI = function() {
 						</svg>\
 					</li>");
 				if(this.categories[c].active)
-					element.addClass("active");
+					element.classList.add("active");
 				element.click(function(ui, i, e) {
 					return function(event) {
 						ui.categories[i].active = !ui.categories[i].active;						
 						if(ui.categories[i].active)
-							e.addClass("active");
+							e.classList.add("active");
 						else
-							e.removeClass("active");
+							e.classList.remove("active");
 						app.setCategories(ui.categories);
 					};
 				}(this, c, element));
@@ -56,33 +56,33 @@ var UI = function() {
 		
 		var other = element.siblings(".position" + (toIndex));
 		
-		other.addClass("position" + fromIndex);
-		other.removeClass("position" + toIndex);
+		other.classList.add("position" + fromIndex);
+		other.classList.remove("position" + toIndex);
 		
-		element.addClass("position" + toIndex);
-		element.removeClass("position" + fromIndex);
+		element.classList.add("position" + toIndex);
+		element.classList.remove("position" + fromIndex);
 		
 		// update "first" and "last" tag
 		if(fromIndex == 1 && toIndex == 0)
 		{
-			element.addClass("first");
-			other.removeClass("first");
+			element.classList.add("first");
+			other.classList.remove("first");
 		}
 		else if(fromIndex == 0 && toIndex == 1)
 		{
-			other.addClass("first");
-			element.removeClass("first");
+			other.classList.add("first");
+			element.classList.remove("first");
 		}
 		// no else here, in case list length is 2
 		if(fromIndex == this.categories.length-1 && toIndex == this.categories.length-2)
 		{
-			other.addClass("last");
-			element.removeClass("last");
+			other.classList.add("last");
+			element.classList.remove("last");
 		}
 		else if(fromIndex == this.categories.length-2 && toIndex == this.categories.length-1)
 		{
-			element.addClass("last");
-			other.removeClass("last");
+			element.classList.add("last");
+			other.classList.remove("last");
 		}
 	};			
 	
@@ -117,16 +117,16 @@ var UI = function() {
 					</svg>\
 				</li>");
 			if(this.categories[c].favorite)
-				element.addClass("favorite");
+				element.classList.add("favorite");
 			element.children(".star").click(function(ui, category, e) {
 				return function(event) {
 					var i = category.position;
 					console.log("click star " + ui.categories[i].category.key + " @ pos=" + i);
 					ui.categories[i].favorite = !ui.categories[i].favorite;						
 					if(ui.categories[i].favorite)
-						e.addClass("favorite");
+						e.classList.add("favorite");
 					else
-						e.removeClass("favorite");
+						e.classList.remove("favorite");
 					app.setCategories(ui.categories);
 				};
 			}(this, this.categories[c], element));
@@ -175,16 +175,16 @@ var UI = function() {
 		$("#menu_button").click(function(event) { UI.menu.toggle(); event.stopPropagation(); });
 		$("#main").click(function(event) { if(!event.isPropagationStopped()) UI.menu.hide(); });
 		/* menu elements */
-		$("#menu_categories").click(function(event) { console.log("click menu_categories"); UI.menu.hide(100); $("#manage_categories").removeClass("hidden"); });
+		$("#menu_categories").click(function(event) { console.log("click menu_categories"); UI.menu.hide(100); $("#manage_categories").classList.remove("hidden"); });
 		$("#menu_profile").click(   function(event) { console.log("click menu_profile"); 	UI.menu.hide(100); });
 		$("#menu_settings").click(  function(event) { console.log("click menu_settings"); 	UI.menu.hide(100); });
 		$("#menu_exit").click(      function(event) { console.log("click menu_exit"); 		UI.menu.hide(100); app.exit(); });
 		
 		/* initialize windows */
-		$(".close").click(function(event) {	$(event.target).closest(".window").addClass("hidden"); });
+		$(".close").click(function(event) {	$(event.target).closest(".window").classList.add("hidden"); });
 		/* close window on any click outside window (only for non-modal windows!) */
-		$(".frame").click(function(event) { console.log("a"); event.stopPropagation(); });
-		$("#main").click(function(event) { console.log("b"); if(!event.isPropagationStopped()) $(".window").addClass("hidden"); });
+		$(".frame").click(function(event) { event.stopPropagation(); });
+		$("#main").click(function(event) { if(!event.isPropagationStopped()) $(".window").classList.add("hidden"); });
 		
 		/* initialize calendar */
 		this.calendar = new Calendar($("#calendar"), 1, []);

@@ -8,7 +8,7 @@ var AutoHide = function(element, hideAfter, delayOn, debug)
 	this.show = function() {
 		if(this.debug)
 			console.log("AutoHide[" + element.attr("id") + "].show()");
-		element.removeClass("hidden");
+		element.classList.remove("hidden");
 		element.focus();
 		this.autoHide();
 	};	
@@ -16,7 +16,7 @@ var AutoHide = function(element, hideAfter, delayOn, debug)
 	this.hide = function() {			
 		if(this.debug)
 			console.log("AutoHide[" + element.attr("id") + "].hide()");
-		element.addClass("hidden");
+		element.classList.add("hidden");
 	};
 	
 	this.autoHide = function() {

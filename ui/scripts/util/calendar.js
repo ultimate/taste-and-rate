@@ -17,7 +17,7 @@ var Calendar = function(parent, firstDayOfWeek, events) {
 	this.currentMonth = this.today.getMonth() + this.MONTH_OFFSET;
 	
 	this.parent = $(parent);
-	this.parent.addClass("calendar");
+	this.parent.classList.add("calendar");
 	
 	var index;
 	var element;
@@ -72,23 +72,23 @@ var Calendar = function(parent, firstDayOfWeek, events) {
 				if(index >= offset && index < (offset + daysInThisMonth))
 				{
 					number = index - offset + 1;
-					this.elements[w*7 + d].removeClass("calendar_previous_month");
-					this.elements[w*7 + d].addClass("calendar_current_month");
-					this.elements[w*7 + d].removeClass("calendar_next_month");
+					this.elements[w*7 + d].classList.remove("calendar_previous_month");
+					this.elements[w*7 + d].classList.add("calendar_current_month");
+					this.elements[w*7 + d].classList.remove("calendar_next_month");
 				}
 				else if(index < offset)
 				{
 					number = daysInPrevMonth - offset + index + 1;
-					this.elements[w*7 + d].addClass("calendar_previous_month");
-					this.elements[w*7 + d].removeClass("calendar_current_month");
-					this.elements[w*7 + d].removeClass("calendar_next_month");
+					this.elements[w*7 + d].classList.add("calendar_previous_month");
+					this.elements[w*7 + d].classList.remove("calendar_current_month");
+					this.elements[w*7 + d].classList.remove("calendar_next_month");
 				}
 				else
 				{
 					number = index - offset - daysInThisMonth + 1;
-					this.elements[w*7 + d].removeClass("calendar_previous_month");
-					this.elements[w*7 + d].removeClass("calendar_current_month");
-					this.elements[w*7 + d].addClass("calendar_next_month");
+					this.elements[w*7 + d].classList.remove("calendar_previous_month");
+					this.elements[w*7 + d].classList.remove("calendar_current_month");
+					this.elements[w*7 + d].classList.add("calendar_next_month");
 				}
 				console.log("index=" + index + " -> " + number);
 				this.elements[w*7 + d].append($("<div class='calendar_number'>" + number + "</div>"));

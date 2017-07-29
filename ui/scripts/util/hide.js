@@ -12,7 +12,7 @@ var Hideable = function(element, visible, debug)
 			setTimeout(function(h) { return function() { h.show(); }; }(this), delay);
 			return;
 		}
-		element.removeClass("hidden");
+		element.classList.remove("hidden");
 		element.focus();
 		this.visible = true;
 	};	
@@ -25,7 +25,7 @@ var Hideable = function(element, visible, debug)
 			setTimeout(function(h) { return function() { h.hide(); }; }(this), delay);
 			return;
 		}
-		element.addClass("hidden");
+		element.classList.add("hidden");
 		this.visible = false;
 	};
 	
