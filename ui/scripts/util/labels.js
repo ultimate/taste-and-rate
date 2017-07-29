@@ -16,7 +16,9 @@ var LabelManager = function(labelProvider, labelFunction) {
 	this.updateLabels = function(parent)
 	{
 		if(parent == undefined)
-			parent = document;		
+			parent = document;	
+		else if(typeof(parent) == "string")		
+			parent = document.getElementById(parent);
 		else if(parent.getElementsByTagName == undefined)
 			parent = document;
 		var elements;

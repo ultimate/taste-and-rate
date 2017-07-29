@@ -1,5 +1,8 @@
 var AutoHide = function(element, hideAfter, delayOn, debug)
 {	
+	if(typeof(element) == "string")
+		element = document.getElementById(element);
+	
 	this.hideAfter = hideAfter;
 	this.element = element;
 	this.timeout = null;
@@ -7,7 +10,7 @@ var AutoHide = function(element, hideAfter, delayOn, debug)
 	
 	this.show = function() {
 		if(this.debug)
-			console.log("AutoHide[" + element.attr("id") + "].show()");
+			console.log("AutoHide[" + element.id + "].show()");
 		element.classList.remove("hidden");
 		element.focus();
 		this.autoHide();
@@ -15,13 +18,13 @@ var AutoHide = function(element, hideAfter, delayOn, debug)
 	
 	this.hide = function() {			
 		if(this.debug)
-			console.log("AutoHide[" + element.attr("id") + "].hide()");
+			console.log("AutoHide[" + element.id + "].hide()");
 		element.classList.add("hidden");
 	};
 	
 	this.autoHide = function() {
 		if(this.debug)
-			console.log("AutoHide[" + element.attr("id") + "].autoHide()");
+			console.log("AutoHide[" + element.id + "].autoHide()");
 		if(this.timeout)
 			return;
 		this.timeout = setTimeout(function(a) {
@@ -34,7 +37,7 @@ var AutoHide = function(element, hideAfter, delayOn, debug)
 	
 	this.cancelAutoHide = function() {
 		if(this.debug)
-			console.log("AutoHide[" + element.attr("id") + "].cancelAutoHide()");
+			console.log("AutoHide[" + element.id + "].cancelAutoHide()");
 		if(this.timeout)
 		{
 			clearTimeout(this.timeout);
@@ -44,10 +47,17 @@ var AutoHide = function(element, hideAfter, delayOn, debug)
 	
 	this.delayAutoHide = function() {
 		if(this.debug)
-			console.log("AutoHide[" + element.attr("id") + "].delayAutoHide()");
+			console.log("AutoHide[" + element.id + "].delayAutoHide()");
 		this.cancelAutoHide();
 		this.show();
 	};			
 	
-	this.element.bind(delayOn, function(a) { return function(event) { a.delayAutoHide() }; }(this) );
+	if(delayOn != null)
+	{
+		for(var i = 0; i < delayOn.length; i++)
+		{
+			console.log("add listener for '" + delayOn[i] + "' to " + this.element);
+			Events.addEventListener(delayOn[i], Events.wrapEventHandler(this, this.delayAutoHide), this.element);		
+		}
+	}	
 };

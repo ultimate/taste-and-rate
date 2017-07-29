@@ -1,12 +1,15 @@
 var Hideable = function(element, visible, debug)
 {	
+	if(typeof(element) == "string")
+		element = document.getElementById(element);
+	
 	this.element = element;
 	this.visible = visible;
 	this.debug = debug;
 	
 	this.show = function(delay) {	
 		if(this.debug)
-			console.log("Hideable[" + element.attr("id") + "].show(" + (delay ? delay : "") + ")");	
+			console.log("Hideable[" + element.id + "].show(" + (delay ? delay : "") + ")");	
 		if(delay > 0)
 		{
 			setTimeout(function(h) { return function() { h.show(); }; }(this), delay);
@@ -19,7 +22,7 @@ var Hideable = function(element, visible, debug)
 	
 	this.hide = function(delay) {
 		if(this.debug)
-			console.log("Hideable[" + element.attr("id") + "].hide(" + (delay ? delay : "") + ")");			
+			console.log("Hideable[" + element.id + "].hide(" + (delay ? delay : "") + ")");			
 		if(delay > 0)
 		{
 			setTimeout(function(h) { return function() { h.hide(); }; }(this), delay);
