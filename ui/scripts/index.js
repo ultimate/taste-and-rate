@@ -2,12 +2,33 @@ var UI = function() {
 	
 	this.constants = {
 		CATEGORIES_LIST_LINE_HEIGHT: 2,
+		SVG_NAMESPACE: "http://www.w3.org/2000/svg",
+		SVG_XML_NAMESPACE: "http://www.w3.org/2000/xmlns/",
+		SVG_XLINK_NAMESPACE: "http://www.w3.org/1999/xlink",
+	};
+	
+	this.createSVG = function(viewBox, classes, useID)
+	{
+		var svg = document.createElementNS(this.constants.SVG_NAMESPACE, "svg");
+		svg.setAttribute("xmlns", this.constants.SVG_XML_NAMESPACE);
+		svg.setAttributeNS(this.constants.SVG_XML_NAMESPACE, "xmlns:xlink", this.constants.SVG_XLINK_NAMESPACE);
+		svg.setAttribute("viewBox", viewBox);
+		svg.setAttribute("class", classes);
+		
+		var use = document.createElementNS(this.constants.SVG_NAMESPACE, "use");
+		use.setAttributeNS(this.constants.SVG_XLINK_NAMESPACE, "xlink:href", useID);
+		svg.append(use);
+		
+		console.log(svg);
+		
+		return svg;
 	};
 	
 	this.populateMenu = function()
 	{
-		$("#menu_categories_list li").remove();
-		
+		var menuCategories = document.getElementById("menu_categories_list")
+		Elements.removeChildren(menuCategories);
+				
 		this.categories = app.getCategories();
 		
 		var element;
@@ -17,18 +38,13 @@ var UI = function() {
 			// populate menu
 			if(this.categories[c].favorite)
 			{
-				element = $("\
-					<li class='selectable'><label key='" + this.categories[c].category.key + ".title'/>\
-						<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 150 100' class='image active'>\
-							<use xlink:href='#img_filter_active'/>\
-						</svg>\
-						<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 150 100' class='image not_active'>\
-							<use xlink:href='#img_filter_inactive'/>\
-						</svg>\
-					</li>");
+				element = Elements.fromString("<li class='selectable'><label key='" + this.categories[c].category.key + ".title'/></li>");
+				element.append(this.createSVG("0 0 150 100", "image active", "#img_filter_active"));	
+				element.append(this.createSVG("0 0 150 100", "image not_active", "#img_filter_inactive"));	
+										
 				if(this.categories[c].active)
 					element.classList.add("active");
-				element.click(function(ui, i, e) {
+				Events.addEventListener(Events.CLICK, function(ui, i, e) {
 					return function(event) {
 						ui.categories[i].active = !ui.categories[i].active;						
 						if(ui.categories[i].active)
@@ -37,11 +53,11 @@ var UI = function() {
 							e.classList.remove("active");
 						app.setCategories(ui.categories);
 					};
-				}(this, c, element));
-				$("#menu_categories_list").append(element);
+				}(this, c, element), element);
+				menuCategories.append(element);
 			}
 		}
-		this.labelManager.updateLabels($("#menu_categories_list"));
+		this.labelManager.updateLabels(menuCategories);
 	};	
 	
 	this.swapManageCategories = function(element, fromIndex, toIndex)
@@ -54,6 +70,7 @@ var UI = function() {
 		this.categories[fromIndex].position = fromIndex;
 		this.categories[toIndex].position = toIndex;
 		
+		// TODO
 		var other = element.siblings(".position" + (toIndex));
 		
 		other.classList.add("position" + fromIndex);
@@ -88,7 +105,8 @@ var UI = function() {
 	
 	this.populateManageCategories = function()
 	{
-		$("#manage_categories_list li").remove();
+		var manageCategories = document.getElementById("manage_categories_list")
+		Elements.removeChildren(manageCategories);
 		
 		this.categories = app.getCategories();
 		
@@ -101,24 +119,17 @@ var UI = function() {
 				posClasses += " first";
 			else if(c == this.categories.length-1)
 				posClasses += " last";
-			element = $("\
-				<li class='draggable selectable " + posClasses + "'><label key='" + this.categories[c].category.key + ".title'/>\
-					<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 100 100' class='image star favorite'>\
-						<use xlink:href='#img_star_active'/>\
-					</svg>\
-					<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 100 100' class='image star no_favorite'>\
-						<use xlink:href='#img_star_inactive'/>\
-					</svg>\
-					<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 100 100' class='image down'>\
-						<use xlink:href='#img_arrow_down'/>\
-					</svg>\
-					<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 100 100' class='image up'>\
-						<use xlink:href='#img_arrow_up'/>\
-					</svg>\
-				</li>");
+			
+			element = Elements.fromString("<li class='draggable selectable " + posClasses + "'><label key='" + this.categories[c].category.key + ".title'/></li>");
+			element.append(this.createSVG("0 0 100 100", "image star favorite", "#img_star_active"));	
+			element.append(this.createSVG("0 0 100 100", "image star no_favorite", "#img_star_inactive"));	
+			element.append(this.createSVG("0 0 100 100", "image down", "#img_arrow_down"));	
+			element.append(this.createSVG("0 0 100 100", "image up", "#img_arrow_up"));		
+				
+			console.log(element);
 			if(this.categories[c].favorite)
 				element.classList.add("favorite");
-			element.children(".star").click(function(ui, category, e) {
+			Events.addEventListener(Events.CLICK, function(ui, category, e) {
 				return function(event) {
 					var i = category.position;
 					console.log("click star " + ui.categories[i].category.key + " @ pos=" + i);
@@ -129,8 +140,8 @@ var UI = function() {
 						e.classList.remove("favorite");
 					app.setCategories(ui.categories);
 				};
-			}(this, this.categories[c], element));
-			element.children(".up").click(function(ui, category, e) {
+			}(this, this.categories[c], element), element.getElementsByClassName("star"));
+			Events.addEventListener(Events.CLICK, function(ui, category, e) {
 				return function(event) {
 					var i = category.position;
 					console.log("click up " + ui.categories[i].category.key + " @ pos=" + i);
@@ -140,8 +151,8 @@ var UI = function() {
 					}
 					app.setCategories(ui.categories);
 				};
-			}(this, this.categories[c], element));
-			element.children(".down").click(function(ui, category, e) {
+			}(this, this.categories[c], element), element.getElementsByClassName("up"));
+			Events.addEventListener(Events.CLICK, function(ui, category, e) {
 				return function(event) {
 					var i = category.position;
 					console.log("click down " + ui.categories[i].category.key + " @ pos=" + i);
@@ -151,13 +162,13 @@ var UI = function() {
 					}
 					app.setCategories(ui.categories);
 				};
-			}(this, this.categories[c], element));
+			}(this, this.categories[c], element), element.getElementsByClassName("down"));
 			
-			$("#manage_categories_list").append(element);
+			manageCategories.append(element);
 		}
 		
-		$("#manage_categories_list").css("height", (this.categories.length * this.constants.CATEGORIES_LIST_LINE_HEIGHT) + "em");
-		this.labelManager.updateLabels($("#manage_categories_list"));
+		manageCategories.style.height = (this.categories.length * this.constants.CATEGORIES_LIST_LINE_HEIGHT) + "em";
+		this.labelManager.updateLabels(manageCategories);
 	};
 	
 	this.initialize = function()
@@ -166,32 +177,62 @@ var UI = function() {
 		this.labelManager = new LabelManager(app, app.getString);
 		
 		/* initialize top bar */
-		this.searchInput = new AutoHide($("#search"), 5000, "keydown keypressed keyup click mousedown mouseup");
-		$("#search_button").click(function(event) { UI.searchInput.show(); });
+		this.searchInput = new AutoHide("search", 5000, [Events.KEYDOWN, Events.KEYPRESSED, Events.KEYUP, Events.CLICK, Events.MOUSEDOWN, Events.MOUSEUP]);
+		Events.addEventListener(Events.CLICK, function(event) { UI.searchInput.show(); }, document.getElementById("search_button"));
 		
 		/* initialize menu */
-		this.menu = new Hideable($("#menu"), false);
+		this.menu = new Hideable("menu", false);
 		this.populateMenu();
-		$("#menu_button").click(function(event) { UI.menu.toggle(); event.stopPropagation(); });
-		$("#main").click(function(event) { if(!event.isPropagationStopped()) UI.menu.hide(); });
+		Events.addEventListener(Events.CLICK, function(event) { UI.menu.toggle(); event.stopPropagation(); }, document.getElementById("menu_button"));
+		Events.addEventListener(Events.CLICK, function(event) { if(!event.isPropagationStopped()) UI.menu.hide(); }, document.getElementById("main"));
 		/* menu elements */
-		$("#menu_categories").click(function(event) { console.log("click menu_categories"); UI.menu.hide(100); $("#manage_categories").classList.remove("hidden"); });
-		$("#menu_profile").click(   function(event) { console.log("click menu_profile"); 	UI.menu.hide(100); });
-		$("#menu_settings").click(  function(event) { console.log("click menu_settings"); 	UI.menu.hide(100); });
-		$("#menu_exit").click(      function(event) { console.log("click menu_exit"); 		UI.menu.hide(100); app.exit(); });
+		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_categories"); 	UI.menu.hide(100); document.getElementById("manage_categories").classList.remove("hidden"); }, document.getElementById("menu_categories"));
+		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_profile"); 		UI.menu.hide(100); }, document.getElementById("menu_categories"));
+		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_settings"); 	UI.menu.hide(100); }, document.getElementById("menu_settings"));
+		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_exit"); 		UI.menu.hide(100); app.exit(); }, document.getElementById("menu_exit"));
 		
 		/* initialize windows */
-		$(".close").click(function(event) {	$(event.target).closest(".window").classList.add("hidden"); });
+		var closeButtons = document.getElementsByClassName("close");
+		for(var i = 0; i < closeButtons.length; i++)
+		{
+			Events.addEventListener(Events.CLICK, function(event) {
+				var element = event.target;
+				while(element != null)
+				{
+					if(element.classList.contains("window"))
+					{
+						element.classList.add("hidden");
+						break;
+					}
+					element = element.parentElement;
+				}
+			}, closeButtons[i]);
+		}
 		/* close window on any click outside window (only for non-modal windows!) */
-		$(".frame").click(function(event) { event.stopPropagation(); });
-		$("#main").click(function(event) { if(!event.isPropagationStopped()) $(".window").classList.add("hidden"); });
+		var frames = document.getElementsByClassName("frame");
+		for(var i = 0; i < frames.length; i++)
+		{
+			Events.addEventListener(Events.CLICK, function(event) { event.stopPropagation(); }, frames[i]);
+		}
+		Events.addEventListener(Events.CLICK, function(event) {
+			if(!event.isPropagationStopped())
+			{
+				// close all windows
+				var windows = document.getElementsByClassName("window");
+				for(var i = 0; i < windows.length; i++)
+				{
+					windows[i].classList.add("hidden");
+				}
+			}
+		}, document.getElementById("main"));
 		
 		/* initialize calendar */
-		this.calendar = new Calendar($("#calendar"), 1, []);
+		this.calendar = new Calendar("calendar", 1, []);
 
 		/* manage categories */
 		this.populateManageCategories();
-		$("#manage_categories .close").click(function(event) { UI.populateMenu(); UI.populateManageCategories(); });
+		var manageCategoriesCloseButton = document.getElementById("manage_categories").getElementsByClassName("close")[0];
+		Events.addEventListener(Events.CLICK, function(event) { UI.populateMenu(); UI.populateManageCategories(); }, manageCategoriesCloseButton);
 		
 		/* update locale dependent labels */
 		this.labelManager.updateLabels();
