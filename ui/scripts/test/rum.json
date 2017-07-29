@@ -3,7 +3,7 @@
  */
 var TEST_CAT_RUM = {
 	id: 1,
-	key: "Rum",
+	key: "categories.rum",
 	criteria: [
 		{
 			id: 101,

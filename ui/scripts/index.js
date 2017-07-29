@@ -18,7 +18,7 @@ var UI = function() {
 			if(this.categories[c].favorite)
 			{
 				element = $("\
-					<li class='selectable'><label key='" + this.categories[c].category.key + "'/>\
+					<li class='selectable'><label key='" + this.categories[c].category.key + ".title'/>\
 						<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 150 100' class='image active'>\
 							<use xlink:href='#img_filter_active'/>\
 						</svg>\
@@ -102,7 +102,7 @@ var UI = function() {
 			else if(c == this.categories.length-1)
 				posClasses += " last";
 			element = $("\
-				<li class='draggable selectable " + posClasses + "'><label key='" + this.categories[c].category.key + "'/>\
+				<li class='draggable selectable " + posClasses + "'><label key='" + this.categories[c].category.key + ".title'/>\
 					<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 100 100' class='image star favorite'>\
 						<use xlink:href='#img_star_active'/>\
 					</svg>\

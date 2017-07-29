@@ -29,9 +29,10 @@
 </script>
 <!-- Scripts included for testing only -->
 <script type="text/javascript" src="scripts/util/storage.js"></script>
+<script type="text/javascript" src="scripts/test/locale.js"></script>
 <script type="text/javascript" src="scripts/test/app.js"></script>
 <script type="text/javascript" src="scripts/test/rum.json"></script>
-<script type="text/javascript" src="scripts/test/whisky.json"></script>
+<script type="text/javascript" src="scripts/test/whiskey.json"></script>
 <script type="text/javascript" src="scripts/test/beer.json"></script>
 <script type="text/javascript">
 	// debug-js
@@ -322,7 +323,7 @@
 	<div id="menu" class="hidden">
 		<ul>
 			<li class="selectable" id="menu_categories">
-				<label key="categories"></label>
+				<label key="menu.categories"></label>
 				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 150 100" class="image">
 					<use xlink:href="#img_filter_settings"/>
 				</svg>
@@ -335,19 +336,19 @@
 			<!--<li class="selectable" id="menu_manage_categories"><label key="select categories"></label></li>-->
 			<li class="separator"></li>
 			<li class="selectable" id="menu_profile">
-				<label key="profile"></label>
+				<label key="menu.profile"></label>
 				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 150 100" class="image">
 					<use xlink:href="#img_profile"/>
 				</svg>
 			</li>			
 			<li class="selectable" id="menu_settings">
-				<label key="settings"></label>
+				<label key="menu.settings"></label>
 				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 150 100" class="image">
 					<use xlink:href="#img_settings"/>
 				</svg>
 			</li>		
 			<li class="selectable" id="menu_exit">
-				<label key="exit"></label>
+				<label key="menu.exit"></label>
 				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 150 100" class="image">
 					<use xlink:href="#img_exit"/>
 				</svg>
@@ -357,7 +358,7 @@
 	<div id="manage_categories" class="window modal hidden">
 		<div class="frame">
 			<h2 class="title">
-				<label key="manage categories"></label>
+				<label key="manage_categories.title"></label>
 				<div class="close">
 					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" class="image">
 						<use xlink:href="#img_cross"/>
@@ -365,7 +366,7 @@
 				</div>
 			</h2>
 			<div class="content">
-				<label key="description on how to manage categories..."></label>
+				<label key="manage_categories.description"></label>
 				<ul id="manage_categories_list">
 					<!-- will be populated by script -->
 				</ul>

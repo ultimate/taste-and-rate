@@ -1,7 +1,9 @@
 var app = function() {
 	
 	this.getString = function(key) {
-		return key;
+		if(key == null || key == "")
+			return key; // otherwise the following eval would fail!
+		return eval("lang." + key);
 	};
 	
 	this.RATING_X = "rating_"
@@ -34,7 +36,7 @@ var app = function() {
 			console.log("no categories found in local storage - loading default")
 			categories = [
 				{ position: 0, favorite: true,  active: true,  category: TEST_CAT_RUM },
-				{ position: 1, favorite: true,  active: false, category: TEST_CAT_WHISKY },
+				{ position: 1, favorite: true,  active: false, category: TEST_CAT_WHISKEY },
 				{ position: 2, favorite: false, active: false, category: TEST_CAT_BEER }
 			];
 		}

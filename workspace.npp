@@ -39,8 +39,9 @@
             <Folder name="test">
                 <File name="ui\scripts\test\app.js" />
                 <File name="ui\scripts\test\rum.json" />
-                <File name="ui\scripts\test\whisky.json" />
+                <File name="ui\scripts\test\whiskey.json" />
                 <File name="ui\scripts\test\beer.json" />
+                <File name="ui\scripts\test\locale.js" />
             </Folder>
             <Folder name="types">
                 <File name="ui\scripts\types\Rating.js" />

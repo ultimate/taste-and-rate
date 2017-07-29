@@ -3,7 +3,7 @@
  */
 var TEST_CAT_BEER = {
 	id: 3,
-	key: "Beer",
+	key: "categories.beer",
 	criteria: [
 		{
 			id: 301,

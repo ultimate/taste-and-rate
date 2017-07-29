@@ -1,9 +1,9 @@
 /*
  * NOT TRUE JSON... JUST FOR TESTING
  */
-var TEST_CAT_WHISKY = {
+var TEST_CAT_WHISKEY = {
 	id: 2,
-	key: "Whisky",
+	key: "categories.whiskey",
 	criteria: [
 		{
 			id: 201,

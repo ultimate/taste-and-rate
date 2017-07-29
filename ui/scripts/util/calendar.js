@@ -7,7 +7,7 @@ var Calendar = function(parent, firstDayOfWeek, events) {
 		this.events = [];
 	
 	this.FIRST_DAY_OF_WEEK = firstDayOfWeek;
-	this.WEEK_DAY_LABEL = ""; // weekday";
+	this.WEEK_DAY_LABEL = "calendar.weekdays";
 	// NOTE: Month is from 0 to 11
 	this.FIRST_MONTH = 0;
 	this.LAST_MONTH = 11;
