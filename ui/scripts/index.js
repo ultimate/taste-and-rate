@@ -1,7 +1,7 @@
 var UI = function() {
 	
 	this.constants = {
-		CATEGORIES_LIST_LINE_HEIGHT: 2,
+		CATEGORIES_LIST_LINE_HEIGHT: 2.5,
 		SVG_NAMESPACE: "http://www.w3.org/2000/svg",
 		SVG_XML_NAMESPACE: "http://www.w3.org/2000/xmlns/",
 		SVG_XLINK_NAMESPACE: "http://www.w3.org/1999/xlink",
@@ -75,9 +75,11 @@ var UI = function() {
 		
 		other.classList.add("position" + fromIndex);
 		other.classList.remove("position" + toIndex);
+		other.style.top = (this.constants.CATEGORIES_LIST_LINE_HEIGHT * fromIndex) + "em";
 		
 		element.classList.add("position" + toIndex);
 		element.classList.remove("position" + fromIndex);
+		element.style.top = (this.constants.CATEGORIES_LIST_LINE_HEIGHT * toIndex) + "em";
 		
 		// update "first" and "last" tag
 		if(fromIndex == 1 && toIndex == 0)
@@ -124,7 +126,9 @@ var UI = function() {
 			element.append(this.createSVG("0 0 100 100", "image star favorite", "#img_star_active"));	
 			element.append(this.createSVG("0 0 100 100", "image star no_favorite", "#img_star_inactive"));	
 			element.append(this.createSVG("0 0 100 100", "image down", "#img_arrow_down"));	
-			element.append(this.createSVG("0 0 100 100", "image up", "#img_arrow_up"));		
+			element.append(this.createSVG("0 0 100 100", "image up", "#img_arrow_up"));	
+
+			element.style.top = (this.constants.CATEGORIES_LIST_LINE_HEIGHT * c) + "em";
 				
 			console.log(element);
 			if(this.categories[c].favorite)

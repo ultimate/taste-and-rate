@@ -14,9 +14,11 @@
 }
 
 #main > .bar {
+	/*
 	height: 2em;
 	line-height: 1.8em;
-	padding: 0.5em;
+	*/
+	padding: 0.3em;
 }
 
 #main > .bar input[type=text] {
@@ -55,8 +57,10 @@
 #top > #logo_search {
 	flex: 1;
 	text-align: center;
+	/*
 	margin-left: 10%;
 	margin-right: 10%;
+	*/
 	background-image: url("../images/logo-placeholder.svg");
 	background-size: auto 100%;
 	background-repeat: no-repeat;
@@ -97,7 +101,7 @@
 
 #menu {
 	position: absolute;
-	top: 3.2em;
+	top: 3.0em;
 	z-index: 4;
 	background: white;
 	border-bottom: 0.2em solid rgb(150,85,0);
@@ -105,13 +109,13 @@
 	/*border-left: 0.05em solid rgb(150,85,0);*/
 	height: auto;
 	left: 0%;
-	width: 45%;
+	width: 60%;
 	opacity: 1;
 	transition: all 0.5s;
 }
 
 #menu.hidden {
-	left: -46%;
+	left: -61%;
 }
 
 #menu ul {
@@ -354,6 +358,7 @@
 	width: 95%;
 }
 
+/* via JS
 #manage_categories ul > li.position0  {	top:  0em;  }
 #manage_categories ul > li.position1  {	top:  2em;  }
 #manage_categories ul > li.position2  {	top:  4em;  }
@@ -365,14 +370,15 @@
 #manage_categories ul > li.position8  {	top: 16em;  }
 #manage_categories ul > li.position9  {	top: 18em;  }
 #manage_categories ul > li.position10 {	top: 20em;  }
+*/
 
 #manage_categories .content .image {
 	float: right;
 	margin-left: 1em;
 	position: relative;
-	bottom: 0.2em;
-	width: 1.2em;
-	height: 1.2em;
+	bottom: 0.35em;
+	width: 1.5em;
+	height: 1.5em;
 	opacity: 1;
 }
 
