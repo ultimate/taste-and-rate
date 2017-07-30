@@ -71,7 +71,7 @@ var UI = function() {
 		this.categories[toIndex].position = toIndex;
 		
 		// TODO
-		var other = element.siblings(".position" + (toIndex));
+		var other = element.parentElement.getElementsByClassName("position" + toIndex)[0];
 		
 		other.classList.add("position" + fromIndex);
 		other.classList.remove("position" + toIndex);
@@ -183,8 +183,8 @@ var UI = function() {
 		/* initialize menu */
 		this.menu = new Hideable("menu", false);
 		this.populateMenu();
-		Events.addEventListener(Events.CLICK, function(event) { UI.menu.toggle(); event.stopPropagation(); }, document.getElementById("menu_button"));
-		Events.addEventListener(Events.CLICK, function(event) { if(!event.isPropagationStopped()) UI.menu.hide(); }, document.getElementById("main"));
+		Events.addEventListener(Events.CLICK, function(event) { UI.menu.toggle(); event.preventDefault(); }, document.getElementById("menu_button"));
+		Events.addEventListener(Events.CLICK, function(event) { if(!event.defaultPrevented) UI.menu.hide(); }, document.getElementById("main"));
 		/* menu elements */
 		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_categories"); 	UI.menu.hide(100); document.getElementById("manage_categories").classList.remove("hidden"); }, document.getElementById("menu_categories"));
 		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_profile"); 		UI.menu.hide(100); }, document.getElementById("menu_categories"));
@@ -212,10 +212,10 @@ var UI = function() {
 		var frames = document.getElementsByClassName("frame");
 		for(var i = 0; i < frames.length; i++)
 		{
-			Events.addEventListener(Events.CLICK, function(event) { event.stopPropagation(); }, frames[i]);
+			Events.addEventListener(Events.CLICK, function(event) { event.preventDefault(); }, frames[i]);
 		}
 		Events.addEventListener(Events.CLICK, function(event) {
-			if(!event.isPropagationStopped())
+			if(!event.defaultPrevented)
 			{
 				// close all windows
 				var windows = document.getElementsByClassName("window");
