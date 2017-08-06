@@ -44,6 +44,23 @@ var app = function() {
 		return categories;
 	};
 	
+	this.events = null;
+	
+	this.getEvents = function() {
+		if(this.events == null)
+		{
+			this.events = [];
+			for(var i = 0; i < 20; i++)
+			{
+				this.events.push({
+					title: "Event " + (i+1),
+					date: new Date(Date.now() + (Math.random() * 90 - 45)*24*3600*1000)
+				})
+			}
+		}
+		return this.events;
+	};
+	
 	this.saveRating = function(rating) {
 		if(rating == null)
 			return;

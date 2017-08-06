@@ -29,17 +29,23 @@
 .calendar_day {
 	flex: 1;
 	border: 1px solid rgb(85,85,85);
-	margin: 0.125em;
-	padding: 0.125em;
+	margin: 0.08em;
+	padding: 0.12em;
+	overflow: hidden;
 }
 
-.calendar_day.calendar_previous_month,
-.calendar_day.calendar_next_month {
+.calendar_day.calendar_previous_month .calendar_number,
+.calendar_day.calendar_next_month .calendar_number {
 	color: rgb(85,85,0);
 }
 
-.calendar_day.calendar_current_month {
+.calendar_day.calendar_current_month .calendar_number {
 	color: rgb(150,85,0);
+}
+
+.calendar_day .calendar_event {
+	font-size: 75%;
+	white-space: nowrap;
 }
 
 .calendar_day .calendar_number {

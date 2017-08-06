@@ -101,16 +101,38 @@ var Calendar = function(parent, firstDayOfWeek, events) {
 		}
 		
 		// display events
+		console.log("range = " + new Date(rangeStart) + " to " + new Date(rangeEnd));
 		var eventTime;
 		for(var i = 0; i < this.events.length; i++)
 		{
 			eventTime = this.events[i].date.getTime();
 			if(eventTime >= rangeStart && eventTime < rangeEnd)
 			{
-				index = this.events[i].date.getDay() + offset - 1;
+				index = this.events[i].date.getDate() + offset - 1;
+				if(this.events[i].date.getMonth() != this.currentMonth)
+				{
+					if(this.events[i].date.getYear() > this.currentYear || this.events[i].date.getMonth() > this.currentMonth)
+					{
+						index += daysInThisMonth;
+					}
+					else if(this.events[i].date.getYear() < this.currentYear || this.events[i].date.getMonth() < this.currentMonth)
+					{
+						index -= daysInThisMonth;
+					}
+					else
+					{
+						console.err("how did we get here: " + this.events[i].date);
+					}
+				}
+				console.log("displaying event: '" + this.events[i].title + "' (" + this.events[i].date + ") @ " + index);
 				this.elements[index].append(Elements.fromString("<div class='calendar_event'>\
 																	<span>" + this.events[i].title + "</span>\
 																 </div>"));
+																
+			}
+			else
+			{
+				console.log("skipping event: '" + this.events[i].title + "' (" + this.events[i].date + ") > out of range");
 			}
 		}
 	};
