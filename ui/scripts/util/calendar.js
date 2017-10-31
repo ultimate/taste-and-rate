@@ -26,13 +26,17 @@ var Calendar = function(parent, showNav, firstDayOfWeek, events) {
 	var element;
 	
 	var nav = Elements.fromString("<div class='calendar_nav'></div>");
-	var prevMonthButton = Elements.fromString("<div id='prev_month_button' class='button'>&lt;</div>");
-	var currMonthLabel  = Elements.fromString("<label id='nav_month' key=''></div>");
-	var currYearLabel   = Elements.fromString("<label id='nav_year' key=''></div>");
-	var nextMonthButton = Elements.fromString("<div id='next_month_button' class='button'>&gt;</div>");
+	var prevMonthButton = Elements.fromString("<div class='button'></div>");
+	prevMonthButton.append(Elements.createSVG("0 0 100 100", "image up", "#img_arrow_left"));
+	var navLabel 		= Elements.fromString("<div class='label'></div>")
+	var currMonthLabel  = Elements.fromString("<label key=''></div>");
+	var currYearLabel   = Elements.fromString("<label key=''></div>");
+	var nextMonthButton = Elements.fromString("<div class='button'></div>");
+	nextMonthButton.append(Elements.createSVG("0 0 100 100", "image up", "#img_arrow_right"));
 	nav.append(prevMonthButton);
-	nav.append(currMonthLabel);
-	nav.append(currYearLabel);
+	navLabel.append(currMonthLabel);
+	navLabel.append(currYearLabel);
+	nav.append(navLabel);
 	nav.append(nextMonthButton);
 	if(showNav)
 		this.parent.append(nav);

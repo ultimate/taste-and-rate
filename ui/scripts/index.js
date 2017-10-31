@@ -2,26 +2,6 @@ var UI = function() {
 	
 	this.constants = {
 		CATEGORIES_LIST_LINE_HEIGHT: 2.5,
-		SVG_NAMESPACE: "http://www.w3.org/2000/svg",
-		SVG_XML_NAMESPACE: "http://www.w3.org/2000/xmlns/",
-		SVG_XLINK_NAMESPACE: "http://www.w3.org/1999/xlink",
-	};
-	
-	this.createSVG = function(viewBox, classes, useID)
-	{
-		var svg = document.createElementNS(this.constants.SVG_NAMESPACE, "svg");
-		svg.setAttribute("xmlns", this.constants.SVG_XML_NAMESPACE);
-		svg.setAttributeNS(this.constants.SVG_XML_NAMESPACE, "xmlns:xlink", this.constants.SVG_XLINK_NAMESPACE);
-		svg.setAttribute("viewBox", viewBox);
-		svg.setAttribute("class", classes);
-		
-		var use = document.createElementNS(this.constants.SVG_NAMESPACE, "use");
-		use.setAttributeNS(this.constants.SVG_XLINK_NAMESPACE, "xlink:href", useID);
-		svg.append(use);
-		
-		console.log(svg);
-		
-		return svg;
 	};
 	
 	this.populateMenu = function()
@@ -39,8 +19,8 @@ var UI = function() {
 			if(this.categories[c].favorite)
 			{
 				element = Elements.fromString("<li class='selectable'><label key='" + this.categories[c].category.key + ".title'/></li>");
-				element.append(this.createSVG("0 0 150 100", "image active", "#img_filter_active"));	
-				element.append(this.createSVG("0 0 150 100", "image not_active", "#img_filter_inactive"));	
+				element.append(Elements.createSVG("0 0 150 100", "image active", "#img_filter_active"));	
+				element.append(Elements.createSVG("0 0 150 100", "image not_active", "#img_filter_inactive"));	
 										
 				if(this.categories[c].active)
 					element.classList.add("active");
@@ -123,10 +103,10 @@ var UI = function() {
 				posClasses += " last";
 			
 			element = Elements.fromString("<li class='draggable selectable " + posClasses + "'><label key='" + this.categories[c].category.key + ".title'/></li>");
-			element.append(this.createSVG("0 0 100 100", "image star favorite", "#img_star_active"));	
-			element.append(this.createSVG("0 0 100 100", "image star no_favorite", "#img_star_inactive"));	
-			element.append(this.createSVG("0 0 100 100", "image down", "#img_arrow_down"));	
-			element.append(this.createSVG("0 0 100 100", "image up", "#img_arrow_up"));	
+			element.append(Elements.createSVG("0 0 100 100", "image star favorite", "#img_star_active"));	
+			element.append(Elements.createSVG("0 0 100 100", "image star no_favorite", "#img_star_inactive"));	
+			element.append(Elements.createSVG("0 0 100 100", "image down", "#img_arrow_down"));	
+			element.append(Elements.createSVG("0 0 100 100", "image up", "#img_arrow_up"));	
 
 			element.style.top = (this.constants.CATEGORIES_LIST_LINE_HEIGHT * c) + "em";
 				

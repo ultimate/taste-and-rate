@@ -1,4 +1,8 @@
-var Elements = {};
+var Elements = {
+	SVG_NAMESPACE: "http://www.w3.org/2000/svg",
+	SVG_XML_NAMESPACE: "http://www.w3.org/2000/xmlns/",
+	SVG_XLINK_NAMESPACE: "http://www.w3.org/1999/xlink",
+};
 
 Elements.isBelow = function(parent, element)
 {
@@ -44,4 +48,21 @@ Elements.removeChildren = function(element)
 {
 	while(element.childNodes.length > 0)
 		element.removeChild(element.childNodes[0]);
+};
+
+Elements.createSVG = function(viewBox, classes, useID)
+{
+	var svg = document.createElementNS(this.SVG_NAMESPACE, "svg");
+	svg.setAttribute("xmlns", this.SVG_XML_NAMESPACE);
+	svg.setAttributeNS(this.SVG_XML_NAMESPACE, "xmlns:xlink", this.SVG_XLINK_NAMESPACE);
+	svg.setAttribute("viewBox", viewBox);
+	svg.setAttribute("class", classes);
+	
+	var use = document.createElementNS(this.SVG_NAMESPACE, "use");
+	use.setAttributeNS(this.SVG_XLINK_NAMESPACE, "xlink:href", useID);
+	svg.append(use);
+	
+	console.log(svg);
+	
+	return svg;
 };

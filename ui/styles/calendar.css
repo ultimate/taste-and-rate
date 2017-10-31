@@ -5,6 +5,31 @@
 	line-height: 1em;
 }
 
+.calendar .calendar_nav {
+	display: flex;
+    flex-direction: row;
+	color: rgb(150,85,0);
+	line-height: 1.5em;
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
+.calendar .calendar_nav .button {
+	width: 1.5em;
+    text-align: center;
+	font-weight: bold;
+}
+
+.calendar .calendar_nav .label {
+	flex: 1;
+    text-align: center;
+	font-weight: bold;
+}
+
+.calendar .calendar_nav .label label{
+	margin: 0.3em;
+}
+
 .calendar_labels, 
 .calendar_week {
 	display: flex;
