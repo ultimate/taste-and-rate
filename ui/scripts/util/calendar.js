@@ -59,14 +59,15 @@ var Calendar = function(parent, firstDayOfWeek, events) {
 		var endOfMonth   	= new Date(this.currentYear, this.currentMonth + 1, 0)
 		var endOfPrevMonth  = new Date(this.currentYear, this.currentMonth, 0)
 		var offset = startOfMonth.getDay() - this.FIRST_DAY_OF_WEEK;
+		if(offset < 0) offset += 7;
 		var daysInThisMonth = endOfMonth.getDate();
 		var daysInPrevMonth = endOfPrevMonth.getDate();
 		var rangeStart 	 	= new Date(this.currentYear, this.currentMonth, 1 - offset).getTime();
 		var rangeEnd 	 	= new Date(this.currentYear, this.currentMonth, 1 - offset + 6*7).getTime();
 		
-		//console.log("offset=" + offset);
-		//console.log(endOfMonth);
-		//console.log("daysInThisMonth=" + daysInThisMonth);
+		console.log("offset=" + offset);
+		console.log(endOfMonth);
+		console.log("daysInThisMonth=" + daysInThisMonth);
 		var index;
 		var number;
 		for(var w = 0; w < 6; w++)
@@ -144,7 +145,6 @@ var Calendar = function(parent, firstDayOfWeek, events) {
 	};
 	
 	this.previousMonth = function() {
-		this.currentYear = year;
 		this.currentMonth--;
 		if(this.currentMonth < this.FIRST_MONTH)
 		{
@@ -155,7 +155,6 @@ var Calendar = function(parent, firstDayOfWeek, events) {
 	};
 	
 	this.nextMonth = function() {
-		this.currentYear = year;
 		this.currentMonth++;
 		if(this.currentMonth > this.LAST_MONTH)
 		{
