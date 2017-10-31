@@ -2,6 +2,7 @@ var lang = {};
 
 lang.calendar = {};
 lang.calendar.weekdays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+lang.calendar.months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 lang.menu = {};
 lang.menu.categories = "categories";

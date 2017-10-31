@@ -231,7 +231,8 @@ var UI = function() {
 		}, document.getElementById("main"));
 		
 		/* initialize calendar */
-		this.calendar = new Calendar("calendar", 1, app.getEvents());
+		this.calendar = new Calendar("calendar", true, 1, app.getEvents());
+		this.calendar.onUpdate = function(ui) { return function() {ui.labelManager.updateLabels(); }; } (this);
 
 		/* manage categories */
 		this.populateManageCategories();

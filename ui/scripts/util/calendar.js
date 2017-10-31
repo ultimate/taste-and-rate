@@ -1,4 +1,4 @@
-var Calendar = function(parent, firstDayOfWeek, events) {
+var Calendar = function(parent, showNav, firstDayOfWeek, events) {
 	
 	this.today = new Date();
 	if(events)
@@ -8,6 +8,7 @@ var Calendar = function(parent, firstDayOfWeek, events) {
 	
 	this.FIRST_DAY_OF_WEEK = firstDayOfWeek;
 	this.WEEK_DAY_LABEL = "calendar.weekdays";
+	this.MONTH_LABEL = "calendar.months";
 	// NOTE: Month is from 0 to 11
 	this.FIRST_MONTH = 0;
 	this.LAST_MONTH = 11;
@@ -23,6 +24,18 @@ var Calendar = function(parent, firstDayOfWeek, events) {
 	
 	var index;
 	var element;
+	
+	var nav = Elements.fromString("<div class='calendar_nav'></div>");
+	var prevMonthButton = Elements.fromString("<div id='prev_month_button' class='button'>&lt;</div>");
+	var currMonthLabel  = Elements.fromString("<label id='nav_month' key=''></div>");
+	var currYearLabel   = Elements.fromString("<label id='nav_year' key=''></div>");
+	var nextMonthButton = Elements.fromString("<div id='next_month_button' class='button'>&gt;</div>");
+	nav.append(prevMonthButton);
+	nav.append(currMonthLabel);
+	nav.append(currYearLabel);
+	nav.append(nextMonthButton);
+	if(showNav)
+		this.parent.append(nav);
 	
 	var labels = Elements.fromString("<div class='calendar_labels'></div>");
 	for(var d = this.FIRST_DAY_OF_WEEK; d < this.FIRST_DAY_OF_WEEK + 7; d++)
@@ -44,7 +57,11 @@ var Calendar = function(parent, firstDayOfWeek, events) {
 			week.append(element);
 		}
 		this.parent.append(week);
-	}
+	}	
+	
+	this.onUpdate = function() {
+		// function to be overwritten by external function to support onUpdate event
+	};
 	
 	this.update = function(events) {
 		if(events)
@@ -128,14 +145,18 @@ var Calendar = function(parent, firstDayOfWeek, events) {
 				console.log("displaying event: '" + this.events[i].title + "' (" + this.events[i].date + ") @ " + index);
 				this.elements[index].append(Elements.fromString("<div class='calendar_event'>\
 																	<span>" + this.events[i].title + "</span>\
-																 </div>"));
-																
+																 </div>"));			
 			}
 			else
 			{
 				console.log("skipping event: '" + this.events[i].title + "' (" + this.events[i].date + ") > out of range");
 			}
 		}
+		
+		currMonthLabel.setAttribute("key", this.MONTH_LABEL + "[" + this.currentMonth + "]");
+		currYearLabel.innerHTML = this.currentYear;
+		if(this.onUpdate)
+			this.onUpdate();
 	};
 	
 	this.showMonth = function(year, month) {
@@ -163,6 +184,9 @@ var Calendar = function(parent, firstDayOfWeek, events) {
 		}
 		this.update();
 	};
+		
+	Events.addEventListener(Events.CLICK, function(c) { return function(event) { c.previousMonth() }; }(this), prevMonthButton);
+	Events.addEventListener(Events.CLICK, function(c) { return function(event) { c.nextMonth()     }; }(this), nextMonthButton);
 	
 	this.update();
 };
