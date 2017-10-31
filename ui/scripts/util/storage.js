@@ -1,8 +1,16 @@
 var Storage = {};
 
+Storage.NATIVE_TYPE = "native_type";
+Storage.TYPE_DATE = "Date";
+
 Storage.saveLocalObject = function(key, object)
 {
-	if(typeof(object) == "object")
+	if(object instanceof Date)
+	{
+		localStorage.setItem(key + "." + this.NATIVE_TYPE, this.TYPE_DATE);
+		localStorage.setItem(key + ".time", object.getTime());
+	}
+	else if(typeof(object) == "object")
 	{
 		for(var prop in object)
 		{
@@ -48,6 +56,7 @@ Storage.loadLocalObject = function(key)
 	var subKeys = [];
 	var keyFound = false;
 	var indexFound = false;
+	var typeFound = false;
 	for(var prop in localStorage)
 	{
 		if(prop.startsWith(key + "."))
@@ -63,26 +72,40 @@ Storage.loadLocalObject = function(key)
 			keyFound = true;
 			if(Number(subKey).toString() == subKey)
 				indexFound = true;
+			if(subKey == this.NATIVE_TYPE)
+				typeFound = true;
 		}
 	}
 	
-	var object;
-	if(indexFound) // numerical index found -> object is an array
-		object = [];
-	else
-		object = {};
-	//console.log(subKeys);
-	for(var i = 0; i < subKeys.length; i++)
+	if(typeFound)
 	{
-		var subKey = subKeys[i];
-		//console.log("loading sub object: " + key + "." + subKey);	
-		object[subKey] = this.loadLocalObject(key + "." + subKey)
+		var type = this.loadLocalObject(key + "." + this.NATIVE_TYPE);
+		switch(type)
+		{
+			case this.TYPE_DATE:	return new Date(this.loadLocalObject(key + ".time"));
+			default:				return null;
+		}
 	}
-	
-	if(keyFound)
+	else if(keyFound)	
+	{
+		var object;
+		if(indexFound) // numerical index found -> object is an array
+			object = [];
+		else
+			object = {};
+		//console.log(subKeys);
+		for(var i = 0; i < subKeys.length; i++)
+		{
+			var subKey = subKeys[i];
+			//console.log("loading sub object: " + key + "." + subKey);	
+			object[subKey] = this.loadLocalObject(key + "." + subKey);
+		}
 		return object;
+	}
 	else
-		null;
+	{
+		return null;
+	}
 };
 
 Storage.removeLocalObject = function(key)
