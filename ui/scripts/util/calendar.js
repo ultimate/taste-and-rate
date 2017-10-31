@@ -65,9 +65,9 @@ var Calendar = function(parent, firstDayOfWeek, events) {
 		var rangeStart 	 	= new Date(this.currentYear, this.currentMonth, 1 - offset).getTime();
 		var rangeEnd 	 	= new Date(this.currentYear, this.currentMonth, 1 - offset + 6*7).getTime();
 		
-		console.log("offset=" + offset);
-		console.log(endOfMonth);
-		console.log("daysInThisMonth=" + daysInThisMonth);
+		//console.log("offset=" + offset);
+		//console.log(endOfMonth);
+		//console.log("daysInThisMonth=" + daysInThisMonth);
 		var index;
 		var number;
 		for(var w = 0; w < 6; w++)
@@ -118,7 +118,7 @@ var Calendar = function(parent, firstDayOfWeek, events) {
 					}
 					else if(this.events[i].date.getYear() < this.currentYear || this.events[i].date.getMonth() < this.currentMonth)
 					{
-						index -= daysInThisMonth;
+						index -= daysInPrevMonth;
 					}
 					else
 					{
