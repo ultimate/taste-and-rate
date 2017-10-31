@@ -6,8 +6,8 @@ var app = function() {
 		return eval("lang." + key);
 	};
 	
-	this.RATING_X = "rating_"
-	this.RATING_ID = RATING_X + "id";
+	this.TYPE_EVENT = "event";
+	this.TYPE_RATING = "rating";
 	
 	this.getCategoryNames = function() {
 		var result = [];
@@ -44,38 +44,74 @@ var app = function() {
 		return categories;
 	};
 	
+	this.save = function(type, object) {
+		switch(type)
+		{
+			case this.TYPE_EVENT:
+			case this.TYPE_RATING:
+				break;
+			default:
+				throw new Error("unsupported type");
+		}
+		if(object == null)
+			return;
+		if(object.id == null)
+		{
+			object.id = Storage.loadLocalObject(type + "_id") + 1;
+			Storage.saveLocalObject(type + "_id", object.id);
+		}
+		Storage.saveLocalObject(type + "_" + object.id, object);
+	};
+	
+	this.load = function(type, id) {
+		if(id == null)
+			return null;
+		return Storage.loadLocalObject(type + "_" + id);
+	};
+	
 	this.events = null;
+		
+	this.saveEvent = function(event) {
+		if(event.id == null)
+			this.events.push(event);
+		this.save(this.TYPE_EVENT, event);
+	};	
+	
+	this.loadEvent = function(id) {
+		return this.load(this.TYPE_EVENT, id);
+	};
 	
 	this.getEvents = function() {
 		if(this.events == null)
 		{
 			this.events = [];
-			for(var i = 0; i < 20; i++)
+			for(var i = 1; i <= 20; i++)
 			{
 				this.events.push({
-					title: "Event " + (i+1),
+					id: -i,
+					title: "Random Event " + i,
 					date: new Date(Date.now() + (Math.random() * 90 - 45)*24*3600*1000)
 				})
+			}
+			var maxId = Storage.loadLocalObject(this.TYPE_EVENT + "_id");
+			for(var i = 1; i <= maxId; i++)
+			{
+				this.events.push(this.loadEvent(i));
 			}
 		}
 		return this.events;
 	};
 	
+	this.ratings = null;
+	
 	this.saveRating = function(rating) {
-		if(rating == null)
-			return;
 		if(rating.id == null)
-		{
-			rating.id = Storage.loadLocalObject(this.RATING_ID) + 1;
-			Storage.saveLocalObject(this.RATING_ID, rating.id);
-		}
-		Storage.saveLocalObject(this.RATING_X + rating.id, rating);
+			this.ratings.push(rating);
+		this.save(this.TYPE_RATING, rating);
 	};	
 	
 	this.loadRating = function(id) {
-		if(id == null)
-			return null;
-		return Storage.loadLocalObject(this.RATING_X + id);
+		return this.load(this.TYPE_RATING, id);
 	};
 	
 	this.clearDatabase = function() {
