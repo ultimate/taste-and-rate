@@ -22,22 +22,29 @@ var LabelManager = function(labelProvider, labelFunction) {
 		else if(parent.getElementsByTagName == undefined)
 			parent = document;
 		var elements;
+		var key;
 		// labels
 		elements = parent.getElementsByTagName(this.LABEL_TAGNAME);
 		for( var i = 0; i < elements.length; i++)
 		{
-			console.log("updating label key='" + elements[i].getAttribute(this.KEY_ATTRIBUTE) + "'");
+			key = elements[i].getAttribute(this.KEY_ATTRIBUTE);
+			if(key == "" || key == null)
+				continue;
+			console.log("updating label key='" + key + "'");
 			// remove all current children
 			while(elements[i].firstChild)
 				elements[i].removeChild(elements[i].firstChild);
-			elements[i].appendChild(document.createTextNode(this.getString(elements[i].getAttribute(this.KEY_ATTRIBUTE))));
+			elements[i].appendChild(document.createTextNode(this.getString(key)));
 		}
 		// buttons
 		elements = document.getElementsByTagName(this.BUTTON_TAGNAME);
 		for( var i = 0; i < elements.length; i++)
 		{
+			key = elements[i].getAttribute(this.KEY_ATTRIBUTE);
+			if(key == "" || key == null)
+				continue;
 			if(elements[i].getAttribute("type") == "button")
-				elements[i].value = this.getString(elements[i].getAttribute(this.KEY_ATTRIBUTE));
+				elements[i].value = this.getString(key);
 		}
 		// ToDo other element types like
 		// - selects
