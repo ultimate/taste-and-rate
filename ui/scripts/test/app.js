@@ -6,9 +6,6 @@ var app = function() {
 		return eval("lang." + key);
 	};
 	
-	this.TYPE_EVENT = "event";
-	this.TYPE_RATING = "rating";
-	
 	this.getCategoryNames = function() {
 		var result = [];
 		var categories = getCategories();
@@ -47,8 +44,8 @@ var app = function() {
 	this.save = function(type, object) {
 		switch(type)
 		{
-			case this.TYPE_EVENT:
-			case this.TYPE_RATING:
+			case UI.constants.TYPE_EVENT:
+			case UI.constants.TYPE_RATING:
 				break;
 			default:
 				throw new Error("unsupported type");
@@ -74,11 +71,11 @@ var app = function() {
 	this.saveEvent = function(event) {
 		if(event.id == null)
 			this.events.push(event);
-		this.save(this.TYPE_EVENT, event);
+		this.save(UI.constants.TYPE_EVENT, event);
 	};	
 	
 	this.loadEvent = function(id) {
-		return this.load(this.TYPE_EVENT, id);
+		return this.load(UI.constants.TYPE_EVENT, id);
 	};
 	
 	this.getEvents = function() {
@@ -93,7 +90,7 @@ var app = function() {
 					date: new Date(Date.now() + (Math.random() * 90 - 45)*24*3600*1000)
 				})
 			}
-			var maxId = Storage.loadLocalObject(this.TYPE_EVENT + "_id");
+			var maxId = Storage.loadLocalObject(UI.constants.TYPE_EVENT + "_id");
 			for(var i = 1; i <= maxId; i++)
 			{
 				this.events.push(this.loadEvent(i));
@@ -107,11 +104,11 @@ var app = function() {
 	this.saveRating = function(rating) {
 		if(rating.id == null)
 			this.ratings.push(rating);
-		this.save(this.TYPE_RATING, rating);
+		this.save(UI.constants.TYPE_RATING, rating);
 	};	
 	
 	this.loadRating = function(id) {
-		return this.load(this.TYPE_RATING, id);
+		return this.load(UI.constants.TYPE_RATING, id);
 	};
 	
 	this.clearDatabase = function() {

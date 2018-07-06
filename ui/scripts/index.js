@@ -2,6 +2,8 @@ var UI = function() {
 	
 	this.constants = {
 		CATEGORIES_LIST_LINE_HEIGHT: 2.5,
+		TYPE_EVENT: "event",
+		TYPE_RATING: "rating",
 	};
 	
 	this.populateMenu = function()
