@@ -335,6 +335,11 @@
 	display: none;
 }
 
+.window label.hidden,
+.window div.hidden {
+	display:none;
+}
+
 /* specific windows */
 
 

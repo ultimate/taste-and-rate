@@ -4,7 +4,19 @@ var UI = function() {
 		CATEGORIES_LIST_LINE_HEIGHT: 2.5,
 		TYPE_EVENT: "event",
 		TYPE_RATING: "rating",
+		VIEW_CALENDAR: "calendar", 
+		VIEW_PERSONAL_RATINGS: "personal_ratings",
+		VIEW_FRIENDS_RATINGS: "friends_ratings",
+		VIEW_GLOBAL_RATINGS: "global_ratings",
 	};
+	
+	// temporary storage for currently edited objects
+	this.tmp = {
+		event: null,
+		rating: null,
+	};
+	
+	this.view = this.constants.VIEW_CALENDAR;
 	
 	this.populateMenu = function()
 	{
@@ -157,6 +169,62 @@ var UI = function() {
 		this.labelManager.updateLabels(manageCategories);
 	};
 	
+	this.add = function()
+	{
+		console.log("add called for '" + this.view + "'");
+		if(this.view == this.constants.VIEW_CALENDAR)
+		{
+			this.updateEventForm(null);
+		}
+		else if(this.view == this.constants.VIEW_PERSONAL_RATINGS)
+		{
+			
+		}
+		else if(this.view == this.constants.VIEW_FRIENDS_RATINGS)
+		{
+			
+		}
+		else if(this.view == this.constants.VIEW_GLOBAL_RATINGS)
+		{
+			
+		}
+	};
+	
+	this.updateEventForm = function(event)
+	{
+		this.tmp.event = event;
+		form = document.getElementById("form_event");
+		createElements = form.getElementsByClassName("create");
+		editElements = form.getElementsByClassName("edit");
+		if(event != null)
+		{
+			// populate all fields
+			// show/hide create/edit elements
+			for(var i = 0; i < createElements.length; i++)
+			{
+				createElements[i].classList.add("hidden");
+			}
+			for(var i = 0; i < editElements.length; i++)
+			{
+				editElements[i].classList.remove("hidden");
+			}
+		}
+		else
+		{
+			// clear all fields
+			// show/hide create/edit elements
+			for(var i = 0; i < editElements.length; i++)
+			{
+				editElements[i].classList.add("hidden");
+			}
+			for(var i = 0; i < createElements.length; i++)
+			{
+				createElements[i].classList.remove("hidden");
+			}
+		}
+		form.classList.remove("hidden");
+	};
+	
 	this.initialize = function()
 	{		
 		/* create LabelManager for updating locale dependent labels */
@@ -164,19 +232,23 @@ var UI = function() {
 		
 		/* initialize top bar */
 		this.searchInput = new AutoHide("search", 5000, [Events.KEYDOWN, Events.KEYPRESSED, Events.KEYUP, Events.CLICK, Events.MOUSEDOWN, Events.MOUSEUP]);
-		Events.addEventListener(Events.CLICK, function(event) { UI.searchInput.show(); }, document.getElementById("search_button"));
+		Events.addEventListener(Events.CLICK, function(event) { UI.searchInput.show(); 							}, document.getElementById("search_button"));
+		Events.addEventListener(Events.CLICK, function(event) { UI.add(); 				event.preventDefault(); }, document.getElementById("add_button"));
 		
 		/* initialize menu */
 		this.menu = new Hideable("menu", false);
 		this.populateMenu();
-		Events.addEventListener(Events.CLICK, function(event) { UI.menu.toggle(); event.preventDefault(); }, document.getElementById("menu_button"));
-		Events.addEventListener(Events.CLICK, function(event) { if(!event.defaultPrevented) UI.menu.hide(); }, document.getElementById("main"));
+		Events.addEventListener(Events.CLICK, function(event) { UI.menu.toggle(); 		event.preventDefault(); }, document.getElementById("menu_button"));
+		Events.addEventListener(Events.CLICK, function(event) { if(!event.defaultPrevented) UI.menu.hide(); 	}, document.getElementById("main"));
 		/* menu elements */
 		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_categories"); 	UI.menu.hide(100); document.getElementById("manage_categories").classList.remove("hidden"); }, document.getElementById("menu_categories"));
 		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_profile"); 		UI.menu.hide(100); }, document.getElementById("menu_profile"));
 		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_settings"); 	UI.menu.hide(100); }, document.getElementById("menu_settings"));
 		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_exit"); 		UI.menu.hide(100); app.exit(); }, document.getElementById("menu_exit"));
 		
+		/* initialize bottom bar */
+		// TODO
+				
 		/* initialize windows */
 		var closeButtons = document.getElementsByClassName("close");
 		for(var i = 0; i < closeButtons.length; i++)
@@ -220,6 +292,9 @@ var UI = function() {
 		this.populateManageCategories();
 		var manageCategoriesCloseButton = document.getElementById("manage_categories").getElementsByClassName("close")[0];
 		Events.addEventListener(Events.CLICK, function(event) { UI.populateMenu(); UI.populateManageCategories(); }, manageCategoriesCloseButton);
+		
+		/* select view */
+		// TODO
 		
 		/* update locale dependent labels */
 		this.labelManager.updateLabels();
