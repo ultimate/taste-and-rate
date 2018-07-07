@@ -112,6 +112,7 @@ var app = function() {
 	};
 	
 	this.clearDatabase = function() {
+		console.log("clearing database");
 		Storage.clear();
 	};
 	

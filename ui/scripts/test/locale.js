@@ -14,6 +14,8 @@ lang.menu = {};
 lang.menu.categories = "categories";
 lang.menu.profile = "profile";
 lang.menu.settings = "settings";
+lang.menu.help = "help";
+lang.menu.about = "about this app";
 lang.menu.exit = "exit";
 
 lang.manage_categories = {};
