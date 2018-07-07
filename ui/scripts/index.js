@@ -341,6 +341,7 @@ var UI = function() {
 			}, okButtons[i]);
 		}		
 		/* close window on any click outside window (only for non-modal windows!) */
+		/*
 		let frames = document.getElementsByClassName("frame");
 		for(var i = 0; i < frames.length; i++)
 		{
@@ -359,6 +360,7 @@ var UI = function() {
 				UI.menu.hide();
 			}
 		}, document.getElementById("main"));
+		*/
 		
 		/* initialize calendar */
 		this.calendar = new Calendar("calendar", true, 1, app.getEvents());
