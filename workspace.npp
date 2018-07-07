@@ -1,7 +1,13 @@
 <NotepadPlus>
     <Project name="ui">
         <Folder name="images">
-            <File name="ui\images\wood-pattern-01-full.jpg" />
+            <File name="ui\images\wood-pattern-01.jpg" />
+            <File name="ui\images\wood-pattern-02.jpg" />
+            <File name="ui\images\wood-pattern-03.jpg" />
+            <File name="ui\images\wood-pattern-04.jpg" />
+            <File name="ui\images\wood-pattern-full.jpg" />
+            <File name="ui\images\wood-plank-small.jpg" />
+            <File name="ui\images\logo-placeholder.svg" />
         </Folder>
         <Folder name="lang">
             <Folder name="de">
@@ -24,8 +30,26 @@
             <Folder name="lib">
                 <File name="ui\scripts\lib\date.format.js" />
                 <File name="ui\scripts\lib\json2.js" />
-                <File name="ui\scripts\lib\jquery-3.2.1.js" />
                 <File name="ui\scripts\lib\jquery-3.2.1.min.js" />
+                <File name="ui\scripts\lib\jquery-3.2.1.js" />
+            </Folder>
+            <Folder name="util">
+                <File name="ui\scripts\util\autohide.js" />
+                <File name="ui\scripts\util\storage.js" />
+                <File name="ui\scripts\util\hide.js" />
+                <File name="ui\scripts\util\strings.js" />
+                <File name="ui\scripts\util\labels.js" />
+                <File name="ui\scripts\util\arrays.js" />
+                <File name="ui\scripts\util\events.js" />
+                <File name="ui\scripts\util\calendar.js" />
+                <File name="ui\scripts\util\elements.js" />
+            </Folder>
+            <Folder name="test">
+                <File name="ui\scripts\test\rum.json" />
+                <File name="ui\scripts\test\app.js" />
+                <File name="ui\scripts\test\beer.json" />
+                <File name="ui\scripts\test\whiskey.json" />
+                <File name="ui\scripts\test\locale.js" />
             </Folder>
             <Folder name="syncnapsis">
                 <File name="ui\scripts\syncnapsis\Console.js" />
@@ -34,33 +58,15 @@
                 <File name="ui\scripts\syncnapsis\Requests.js" />
                 <File name="ui\scripts\syncnapsis\UI.js" />
             </Folder>
-            <Folder name="test">
-                <File name="ui\scripts\test\app.js" />
-                <File name="ui\scripts\test\rum.json" />
-                <File name="ui\scripts\test\whiskey.json" />
-                <File name="ui\scripts\test\beer.json" />
-                <File name="ui\scripts\test\locale.js" />
-            </Folder>
             <Folder name="types">
                 <File name="ui\scripts\types\Rating.js" />
-            </Folder>
-            <Folder name="util">
-                <File name="ui\scripts\util\arrays.js" />
-                <File name="ui\scripts\util\autohide.js" />
-                <File name="ui\scripts\util\calendar.js" />
-                <File name="ui\scripts\util\elements.js" />
-                <File name="ui\scripts\util\events.js" />
-                <File name="ui\scripts\util\hide.js" />
-                <File name="ui\scripts\util\labels.js" />
-                <File name="ui\scripts\util\storage.js" />
-                <File name="ui\scripts\util\strings.js" />
             </Folder>
             <File name="ui\scripts\index.js" />
         </Folder>
         <Folder name="styles">
             <File name="ui\styles\base.css" />
-            <File name="ui\styles\index.css" />
             <File name="ui\styles\calendar.css" />
+            <File name="ui\styles\index.css" />
         </Folder>
         <File name="ui\index.html" />
     </Project>

@@ -260,6 +260,7 @@
 }
 */
 
+
 /* window */
 
 
@@ -338,6 +339,36 @@
 .window label.hidden,
 .window div.hidden {
 	display:none;
+}
+
+.window .control {
+	color: rgb(150,85,0);
+	text-align: center;
+	padding-top: 0.3em;
+	margin-top: 0.75em;
+	/*margin-bottom: 0.25em;*/
+	border-top: 1px solid;
+}
+
+.control div {
+	display: inline-block;
+}
+
+.control .button {
+	border: 1px solid;
+	background: rgb(150,85,0);
+	color: white;
+    padding: 0.3em;
+    margin-left: 0.5em;
+	margin-right: 0.5em;
+}
+
+.control .button:active {
+	/*
+	background: white;
+	color: rgb(150,85,0);
+	*/
+	filter: url(#highlight);
 }
 
 /* specific windows */
