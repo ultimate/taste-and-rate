@@ -1,11 +1,5 @@
 var lang = {};
 
-lang.actions = {};
-lang.actions.cancel = "Cancel";
-lang.actions.create = "Create";
-lang.actions.discard = "Discard changes";
-lang.actions.save = "Save";
-
 lang.calendar = {};
 lang.calendar.weekdays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 lang.calendar.months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -36,12 +30,18 @@ lang.categories.beer = {};
 lang.categories.beer.title = "Beer";
 lang.categories.beer.description = "Drink from different kind of grain";
 
-lang.form_event = {};
-lang.form_event.create_title = "Create new event";
-lang.form_event.create_description = "description on how to create events";
-lang.form_event.create_ok = "Create event";
-lang.form_event.create_cancel = "Cancel";
-lang.form_event.edit_title = "Edit event";
-lang.form_event.edit_description = "description on how to edit events";
-lang.form_event.edit_ok = "Save event";
-lang.form_event.edit_cancel = "Discard changes";
+lang.event = {};
+lang.event.title = "Name";
+lang.event.date = "Date & Time";
+lang.event.location = "Location";
+lang.event.description = "Description";
+lang.event.create = {};
+lang.event.create.title = "Create new event";
+lang.event.create.description = "description on how to create events";
+lang.event.create.ok = "Create event";
+lang.event.create.cancel = "Cancel";
+lang.event.edit = {};
+lang.event.edit.title = "Edit event";
+lang.event.edit.description = "description on how to edit events";
+lang.event.edit.ok = "Save event";
+lang.event.edit.cancel = "Discard changes";
