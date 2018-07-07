@@ -27,12 +27,12 @@ var Calendar = function(parent, showNav, firstDayOfWeek, events) {
 	
 	var nav = Elements.fromString("<div class='calendar_nav'></div>");
 	var prevMonthButton = Elements.fromString("<div class='button'></div>");
-	prevMonthButton.append(Elements.createSVG("0 0 100 100", "image up", "#img_arrow_left"));
+	prevMonthButton.append(Elements.createSVG("0 0 100 100", "image", "#img_arrow_left"));
 	var navLabel 		= Elements.fromString("<div class='label'></div>")
 	var currMonthLabel  = Elements.fromString("<label key=''></div>");
 	var currYearLabel   = Elements.fromString("<label key=''></div>");
 	var nextMonthButton = Elements.fromString("<div class='button'></div>");
-	nextMonthButton.append(Elements.createSVG("0 0 100 100", "image up", "#img_arrow_right"));
+	nextMonthButton.append(Elements.createSVG("0 0 100 100", "image", "#img_arrow_right"));
 	nav.append(prevMonthButton);
 	navLabel.append(currMonthLabel);
 	navLabel.append(currYearLabel);
