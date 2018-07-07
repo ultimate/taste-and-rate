@@ -127,6 +127,11 @@ var Calendar = function(parent, showNav, firstDayOfWeek, events) {
 		var eventTime;
 		for(var i = 0; i < this.events.length; i++)
 		{
+			if(this.events[i] == null || this.events[i].date == null)
+			{
+				console.log("invalid event: " + (this.events[i] == null ? "null": "'" + this.events[i].title + "' (" + this.events[i].date + ")"));
+				continue;
+			}
 			eventTime = this.events[i].date.getTime();
 			if(eventTime >= rangeStart && eventTime < rangeEnd)
 			{
