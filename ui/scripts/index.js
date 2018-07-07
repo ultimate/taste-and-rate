@@ -291,7 +291,7 @@ var UI = function() {
 		this.menu = new Hideable("menu", false);
 		this.populateMenu();
 		Events.addEventListener(Events.CLICK, function(event) { UI.menu.toggle(); 		event.preventDefault(); }, document.getElementById("menu_button"));
-		//Events.addEventListener(Events.CLICK, function(event) { if(!event.defaultPrevented) UI.menu.hide(); 	}, document.getElementById("main"));
+		Events.addEventListener(Events.CLICK, function(event) { if(!event.defaultPrevented) UI.menu.hide(); 	}, document.getElementById("main"));
 		/* menu elements */
 		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_categories"); 	UI.menu.hide(100); document.getElementById("manage_categories").classList.remove("hidden"); }, document.getElementById("menu_categories"));
 		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_profile"); 		UI.menu.hide(100); /* TODO */			}, document.getElementById("menu_profile"));
