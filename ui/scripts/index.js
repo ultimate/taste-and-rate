@@ -10,12 +10,6 @@ var UI = function() {
 		VIEW_GLOBAL_RATINGS: "global_ratings",
 	};
 	
-	// temporary storage for currently edited objects
-	this.tmp = {
-		event: null,
-		rating: null,
-	};
-	
 	this.view = this.constants.VIEW_CALENDAR;
 	
 	this.populateMenu = function()
@@ -57,7 +51,7 @@ var UI = function() {
 	this.swapManageCategories = function(element, fromIndex, toIndex)
 	{
 		console.log("swap " + fromIndex + "->" + toIndex);
-		var tmp = this.categories[fromIndex];
+		let tmp = this.categories[fromIndex];
 		this.categories[fromIndex] = this.categories[toIndex];
 		this.categories[toIndex] = tmp
 		
@@ -65,7 +59,7 @@ var UI = function() {
 		this.categories[toIndex].position = toIndex;
 		
 		// TODO
-		var other = element.parentElement.getElementsByClassName("position" + toIndex)[0];
+		let other = element.parentElement.getElementsByClassName("position" + toIndex)[0];
 		
 		other.classList.add("position" + fromIndex);
 		other.classList.remove("position" + toIndex);
@@ -101,12 +95,12 @@ var UI = function() {
 	
 	this.populateManageCategories = function()
 	{
-		var manageCategories = document.getElementById("manage_categories_list")
+		let manageCategories = document.getElementById("manage_categories_list")
 		Elements.removeChildren(manageCategories);
 		
 		this.categories = app.getCategories();
 		
-		var element;
+		let element;
 		for(var c = 0; c < this.categories.length; c++)
 		{
 		// populate manage categories	
@@ -169,37 +163,27 @@ var UI = function() {
 		this.labelManager.updateLabels(manageCategories);
 	};
 	
-	this.add = function()
+	this.showAdd = function()
 	{
-		console.log("add called for '" + this.view + "'");
+		console.log("showAdd called for '" + this.view + "'");
 		if(this.view == this.constants.VIEW_CALENDAR)
-		{
 			this.updateEventForm(null);
-		}
 		else if(this.view == this.constants.VIEW_PERSONAL_RATINGS)
-		{
-			
-		}
+			this.updateRatingForm(null, true);
 		else if(this.view == this.constants.VIEW_FRIENDS_RATINGS)
-		{
-			
-		}
+			this.updateRatingForm(null, true);
 		else if(this.view == this.constants.VIEW_GLOBAL_RATINGS)
-		{
-			
-		}
+			this.updateRatingForm(null, true);
 		UI.menu.hide();
 	};
 	
-	this.updateEventForm = function(event)
+	this.updateForm = function(form, object)
 	{
-		this.tmp.event = event;
-		form = document.getElementById("form_event");
+		form.object = object;
 		createElements = form.getElementsByClassName("create");
 		editElements = form.getElementsByClassName("edit");
-		if(event != null)
+		if(object != null)
 		{
-			// populate all fields
 			// show/hide create/edit elements
 			for(var i = 0; i < createElements.length; i++)
 			{
@@ -212,7 +196,6 @@ var UI = function() {
 		}
 		else
 		{
-			// clear all fields
 			// show/hide create/edit elements
 			for(var i = 0; i < editElements.length; i++)
 			{
@@ -226,6 +209,74 @@ var UI = function() {
 		form.classList.remove("hidden");
 	};
 	
+	this.updateEventForm = function(event)
+	{
+		form = document.getElementById("form_event");
+		if(event != null)
+		{
+			// populate all fields
+		}
+		else
+		{
+			// clear all fields
+		}
+		this.updateForm(form, event);
+	};
+	
+	this.submitEventForm = function(form)
+	{
+		// validate
+		valid = true;
+		// TODO
+		
+		if(valid)
+		{		
+			event = form.object;
+			if(event == null) event = {};
+			// get all fields
+			app.save(this.constants.TYPE_EVENT, event);	
+		}
+		return valid;
+	};
+	
+	this.updateRatingForm = function(rating)
+	{
+		form = document.getElementById("form_rating");
+		if(rating != null)
+		{
+			// populate all fields
+		}
+		else
+		{
+			// clear all fields
+		}
+		this.updateForm(form, rating);
+	};
+	
+	this.submitRatingForm = function(form)
+	{
+		// validate
+		valid = true;
+		// TODO
+		
+		if(valid)
+		{	
+			rating = form.object;
+			if(rating == null) rating = {};
+			// get all fields
+			app.save(this.constants.TYPE_RATING, rating);
+		}
+		return valid;
+	};
+	
+	this.submitForm = function(form)
+	{
+		if(form.getAttribute("type") == this.constants.TYPE_EVENT)
+			return this.submitEventForm(form);
+		else if(form.getAttribute("type") == this.constants.TYPE_RATING)
+			return this.submitRatingForm(form);
+	};
+	
 	this.initialize = function()
 	{		
 		/* create LabelManager for updating locale dependent labels */
@@ -234,7 +285,7 @@ var UI = function() {
 		/* initialize top bar */
 		this.searchInput = new AutoHide("search", 5000, [Events.KEYDOWN, Events.KEYPRESSED, Events.KEYUP, Events.CLICK, Events.MOUSEDOWN, Events.MOUSEUP]);
 		Events.addEventListener(Events.CLICK, function(event) { UI.searchInput.show(); 							}, document.getElementById("search_button"));
-		Events.addEventListener(Events.CLICK, function(event) { UI.add(); 				event.preventDefault(); }, document.getElementById("add_button"));
+		Events.addEventListener(Events.CLICK, function(event) { UI.showAdd(); 			event.preventDefault(); }, document.getElementById("add_button"));
 		
 		/* initialize menu */
 		this.menu = new Hideable("menu", false);
@@ -251,7 +302,9 @@ var UI = function() {
 		// TODO
 				
 		/* initialize windows */
-		var closeButtons = document.getElementsByClassName("close");
+		/* close cancel buttons */
+		//let closeButtons = document.getElementsByClassName("close");
+		let closeButtons = document.querySelectorAll(".window .close, .window .cancel");
 		for(var i = 0; i < closeButtons.length; i++)
 		{
 			Events.addEventListener(Events.CLICK, function(event) {
@@ -267,8 +320,26 @@ var UI = function() {
 				}
 			}, closeButtons[i]);
 		}
+		/* save buttons controls */
+		let okButtons = document.querySelectorAll(".window .ok");
+		for(var i = 0; i < okButtons.length; i++)
+		{
+			Events.addEventListener(Events.CLICK, function(event) {
+				var element = event.target;
+				while(element != null)
+				{
+					if(element.classList.contains("form"))
+					{
+						if(UI.submitForm(element))
+							element.classList.add("hidden");
+						break;
+					}
+					element = element.parentElement;
+				}
+			}, okButtons[i]);
+		}		
 		/* close window on any click outside window (only for non-modal windows!) */
-		var frames = document.getElementsByClassName("frame");
+		let frames = document.getElementsByClassName("frame");
 		for(var i = 0; i < frames.length; i++)
 		{
 			Events.addEventListener(Events.CLICK, function(event) { event.preventDefault(); }, frames[i]);
@@ -293,7 +364,7 @@ var UI = function() {
 
 		/* manage categories */
 		this.populateManageCategories();
-		var manageCategoriesCloseButton = document.getElementById("manage_categories").getElementsByClassName("close")[0];
+		let manageCategoriesCloseButton = document.getElementById("manage_categories").getElementsByClassName("close")[0];
 		Events.addEventListener(Events.CLICK, function(event) { UI.populateMenu(); UI.populateManageCategories(); }, manageCategoriesCloseButton);
 		
 		/* select view */
