@@ -408,13 +408,14 @@
 				<!-- no close -->
 			</h2>
 			<div class="content">
-				<label key="event.create.description" class="create"></label>
-				<label key="event.edit.description" class="edit"></label>
-				<!-- fields -->
-				<label key="event.title"></label><input type="text" id="event_title"/>
-				<label key="event.date"></label><input type="date" id="event_date"/>
-				<label key="event.location"></label><input type="text" id="event_location"/>
-				<label key="event.description"></label><textarea id="event_description"></textarea>
+				<label key="event.create.description" class="create fullwidth"></label>
+				<label key="event.edit.description" class="edit fullwidth"></label>
+				<form>
+					<label key="event.title"></label><input type="text" id="event_title"/>
+					<label key="event.date"></label><input type="datetime-local" id="event_date"/>
+					<label key="event.location"></label><input type="text" id="event_location"/>
+					<label key="event.description"></label><textarea id="event_description"></textarea>
+				</form>
 			</div>
 			<div class="control">
 				<div class="button ok">

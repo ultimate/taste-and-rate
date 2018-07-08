@@ -371,8 +371,53 @@
 	filter: url(#highlight);
 }
 
-/* specific windows */
+.window.form .content form {
+	display: inline-block;
+	margin-top: 1em;
+}
 
+.window.form .content form>label {
+	width: 35%;
+	float: left;	
+	display: block;
+}
+
+.window.form .content form>input {
+	width: 63%;
+    float: left;
+}
+
+.window.form .content form>textarea {
+	width: 98%;
+	float: left;	
+	display: block;
+}
+/*
+
+.window.form .content .form {
+	display: inline-block;
+	margin-top: 1em;
+}
+
+.window.form .content .form label {
+	width: 35%;
+	float: left;	
+	display: block;
+}
+
+.window.form .content .form input {
+	width: 62%;
+    float: left;
+}
+
+.window.form .content .form textarea {
+	width: 100%;
+	float: left;	
+	display: block;
+}
+*/
+
+/* specific windows */
 
 #manage_categories ul {
 	padding: 0;
@@ -442,4 +487,17 @@
 /* calendar */
 #calendar {
 	height: 100%;
+}
+
+/* components */
+body input[type="text"],
+body input[type="datetime-local"] {
+	position: relative;	
+    top: -0.2em;
+	height: 1.2em;
+	/*border: 0.5px solid rgb(85,85,85);*/
+}
+
+body input[type="datetime-local"] {
+	height: 1.3em;
 }

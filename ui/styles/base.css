@@ -18,7 +18,8 @@ body input {
 }
 
 body,
-body input {	
+body input,
+body textarea {	
 	font-size: 1em;	
 	font-family: Arial;
 }
