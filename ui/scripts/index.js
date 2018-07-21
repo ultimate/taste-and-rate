@@ -243,7 +243,13 @@ var UI = function() {
 			event = form.object;
 			if(event == null) event = {};
 			// get all fields
+			event.title = document.getElementById("event_title").value;
+			event.date = new Date(document.getElementById("event_date").valueAsNumber);
+			event.location = document.getElementById("event_location").value;
+			event.description = document.getElementById("event_description").value;		
 			app.save(this.constants.TYPE_EVENT, event);	
+			// update calendar
+			calendar.update(app.getEvents());
 		}
 		return valid;
 	};
