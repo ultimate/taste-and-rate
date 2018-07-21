@@ -182,6 +182,7 @@ var UI = function() {
 		form.object = object;
 		createElements = form.getElementsByClassName("create");
 		editElements = form.getElementsByClassName("edit");
+		validatableElements = form.getElementsByClassName("validatable");
 		if(object != null)
 		{
 			// show/hide create/edit elements
@@ -206,12 +207,16 @@ var UI = function() {
 				createElements[i].classList.remove("hidden");
 			}
 		}
+		for(var i = 0; i < validatableElements.length; i++)
+		{
+			validatableElements[i].classList.remove("invalid");
+		}
 		form.classList.remove("hidden");
 	};
 	
 	this.updateEventForm = function(event)
 	{
-		form = document.getElementById("form_event");
+		form = document.getElementById("form_event");	
 		if(event != null)
 		{
 			// populate all fields
@@ -235,8 +240,12 @@ var UI = function() {
 	{
 		// validate
 		valid = true;
-		// TODO
-		
+		// Note: use "&& valid" at end to ensure method call
+		valid = UI.validateElement(document.getElementById("event_title"),	 		"value", UI.constants.TYPE_EVENT, "title") && valid;
+		valid = UI.validateElement(document.getElementById("event_date"), 			"value", UI.constants.TYPE_EVENT, "date") && valid;
+		valid = UI.validateElement(document.getElementById("event_location"), 		"value", UI.constants.TYPE_EVENT, "location") && valid;
+		valid = UI.validateElement(document.getElementById("event_description"), 	"value", UI.constants.TYPE_EVENT, "description") && valid;
+		console.log("from valid ? " + valid);
 		if(valid)
 		{		
 			event = form.object;
@@ -289,6 +298,16 @@ var UI = function() {
 			return this.submitEventForm(form);
 		else if(form.getAttribute("type") == this.constants.TYPE_RATING)
 			return this.submitRatingForm(form);
+	};
+	
+	this.validateElement = function(element, property, type, field)
+	{
+		var valid = app.validate(type, field, element[property]);
+		if(valid)
+			element.classList.remove("invalid");
+		else
+			element.classList.add("invalid");
+		return valid;
 	};
 	
 	this.initialize = function()

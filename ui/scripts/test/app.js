@@ -41,6 +41,26 @@ var app = function() {
 		return categories;
 	};
 	
+	this.validate = function(type, field, value) {
+		console.log(type + "." + field + "?" + value);
+		switch(type)
+		{
+			case UI.constants.TYPE_EVENT:
+				switch(field)
+				{
+					case "title":		if(value == null || value == "") return false;
+					case "date":		if(value == null || value == "") return false;
+					case "location":	if(value == null) return false;
+					case "description":	if(value == null) return false;
+				}				
+				return true;
+			case UI.constants.TYPE_RATING:
+				return true;
+			default:
+				throw new Error("unsupported type");
+		}
+	};
+	
 	this.save = function(type, object) {
 		var list = null;
 		switch(type)

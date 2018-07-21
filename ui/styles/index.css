@@ -393,6 +393,26 @@
 	display: block;
     height: 8em;
 }
+
+/*
+.window.form .content .validatable::after {
+	content: "&nbsp;";
+	border-color: rgb(255, 127, 0);
+	border-width: 1px;
+}
+*/
+
+.window.form .content .validatable.invalid {
+	/*
+	border-color: rgb(255, 127, 0);
+	border-width: 1px;
+	*/
+	background: rgba(255, 127, 0, 0.5);
+}
+.window.form .content .validatable.invalid::after {
+	content: "!";
+	color: rgb(255, 127, 0);
+}
 /*
 
 .window.form .content .form {
