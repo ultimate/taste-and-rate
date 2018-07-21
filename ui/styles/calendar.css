@@ -73,8 +73,18 @@
 }
 
 .calendar_day .calendar_event {
-	font-size: 75%;
 	white-space: nowrap;
+}
+
+.calendar_day .calendar_event .title {
+	font-size: 75%;
+	display: block;
+}
+
+.calendar_day .calendar_event .location {
+	font-size: 50%;
+	display: block;
+	line-height: 100%;
 }
 
 .calendar_day .calendar_number {

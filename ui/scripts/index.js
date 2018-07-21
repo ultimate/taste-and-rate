@@ -215,10 +215,19 @@ var UI = function() {
 		if(event != null)
 		{
 			// populate all fields
+			document.getElementById("event_title").value = event.title;
+			//document.getElementById("event_date").value = event.date.toISOString().substr(0, 16);
+			document.getElementById("event_date").valueAsNumber = event.date.getTime();
+			document.getElementById("event_location").value = event.location;
+			document.getElementById("event_description").value = event.description;			
 		}
 		else
 		{
 			// clear all fields
+			document.getElementById("event_title").value = "";
+			document.getElementById("event_date").value = null;
+			document.getElementById("event_location").value = "";
+			document.getElementById("event_description").value = "";	
 		}
 		this.updateForm(form, event);
 	};
@@ -364,7 +373,8 @@ var UI = function() {
 		
 		/* initialize calendar */
 		this.calendar = new Calendar("calendar", true, 1, app.getEvents());
-		this.calendar.onUpdate = function(ui) { return function() {ui.labelManager.updateLabels(); }; } (this);
+		this.calendar.onUpdate = function(ui) { return function() { ui.labelManager.updateLabels(); }; }(this);
+		this.calendar.onSelect = function(ui) { return function(event) { ui.updateEventForm(event); }; }(this);
 
 		/* manage categories */
 		this.populateManageCategories();

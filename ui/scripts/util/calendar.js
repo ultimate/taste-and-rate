@@ -67,6 +67,10 @@ var Calendar = function(parent, showNav, firstDayOfWeek, events) {
 		// function to be overwritten by external function to support onUpdate event
 	};
 	
+	this.onSelect = function(event) {
+		// function to be overwritten by external function to support onSelectEvent event
+	};
+	
 	this.update = function(events) {
 		if(events)
 			this.events = events;
@@ -125,6 +129,7 @@ var Calendar = function(parent, showNav, firstDayOfWeek, events) {
 		// display events
 		console.log("range = " + new Date(rangeStart) + " to " + new Date(rangeEnd));
 		var eventTime;
+		var element;
 		for(var i = 0; i < this.events.length; i++)
 		{
 			if(this.events[i] == null || this.events[i].date == null)
@@ -152,9 +157,12 @@ var Calendar = function(parent, showNav, firstDayOfWeek, events) {
 					}
 				}
 				console.log("displaying event: '" + this.events[i].title + "' (" + this.events[i].date + ") @ " + index);
-				this.elements[index].append(Elements.fromString("<div class='calendar_event'>\
-																	<span>" + this.events[i].title + "</span>\
-																 </div>"));			
+				element = Elements.fromString("<div class='calendar_event'>\
+												<span class='title'>" + this.events[i].title + "</span>\
+												<span class='location'>" + this.events[i].location + "</span>\
+											   </div>")
+				element.onclick = function(cal, i) { return function() { cal.onSelect(cal.events[i]); }; }(this, i);
+				this.elements[index].append(element);			
 			}
 			else
 			{
