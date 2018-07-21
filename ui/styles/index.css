@@ -394,24 +394,21 @@
     height: 8em;
 }
 
-/*
-.window.form .content .validatable::after {
-	content: "&nbsp;";
-	border-color: rgb(255, 127, 0);
-	border-width: 1px;
-}
-*/
-
 .window.form .content .validatable.invalid {
 	/*
-	border-color: rgb(255, 127, 0);
-	border-width: 1px;
-	*/
 	background: rgba(255, 127, 0, 0.5);
+	*/
 }
-.window.form .content .validatable.invalid::after {
-	content: "!";
+.window.form .content .validatable+.marker {
+	opacity: 0;
 	color: rgb(255, 127, 0);
+    float: right;
+    width: 0;
+	font-style: bold;
+}
+	
+.window.form .content .validatable.invalid+.marker {
+	opacity: 1;
 }
 /*
 
