@@ -216,8 +216,7 @@ var UI = function() {
 		{
 			// populate all fields
 			document.getElementById("event_title").value = event.title;
-			//document.getElementById("event_date").value = event.date.toISOString().substr(0, 16);
-			document.getElementById("event_date").valueAsNumber = event.date.getTime();
+			document.getElementById("event_date").value = event.date.toDatetimeLocal(); // convert date to datetimelocal ISO-string using lib first	
 			document.getElementById("event_location").value = event.location;
 			document.getElementById("event_description").value = event.description;			
 		}
@@ -244,10 +243,10 @@ var UI = function() {
 			if(event == null) event = {};
 			// get all fields
 			event.title = document.getElementById("event_title").value;
-			event.date = new Date(document.getElementById("event_date").valueAsNumber);
+			event.date = new Date(document.getElementById("event_date").value); // timezone is applied only, when using ISO-string constructor
 			event.location = document.getElementById("event_location").value;
 			event.description = document.getElementById("event_description").value;		
-			app.save(this.constants.TYPE_EVENT, event);	
+			app.saveEvent(event);	
 			// update calendar
 			calendar.update(app.getEvents());
 		}
@@ -279,7 +278,7 @@ var UI = function() {
 			rating = form.object;
 			if(rating == null) rating = {};
 			// get all fields
-			app.save(this.constants.TYPE_RATING, rating);
+			app.saveRating(rating);
 		}
 		return valid;
 	};
