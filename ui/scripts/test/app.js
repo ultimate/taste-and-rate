@@ -82,12 +82,19 @@ var app = function() {
 		if(this.events == null)
 		{
 			this.events = [];
+			var d;
 			for(var i = 1; i <= 20; i++)
 			{
+				d = new Date(Date.now() + (Math.random() * 90 - 45)*24*3600*1000);
+				d.setSeconds(0);
+				d.setMilliseconds(0);
+				
 				this.events.push({
 					id: -i,
 					title: "Random Event " + i,
-					date: new Date(Date.now() + (Math.random() * 90 - 45)*24*3600*1000)
+					location: "Somewhere " + i,
+					date: d,
+					description: "Do something " + i + " somewhere..."
 				})
 			}
 			var maxId = Storage.loadLocalObject(UI.constants.TYPE_EVENT + "_id");
