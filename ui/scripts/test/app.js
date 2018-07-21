@@ -42,10 +42,14 @@ var app = function() {
 	};
 	
 	this.save = function(type, object) {
+		var list = null;
 		switch(type)
 		{
 			case UI.constants.TYPE_EVENT:
+				list = this.events;
+				break;
 			case UI.constants.TYPE_RATING:
+				list = this.ratings;
 				break;
 			default:
 				throw new Error("unsupported type");
@@ -56,6 +60,8 @@ var app = function() {
 		{
 			object.id = Storage.loadLocalObject(type + "_id") + 1;
 			Storage.saveLocalObject(type + "_id", object.id);
+			if(list != null)
+				list.push(object);
 		}
 		Storage.saveLocalObject(type + "_" + object.id, object);
 	};
@@ -69,8 +75,8 @@ var app = function() {
 	this.events = null;
 		
 	this.saveEvent = function(event) {
-		if(event.id == null)
-			this.events.push(event);
+		//if(event.id == null)
+		//	this.events.push(event);
 		this.save(UI.constants.TYPE_EVENT, event);
 	};	
 	
@@ -109,13 +115,16 @@ var app = function() {
 	this.ratings = null;
 	
 	this.saveRating = function(rating) {
-		if(rating.id == null)
-			this.ratings.push(rating);
+		//if(rating.id == null)
+		//	this.ratings.push(rating);
 		this.save(UI.constants.TYPE_RATING, rating);
 	};	
 	
 	this.loadRating = function(id) {
 		return this.load(UI.constants.TYPE_RATING, id);
+	};
+	
+	this.getRatings = function() {
 	};
 	
 	this.clearDatabase = function() {
