@@ -32,16 +32,16 @@ var UI = function() {
 										
 				if(this.categories[c].active)
 					element.classList.add("active");
-				Events.addEventListener(Events.CLICK, function(ui, i, e) {
+				Events.addEventListener(Events.CLICK, function(i, e) {
 					return function(event) {
-						ui.categories[i].active = !ui.categories[i].active;						
-						if(ui.categories[i].active)
+						UI.categories[i].active = !UI.categories[i].active;						
+						if(UI.categories[i].active)
 							e.classList.add("active");
 						else
 							e.classList.remove("active");
-						app.setCategories(ui.categories);
+						app.setCategories(UI.categories);
 					};
-				}(this, c, element), element);
+				}(c, element), element);
 				menuCategories.append(element);
 			}
 		}
@@ -121,40 +121,40 @@ var UI = function() {
 			console.log(element);
 			if(this.categories[c].favorite)
 				element.classList.add("favorite");
-			Events.addEventListener(Events.CLICK, function(ui, category, e) {
+			Events.addEventListener(Events.CLICK, function(category, e) {
 				return function(event) {
 					var i = category.position;
-					console.log("click star " + ui.categories[i].category.key + " @ pos=" + i);
-					ui.categories[i].favorite = !ui.categories[i].favorite;						
-					if(ui.categories[i].favorite)
+					console.log("click star " + UI.categories[i].category.key + " @ pos=" + i);
+					UI.categories[i].favorite = !UI.categories[i].favorite;						
+					if(UI.categories[i].favorite)
 						e.classList.add("favorite");
 					else
 						e.classList.remove("favorite");
-					app.setCategories(ui.categories);
+					app.setCategories(UI.categories);
 				};
-			}(this, this.categories[c], element), element.getElementsByClassName("star"));
-			Events.addEventListener(Events.CLICK, function(ui, category, e) {
+			}(this.categories[c], element), element.getElementsByClassName("star"));
+			Events.addEventListener(Events.CLICK, function(category, e) {
 				return function(event) {
 					var i = category.position;
-					console.log("click up " + ui.categories[i].category.key + " @ pos=" + i);
+					console.log("click up " + UI.categories[i].category.key + " @ pos=" + i);
 					if(i > 0)
 					{
-						ui.swapManageCategories(e, i, i-1);
+						UI.swapManageCategories(e, i, i-1);
 					}
-					app.setCategories(ui.categories);
+					app.setCategories(UI.categories);
 				};
-			}(this, this.categories[c], element), element.getElementsByClassName("up"));
-			Events.addEventListener(Events.CLICK, function(ui, category, e) {
+			}(this.categories[c], element), element.getElementsByClassName("up"));
+			Events.addEventListener(Events.CLICK, function(category, e) {
 				return function(event) {
 					var i = category.position;
-					console.log("click down " + ui.categories[i].category.key + " @ pos=" + i);
-					if(i < ui.categories.length-1)
+					console.log("click down " + UI.categories[i].category.key + " @ pos=" + i);
+					if(i < UI.categories.length-1)
 					{
-						ui.swapManageCategories(e, i, i+1);
+						UI.swapManageCategories(e, i, i+1);
 					}
-					app.setCategories(ui.categories);
+					app.setCategories(UI.categories);
 				};
-			}(this, this.categories[c], element), element.getElementsByClassName("down"));
+			}(this.categories[c], element), element.getElementsByClassName("down"));
 			
 			manageCategories.append(element);
 		}
@@ -420,8 +420,8 @@ var UI = function() {
 		
 		/* initialize calendar */
 		this.calendar = new Calendar("calendar", true, 1, app.getEvents());
-		this.calendar.onUpdate = function(ui) { return function() { UI.updateLabels(); }; }(this);
-		this.calendar.onSelect = function(ui) { return function(event) { ui.updateEventForm(event); }; }(this);
+		this.calendar.onUpdate = function() { UI.labelManager.updateLabels(); };
+		this.calendar.onSelect = function(event) { UI.updateEventForm(event); };
 
 		/* manage categories */
 		this.populateManageCategories();
