@@ -172,12 +172,10 @@ var UI = function() {
 			if(child.id == "content_" + view)
 			{
 				child.classList.remove("hidden");
-				child.classList.add("fill");
 			}
 			else
 			{
 				child.classList.add("hidden");
-				child.classList.remove("fill");
 			}				
 		}
 	};
