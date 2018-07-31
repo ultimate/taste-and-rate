@@ -217,16 +217,20 @@
 }
 
 #content_frame > div {
-	padding: 0.5em;
-}
-
-#content_frame > div.fill {
 	position: absolute;
 	top: 0;
 	bottom: 0;
 	right: 0;
 	left: 0;
+	padding: 0.5em;
+}
+
+#content_frame > div.fill {
 	overflow: hidden;
+}
+
+#content_frame > div.scrollable {
+	overflow-y: auto;
 }
 
 #content_frame > div.hidden {
@@ -234,7 +238,16 @@
 }
 
 #content_frame > div > div {
-	z-index: -2;	
+	z-index: -2;
+}
+
+#content_frame > div.fill > div {
+	overflow: hidden;
+	height: 100%;
+}
+
+#content_frame > div.scrollable > div {
+	overflow-y: auto;
 }
 
 /* fade content on scroll */
@@ -500,11 +513,6 @@
 #manage_categories ul > li.selectable.first .image.up,
 #manage_categories ul > li.selectable.last .image.down {
 	/*opacity: 0;*/
-}
-
-/* calendar */
-#calendar {
-	height: 100%;
 }
 
 /* components */
