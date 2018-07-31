@@ -22,16 +22,22 @@
 }
 
 .list.standard > ul > li > image {
+	
 }
 
 .list.standard > ul > li > rating {
+	
 }
 
 .list.standard > ul > li > title {
+	
 }
 
 .list.standard > ul > li > details {
+	
 }
+
+/* view style "compact" */
 
 .list.compact > ul {
 	flex-direction: row;
@@ -51,18 +57,18 @@
     box-sizing: border-box;
 }
 
-.list.compact > ul > li+li {
+.list.compact > ul > li > image {
 	
 }
 
-.list.compact > ul > li > image {
-}
-
 .list.compact > ul > li > rating {
+	
 }
 
 .list.compact > ul > li > title {
+	
 }
 
 .list.compact > ul > li > details {
+	
 }
