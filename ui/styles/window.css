@@ -87,11 +87,11 @@
 	border-top: 1px solid;
 }
 
-.control div {
+.window .control div {
 	display: inline-block;
 }
 
-.control .button {
+.window .control .button {
 	border: 1px solid;
 	background: rgb(150,85,0);
 	color: white;
@@ -100,7 +100,7 @@
 	margin-right: 0.5em;
 }
 
-.control .button:active {
+.window .control .button:active {
 	/*
 	background: white;
 	color: rgb(150,85,0);
