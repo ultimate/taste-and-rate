@@ -163,6 +163,25 @@ var UI = function() {
 		this.labelManager.updateLabels(manageCategories);
 	};
 	
+	this.showView = function(view) {
+		var frame = document.getElementById("content_frame");
+		var child;
+		for(var i = 0; i < frame.children.length; i++)
+		{
+			child = frame.children[i];
+			if(child.id == "content_" + view)
+			{
+				child.classList.remove("hidden");
+				child.classList.add("fill");
+			}
+			else
+			{
+				child.classList.add("hidden");
+				child.classList.remove("fill");
+			}				
+		}
+	};
+	
 	this.showAdd = function()
 	{
 		console.log("showAdd called for '" + this.view + "'");
@@ -334,7 +353,11 @@ var UI = function() {
 		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_exit"); 		UI.menu.hide(100); app.exit(); 			}, document.getElementById("menu_exit"));
 		
 		/* initialize bottom bar */
-		// TODO
+		Events.addEventListener(Events.CLICK, function(event) { UI.showView(UI.constants.VIEW_CALENDAR); 			}, document.getElementById(UI.constants.VIEW_CALENDAR 			+ "_button"));
+		Events.addEventListener(Events.CLICK, function(event) { UI.showView(UI.constants.VIEW_PERSONAL_RATINGS); 	}, document.getElementById(UI.constants.VIEW_PERSONAL_RATINGS 	+ "_button"));
+		Events.addEventListener(Events.CLICK, function(event) { UI.showView(UI.constants.VIEW_FRIENDS_RATINGS); 	}, document.getElementById(UI.constants.VIEW_FRIENDS_RATINGS 	+ "_button"));
+		Events.addEventListener(Events.CLICK, function(event) { UI.showView(UI.constants.VIEW_GLOBAL_RATINGS); 		}, document.getElementById(UI.constants.VIEW_GLOBAL_RATINGS 	+ "_button"));
+		
 				
 		/* initialize windows */
 		/* close cancel buttons */
@@ -397,7 +420,7 @@ var UI = function() {
 		
 		/* initialize calendar */
 		this.calendar = new Calendar("calendar", true, 1, app.getEvents());
-		this.calendar.onUpdate = function(ui) { return function() { ui.labelManager.updateLabels(); }; }(this);
+		this.calendar.onUpdate = function(ui) { return function() { UI.updateLabels(); }; }(this);
 		this.calendar.onSelect = function(ui) { return function(event) { ui.updateEventForm(event); }; }(this);
 
 		/* manage categories */
