@@ -430,7 +430,7 @@ var UI = function() {
 		Events.addEventListener(Events.CLICK, function(event) { UI.populateMenu(); UI.populateManageCategories(); }, manageCategoriesCloseButton);
 		
 		/* select view */
-		// TODO
+		this.showView(this.constants.VIEW_PERSONAL_RATINGS);
 		
 		/* update locale dependent labels */
 		this.labelManager.updateLabels();

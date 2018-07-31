@@ -1,0 +1,68 @@
+
+
+/* ratings list */
+.list > ul {
+	list-style: none;
+    padding-left: 0;
+	display: flex;
+}
+
+.list > ul > li {
+	
+}
+
+/* view style "standard" */
+
+.list.standard > ul {
+	flex-direction: column;
+}
+
+.list.standard > ul > li {
+	
+}
+
+.list.standard > ul > li > image {
+}
+
+.list.standard > ul > li > rating {
+}
+
+.list.standard > ul > li > title {
+}
+
+.list.standard > ul > li > details {
+}
+
+.list.compact > ul {
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.list.compact > ul:after {
+	/* left-align last row by adding after-element */
+	content: "";
+	flex: auto;
+}
+
+.list.compact > ul > li {
+	width: 33.3333333%;
+    padding: 0.5em;
+    box-sizing: border-box;
+}
+
+.list.compact > ul > li+li {
+	
+}
+
+.list.compact > ul > li > image {
+}
+
+.list.compact > ul > li > rating {
+}
+
+.list.compact > ul > li > title {
+}
+
+.list.compact > ul > li > details {
+}
