@@ -165,6 +165,9 @@ var UI = function() {
 	
 	this.showView = function(view) {
 		var frame = document.getElementById("content_frame");
+		
+		// TODO refresh view
+		
 		var child;
 		for(var i = 0; i < frame.children.length; i++)
 		{
@@ -177,7 +180,7 @@ var UI = function() {
 			{
 				child.classList.add("hidden");
 			}				
-		}
+		}		
 	};
 	
 	this.showAdd = function()
