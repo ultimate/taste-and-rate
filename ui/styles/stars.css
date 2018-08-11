@@ -11,10 +11,13 @@
     float: left;
 }
 
-.stars:after {	
-    content: "\2605\2605\2605\2605\2605";
+.stars .percent {
     position: absolute;
     left: 0;
     float: left;
     overflow: hidden;
+}
+
+.stars .percent:after {	
+    content: "\2605\2605\2605\2605\2605";
 }
