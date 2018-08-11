@@ -17,23 +17,33 @@
 	flex-direction: column;
 }
 
-.list.standard > ul > li {
+.list.standard > ul > li {	
+	height: 4em; 
+}
+
+
+.list.standard > ul > li > div {
+	display: inline-block;
+	height: 100%;
+    vertical-align: top;
+}
+
+.list.standard .image {
+}
+
+.list.standard .image img {
+	height: 100%; 
+}
+
+.list.standard .rating {
 	
 }
 
-.list.standard > ul > li > image {
-	
+.list.standard .title {
+	display: inline-block;
 }
 
-.list.standard > ul > li > rating {
-	
-}
-
-.list.standard > ul > li > title {
-	
-}
-
-.list.standard > ul > li > details {
+.list.standard .details {
 	
 }
 
@@ -57,18 +67,18 @@
     box-sizing: border-box;
 }
 
-.list.compact > ul > li > image {
+.list.compact .image {
 	
 }
 
-.list.compact > ul > li > rating {
+.list.compact .rating {
 	
 }
 
-.list.compact > ul > li > title {
+.list.compact .title {
 	
 }
 
-.list.compact > ul > li > details {
+.list.compact .details {
 	
 }
