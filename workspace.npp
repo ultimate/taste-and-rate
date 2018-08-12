@@ -70,6 +70,7 @@
             <File name="ui\styles\index.css" />
             <File name="ui\styles\list.css" />
             <File name="ui\styles\window.css" />
+            <File name="ui\styles\stars.css" />
         </Folder>
         <File name="ui\index.html" />
     </Project>
