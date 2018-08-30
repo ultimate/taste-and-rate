@@ -121,7 +121,7 @@ var app = function() {
 					location: "Somewhere " + i,
 					date: d,
 					description: "Do something " + i + " somewhere..."
-				})
+				});
 			}
 			var maxId = Storage.loadLocalObject(UI.constants.TYPE_EVENT + "_id");
 			for(var i = 1; i <= maxId; i++)
@@ -145,6 +145,73 @@ var app = function() {
 	};
 	
 	this.getRatings = function() {
+		if(this.ratings == null)
+		{
+			var tags = ["sweet", "old", "dark", "bright", "fruity", "high alcohol", "spicy"];
+			
+			this.ratings = [];
+			var categories = this.getCategories();
+			var d;
+			var category;
+			var categoryName;
+			var id;
+			var criteria;
+			var spider;
+			for(var c = 0; c < categories.length; c++)
+			{		
+				category = categories[c].category;
+				categoryName = this.getString(category.key + ".title");
+				for(var i = 1; i <= 20; i++)
+				{
+					d = new Date(Date.now() + (Math.random() * 90 - 45)*24*3600*1000);
+					d.setSeconds(0);
+					d.setMilliseconds(0);
+					
+					id = (category.id*100 + i);
+					
+					criteria = [];
+					for(var cr = 0; cr < category.criteria.length; cr++)
+					{
+						spider = [];
+						if(category.criteria[cr].spider)
+						{	
+							for(var s = 0; s < category.spider.length; s++)
+							{
+								spider.push({
+									ref: category.spider[s].id,
+									value: Math.round(Math.random()*10)
+								});
+							}
+						}
+						
+						criteria.push({
+							ref: category.criteria[cr].id,
+							stars: 	(category.criteria[cr].stars 	? Math.ceil(Math.random()*5) : 0),
+							text: 	(category.criteria[cr].text 	? "Criterion " + cr + " text" : ""),
+							spider: (category.criteria[cr].spider 	? spider : []),
+							tags: 	(category.criteria[cr].tags 	? new Array(tags[Math.floor(Math.random()*tags.length)]) : []),
+						});
+					}					
+					
+					this.ratings.push({
+						id: -id,
+						category: category,
+						product: "The very special " + categoryName + " #" + i,
+						summary: "Random Rating " + id,
+						date: d,
+						event: null, // TODO
+						criteria: criteria
+					});
+				}
+			}
+			var maxId = Storage.loadLocalObject(UI.constants.TYPE_EVENT + "_id");
+			for(var i = 1; i <= maxId; i++)
+			{
+				this.ratings.push(this.loadEvent(i));
+			}
+		}
+		// TODO filter 
+		return this.ratings;
 	};
 	
 	this.clearDatabase = function() {
