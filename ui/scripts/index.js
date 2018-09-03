@@ -8,6 +8,9 @@ var UI = function() {
 		VIEW_PERSONAL_RATINGS: "personal_ratings",
 		VIEW_FRIENDS_RATINGS: "friends_ratings",
 		VIEW_GLOBAL_RATINGS: "global_ratings",
+		SCOPE_PERSONAL: 1,
+		SCOPE_FRIENDS: 2,
+		SCOPE_GLOBAL: 4,
 	};
 	
 	this.view = this.constants.VIEW_CALENDAR;

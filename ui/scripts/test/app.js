@@ -1,5 +1,8 @@
 var app = function() {
 	
+	this.CURRENT_USER = 1;
+	this.FRIENDS = [2,3,4];
+	
 	this.getString = function(key) {
 		if(key == null || key == "")
 			return key; // otherwise the following eval would fail!
@@ -144,7 +147,7 @@ var app = function() {
 		return this.load(UI.constants.TYPE_RATING, id);
 	};
 	
-	this.getRatings = function() {
+	this.getRatings = function(categoryId, scope) {
 		if(this.ratings == null)
 		{
 			var tags = ["sweet", "old", "dark", "bright", "fruity", "high alcohol", "spicy"];
@@ -161,7 +164,7 @@ var app = function() {
 			{		
 				category = categories[c].category;
 				categoryName = this.getString(category.key + ".title");
-				for(var i = 1; i <= 20; i++)
+				for(var i = 1; i <= 100; i++)
 				{
 					d = new Date(Date.now() + (Math.random() * 90 - 45)*24*3600*1000);
 					d.setSeconds(0);
@@ -185,17 +188,18 @@ var app = function() {
 						}
 						
 						criteria.push({
-							ref: category.criteria[cr].id,
-							stars: 	(category.criteria[cr].stars 	? Math.ceil(Math.random()*5) : 0),
-							text: 	(category.criteria[cr].text 	? "Criterion " + cr + " text" : ""),
-							spider: (category.criteria[cr].spider 	? spider : []),
-							tags: 	(category.criteria[cr].tags 	? new Array(tags[Math.floor(Math.random()*tags.length)]) : []),
+							ref: 		category.criteria[cr].id,
+							stars: 		(category.criteria[cr].stars 	? Math.ceil(Math.random()*5) : 0),
+							text: 		(category.criteria[cr].text 	? "Criterion " + cr + " text" : ""),
+							spider: 	(category.criteria[cr].spider 	? spider : []),
+							tags: 		(category.criteria[cr].tags 	? new Array(tags[Math.floor(Math.random()*tags.length)]) : []),
+							creator:	Math.round(Math.random()*5)
 						});
 					}					
 					
 					this.ratings.push({
 						id: -id,
-						category: category,
+						category: category.id,
 						product: "The very special " + categoryName + " #" + i,
 						summary: "Random Rating " + id,
 						date: d,
@@ -210,8 +214,18 @@ var app = function() {
 				this.ratings.push(this.loadEvent(i));
 			}
 		}
+		var result = [];
 		// TODO filter 
-		return this.ratings;
+		for(var r = 0; r < this.ratings.length; r++)
+		{
+			if(this.ratings[r].category != categoryId)
+				continue;
+			if(scope|UI.constants.SCOPE_PERSONAL == 0 && this.ratings[r].creator == this.CURRENT_USER)
+				result.push(this.ratings[r]);
+			// TODO other scopes
+
+		}
+		return result;
 	};
 	
 	this.clearDatabase = function() {
