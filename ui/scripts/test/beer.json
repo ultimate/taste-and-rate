@@ -57,5 +57,6 @@ var TEST_CAT_BEER = {
 			min: "bright",
 			max: "dark"
 		}
-	]
+	],
+	overallCriteria: 301,
 };

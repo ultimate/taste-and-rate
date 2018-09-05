@@ -30,6 +30,9 @@ lang.categories.beer = {};
 lang.categories.beer.title = "Beer";
 lang.categories.beer.description = "Drink from different kind of grain";
 
+lang.rating = {};
+lang.rating.no_text = "<i>no detailed description</i>"
+
 lang.event = {};
 lang.event.title = "Name";
 lang.event.date = "Date & Time";

@@ -166,10 +166,162 @@ var UI = function() {
 		this.labelManager.updateLabels(manageCategories);
 	};
 	
+	this.populateRatings = function(view) {
+		var scope = 0;
+		if(view == UI.constants.VIEW_PERSONAL_RATINGS)
+			scope = UI.constants.SCOPE_PERSONAL;
+		else if(view == UI.constants.VIEW_FRIENDS_RATINGS)
+			scope = UI.constants.SCOPE_FRIENDS;
+		if(view == UI.constants.VIEW_GLOBAL_RATINGS)
+			scope = UI.constants.SCOPE_GLOBAL;	
+		
+		console.log("start");
+		var start = new Date().getTime();
+
+		var container = document.getElementById(view);
+		Elements.removeChildren(container);
+		
+		var list = document.createElement("ul");
+		container.append(list);
+		
+		var ratings = app.getRatings(scope);
+		var categories = app.getCategories();
+		
+		console.log("ratings & categories loaded @ " + (new Date().getTime()-start));
+		
+		var t0 = 0;
+		var t1 = 0;
+		var t2 = 0;
+		var t3 = 0;
+		var t4 = 0;
+		var t5 = 0;
+		var t6 = 0;
+		var t7 = 0;
+		var t8 = 0;
+		var li, div, div2, img, stars, perc;
+		
+		for(var r = 0; r < ratings.length; r++)
+		{
+			t0 = new Date().getTime();
+			var category = null;
+			for(var c = 0; c < categories.length; c++)
+			{
+				if(ratings[r].category == categories[c].category.id)
+					category = categories[c].category;
+			}
+			if(category == null)
+				console.err("category not found");
+			t1 += (new Date().getTime() - t0);
+			
+			t0 = new Date().getTime();
+			var overallCriteria;
+			for(var c = 0; c < ratings[r].criteria.length; c++)
+			{
+				if(ratings[r].criteria[c].ref == category.overallCriteria)
+					overallCriteria = ratings[r].criteria[c];
+			}
+			t2 += (new Date().getTime() - t0);
+				
+			t0 = new Date().getTime();		
+			var percent = 0;
+			var details = app.getString("rating.no_text");
+			if(overallCriteria != null)
+			{
+				percent = Math.round(overallCriteria.stars*2)*10;
+				if(overallCriteria.text != null && overallCriteria.text != "")
+					details = overallCriteria.text;
+			}
+			t3 += (new Date().getTime() - t0);			
+			
+			t0 = new Date().getTime();				
+			list.append(Elements.fromString("<li>\
+												<div class='image'><img src='" + ratings[r].image + "'/></div>\
+												<div class='text'>\
+													<div class='rating'><div class='stars'><div class='percent' style='width: " + percent + "%;'></div></div></div>\
+													<div class='product'>" + ratings[r].product + "</div>\
+													<div class='details'>" + details + "</div>\
+												</div>\
+											</li>"));				
+			t4 += (new Date().getTime() - t0);
+			t0 = new Date().getTime();		
+			list.append(Elements.fromString("<li>\
+												<div class='image'><img src=''/></div>\
+												<div class='text'>\
+													<div class='rating'><div class='stars'><div class='percent' style='width: %;'></div></div></div>\
+													<div class='product'></div>\
+													<div class='details'></div>\
+												</div>\
+											</li>"));				
+			t5 += (new Date().getTime() - t0);
+			t0 = new Date().getTime();		
+			list.append(Elements.fromString(["<li>\
+												<div class='image'><img src='", ratings[r].image, "'/></div>\
+												<div class='text'>\
+													<div class='rating'><div class='stars'><div class='percent' style='width: ", percent, "%;'></div></div></div>\
+													<div class='product'>", ratings[r].product, "</div>\
+													<div class='details'>", details, "</div>\
+												</div>\
+											</li>"].join()));		
+			t6 += (new Date().getTime() - t0);	
+			t0 = new Date().getTime();		
+			list.append(Elements.fromString(["<li>\
+												<div class='image'><img src='", ratings[r].image, "'/></div>\
+												<div class='text'>\
+													<div class='rating'><div class='stars'><div class='percent' style='width: ", percent, "%;'></div></div></div>\
+													<div class='product'>", ratings[r].product, "</div>\
+													<div class='details'>", details, "</div>\
+												</div>\
+											</li>"].join("")));		
+			t7 += (new Date().getTime() - t0);	
+			t0 = new Date().getTime();		
+			li = document.createElement("li");
+				div = document.createElement("div");
+					img = document.createElement("div");
+					img.setAttribute("src", ratings[r].image);
+					div.append(img);
+				div.classList.add("image");
+				li.append(div);
+				
+				div = document.createElement("div");
+					div2 = document.createElement("div");
+					div2.classList.add("rating");
+						stars = perc = document.createElement("div");
+						stars.classList.add("stars");
+							perc = document.createElement("div");
+							perc.classList.add("percent");
+							perc.style.width = percent + "%";
+							stars.append(perc);
+						div2.append(stars);						
+					div.append(div2);
+					
+					div2 = document.createElement("div");
+					div2.classList.add("product");
+					div2.append(document.createTextNode(ratings[r].product));
+					div.append(div2);
+					
+					div2 = document.createElement("div");
+					div2.classList.add("details");
+					div2.append(document.createTextNode(details));
+					div.append(div2);
+				div.classList.add("text");
+				li.append(div)
+			list.append(li);
+			t8 += (new Date().getTime() - t0);	
+		}
+		console.log("elements created @ " + (new Date().getTime()-start));
+		console.log("t1 = " + t1);
+		console.log("t2 = " + t2);
+		console.log("t3 = " + t3);
+		console.log("t4 = " + t4);
+		console.log("t5 = " + t5);
+		console.log("t6 = " + t6);
+		console.log("t7 = " + t7);
+		console.log("t8 = " + t8);
+	};
+	
 	this.showView = function(view) {
 		var frame = document.getElementById("content_frame");
-		
-		// TODO refresh view
+		this.view = view;		
 		
 		var child;
 		for(var i = 0; i < frame.children.length; i++)
@@ -183,7 +335,30 @@ var UI = function() {
 			{
 				child.classList.add("hidden");
 			}				
-		}		
+		}	
+		
+		// TODO show load screen if it takes longer
+		
+		// TODO only refresh, if last refresh is 
+		// refresh view
+		if(this.view == this.constants.VIEW_CALENDAR)
+		{
+			this.calendar.update(app.getEvents());
+		}
+		else if(this.view == this.constants.VIEW_PERSONAL_RATINGS)
+		{
+			this.populateRatings(this.view);
+		}
+		else if(this.view == this.constants.VIEW_FRIENDS_RATINGS)
+		{
+			this.populateRatings(this.view);
+		}
+		else if(this.view == this.constants.VIEW_GLOBAL_RATINGS)
+		{
+			this.populateRatings(this.view);
+		}
+		
+		// TODO remove load screen
 	};
 	
 	this.showAdd = function()
@@ -426,6 +601,8 @@ var UI = function() {
 		this.calendar = new Calendar("calendar", true, 1, app.getEvents());
 		this.calendar.onUpdate = function() { UI.labelManager.updateLabels(); };
 		this.calendar.onSelect = function(event) { UI.updateEventForm(event); };
+		
+		/* initialize rating lists */
 
 		/* manage categories */
 		this.populateManageCategories();

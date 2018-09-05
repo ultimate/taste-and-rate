@@ -63,5 +63,6 @@ var TEST_CAT_WHISKEY = {
 			min: "simple",
 			max: "complex"
 		}
-	]
+	],
+	overallCriteria: 201,
 };

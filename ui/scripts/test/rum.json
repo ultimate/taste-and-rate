@@ -63,5 +63,6 @@ var TEST_CAT_RUM = {
 			min: "simple",
 			max: "complex"
 		}
-	]
+	],
+	overallCriteria: 101,
 };

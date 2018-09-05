@@ -204,6 +204,7 @@ var app = function() {
 						creator:	Math.round(Math.random()*10),
 						product: "The very special " + categoryName + " #" + i,
 						summary: "Random Rating " + id,
+						image: "images/bottle.jpg",
 						date: d,
 						event: null, // TODO
 						criteria: criteria,
