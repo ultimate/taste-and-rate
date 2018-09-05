@@ -3,6 +3,8 @@ var app = function() {
 	this.CURRENT_USER = 1;
 	this.FRIENDS = [2,3,4];
 	
+	this.NUMBER_OF_SAMPLES = 200;
+	
 	this.getString = function(key) {
 		if(key == null || key == "")
 			return key; // otherwise the following eval would fail!
@@ -112,9 +114,9 @@ var app = function() {
 		{
 			this.events = [];
 			var d;
-			for(var i = 1; i <= 20; i++)
+			for(var i = 1; i <= NUMBER_OF_SAMPLES; i++)
 			{
-				d = new Date(Date.now() + (Math.random() * 90 - 45)*24*3600*1000);
+				d = new Date(Date.now() + (Math.random()*360-180)*24*3600*1000);
 				d.setSeconds(0);
 				d.setMilliseconds(0);
 				
@@ -164,13 +166,13 @@ var app = function() {
 			{		
 				category = categories[c].category;
 				categoryName = this.getString(category.key + ".title");
-				for(var i = 1; i <= 100; i++)
+				for(var i = 1; i <= NUMBER_OF_SAMPLES; i++)
 				{
 					d = new Date(Date.now() + (Math.random() * 90 - 45)*24*3600*1000);
 					d.setSeconds(0);
 					d.setMilliseconds(0);
 					
-					id = (category.id*100 + i);
+					id = (category.id*1000 + i);
 					
 					criteria = [];
 					for(var cr = 0; cr < category.criteria.length; cr++)
@@ -192,19 +194,19 @@ var app = function() {
 							stars: 		(category.criteria[cr].stars 	? Math.ceil(Math.random()*5) : 0),
 							text: 		(category.criteria[cr].text 	? "Criterion " + cr + " text" : ""),
 							spider: 	(category.criteria[cr].spider 	? spider : []),
-							tags: 		(category.criteria[cr].tags 	? new Array(tags[Math.floor(Math.random()*tags.length)]) : []),
-							creator:	Math.round(Math.random()*5)
+							tags: 		(category.criteria[cr].tags 	? new Array(tags[Math.floor(Math.random()*tags.length)]) : [])
 						});
 					}					
 					
 					this.ratings.push({
 						id: -id,
 						category: category.id,
+						creator:	Math.round(Math.random()*10),
 						product: "The very special " + categoryName + " #" + i,
 						summary: "Random Rating " + id,
 						date: d,
 						event: null, // TODO
-						criteria: criteria
+						criteria: criteria,
 					});
 				}
 			}
@@ -214,16 +216,18 @@ var app = function() {
 				this.ratings.push(this.loadEvent(i));
 			}
 		}
+		// filter by scope
 		var result = [];
-		// TODO filter 
 		for(var r = 0; r < this.ratings.length; r++)
 		{
 			if(this.ratings[r].category != categoryId)
 				continue;
-			if(scope|UI.constants.SCOPE_PERSONAL == 0 && this.ratings[r].creator == this.CURRENT_USER)
+			if((scope & UI.constants.SCOPE_PERSONAL) != 0 && this.CURRENT_USER == this.ratings[r].creator)
 				result.push(this.ratings[r]);
-			// TODO other scopes
-
+			if((scope & UI.constants.SCOPE_FRIENDS) != 0 && this.FRIENDS.indexOf(this.ratings[r].creator) != -1)
+				result.push(this.ratings[r]);
+			if((scope & UI.constants.SCOPE_GLOBAL) != 0 && this.CURRENT_USER != this.ratings[r].creator && this.FRIENDS.indexOf(this.ratings[r].creator) == -1)
+				result.push(this.ratings[r]);
 		}
 		return result;
 	};
