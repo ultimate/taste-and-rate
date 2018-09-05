@@ -175,9 +175,6 @@ var UI = function() {
 		if(view == UI.constants.VIEW_GLOBAL_RATINGS)
 			scope = UI.constants.SCOPE_GLOBAL;	
 		
-		console.log("start");
-		var start = new Date().getTime();
-
 		var container = document.getElementById(view);
 		Elements.removeChildren(container);
 		
@@ -187,22 +184,10 @@ var UI = function() {
 		var ratings = app.getRatings(scope);
 		var categories = app.getCategories();
 		
-		console.log("ratings & categories loaded @ " + (new Date().getTime()-start));
-		
-		var t0 = 0;
-		var t1 = 0;
-		var t2 = 0;
-		var t3 = 0;
-		var t4 = 0;
-		var t5 = 0;
-		var t6 = 0;
-		var t7 = 0;
-		var t8 = 0;
 		var li, div, div2, img, stars, perc;
 		
 		for(var r = 0; r < ratings.length; r++)
 		{
-			t0 = new Date().getTime();
 			var category = null;
 			for(var c = 0; c < categories.length; c++)
 			{
@@ -211,18 +196,14 @@ var UI = function() {
 			}
 			if(category == null)
 				console.err("category not found");
-			t1 += (new Date().getTime() - t0);
 			
-			t0 = new Date().getTime();
 			var overallCriteria;
 			for(var c = 0; c < ratings[r].criteria.length; c++)
 			{
 				if(ratings[r].criteria[c].ref == category.overallCriteria)
 					overallCriteria = ratings[r].criteria[c];
 			}
-			t2 += (new Date().getTime() - t0);
-				
-			t0 = new Date().getTime();		
+			
 			var percent = 0;
 			var details = app.getString("rating.no_text");
 			if(overallCriteria != null)
@@ -230,10 +211,9 @@ var UI = function() {
 				percent = Math.round(overallCriteria.stars*2)*10;
 				if(overallCriteria.text != null && overallCriteria.text != "")
 					details = overallCriteria.text;
-			}
-			t3 += (new Date().getTime() - t0);			
+			}		
 			
-			t0 = new Date().getTime();				
+			/*
 			list.append(Elements.fromString("<li>\
 												<div class='image'><img src='" + ratings[r].image + "'/></div>\
 												<div class='text'>\
@@ -241,42 +221,14 @@ var UI = function() {
 													<div class='product'>" + ratings[r].product + "</div>\
 													<div class='details'>" + details + "</div>\
 												</div>\
-											</li>"));				
-			t4 += (new Date().getTime() - t0);
-			t0 = new Date().getTime();		
-			list.append(Elements.fromString("<li>\
-												<div class='image'><img src=''/></div>\
-												<div class='text'>\
-													<div class='rating'><div class='stars'><div class='percent' style='width: %;'></div></div></div>\
-													<div class='product'></div>\
-													<div class='details'></div>\
-												</div>\
-											</li>"));				
-			t5 += (new Date().getTime() - t0);
-			t0 = new Date().getTime();		
-			list.append(Elements.fromString(["<li>\
-												<div class='image'><img src='", ratings[r].image, "'/></div>\
-												<div class='text'>\
-													<div class='rating'><div class='stars'><div class='percent' style='width: ", percent, "%;'></div></div></div>\
-													<div class='product'>", ratings[r].product, "</div>\
-													<div class='details'>", details, "</div>\
-												</div>\
-											</li>"].join()));		
-			t6 += (new Date().getTime() - t0);	
-			t0 = new Date().getTime();		
-			list.append(Elements.fromString(["<li>\
-												<div class='image'><img src='", ratings[r].image, "'/></div>\
-												<div class='text'>\
-													<div class='rating'><div class='stars'><div class='percent' style='width: ", percent, "%;'></div></div></div>\
-													<div class='product'>", ratings[r].product, "</div>\
-													<div class='details'>", details, "</div>\
-												</div>\
-											</li>"].join("")));		
-			t7 += (new Date().getTime() - t0);	
-			t0 = new Date().getTime();		
+											</li>"));
+			*/
+			// this is the same as above, but much faster!!! ~ factor 1000:
+			// - above = several seconds (dependings on number of elements
+			// - below = few milleseconds
 			li = document.createElement("li");
 				div = document.createElement("div");
-					img = document.createElement("div");
+					img = document.createElement("img");
 					img.setAttribute("src", ratings[r].image);
 					div.append(img);
 				div.classList.add("image");
@@ -306,17 +258,7 @@ var UI = function() {
 				div.classList.add("text");
 				li.append(div)
 			list.append(li);
-			t8 += (new Date().getTime() - t0);	
 		}
-		console.log("elements created @ " + (new Date().getTime()-start));
-		console.log("t1 = " + t1);
-		console.log("t2 = " + t2);
-		console.log("t3 = " + t3);
-		console.log("t4 = " + t4);
-		console.log("t5 = " + t5);
-		console.log("t6 = " + t6);
-		console.log("t7 = " + t7);
-		console.log("t8 = " + t8);
 	};
 	
 	this.showView = function(view) {
