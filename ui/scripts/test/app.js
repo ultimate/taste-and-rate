@@ -149,7 +149,7 @@ var app = function() {
 		return this.load(UI.constants.TYPE_RATING, id);
 	};
 	
-	this.getRatings = function(categoryId, scope) {
+	this.getRatings = function(scope) {
 		if(this.ratings == null)
 		{
 			var tags = ["sweet", "old", "dark", "bright", "fruity", "high alcohol", "spicy"];
@@ -216,11 +216,20 @@ var app = function() {
 				this.ratings.push(this.loadEvent(i));
 			}
 		}
+		// get active categories
+		var categories = this.getCategories();
+		var activeCategories = [];
+		for(var c = 0; c < categories.length; c++)
+		{	
+			if(categories[c].active)
+				activeCategories.push(categories[c].category.id);
+		}
+		console.log("active categories: " + activeCategories);		
 		// filter by scope
 		var result = [];
 		for(var r = 0; r < this.ratings.length; r++)
 		{
-			if(this.ratings[r].category != categoryId)
+			if(activeCategories.indexOf(this.ratings[r].category) == -1)
 				continue;
 			if((scope & UI.constants.SCOPE_PERSONAL) != 0 && this.CURRENT_USER == this.ratings[r].creator)
 				result.push(this.ratings[r]);
