@@ -143,20 +143,22 @@ var Calendar = function(parent, showNav, firstDayOfWeek, events) {
 				index = this.events[i].date.getDate() + offset - 1;
 				if(this.events[i].date.getMonth() != this.currentMonth)
 				{
-					if(this.events[i].date.getYear() > this.currentYear || this.events[i].date.getMonth() > this.currentMonth)
+					if(this.events[i].date.getFullYear() > this.currentYear || this.events[i].date.getMonth() > this.currentMonth)
 					{
 						index += daysInThisMonth;
+						console.log("increment");
 					}
-					else if(this.events[i].date.getYear() < this.currentYear || this.events[i].date.getMonth() < this.currentMonth)
+					else if(this.events[i].date.getFullYear() < this.currentYear || (this.events[i].date.getMonth() < this.currentMonth && this.events[i].date.getFullYear() == this.currentYear))
 					{
 						index -= daysInPrevMonth;
+						console.log("decrement");
 					}
 					else
 					{
 						console.err("how did we get here: " + this.events[i].date);
 					}
 				}
-				console.log("displaying event: '" + this.events[i].title + "' (" + this.events[i].date + ") @ " + index);
+				console.log("displaying event: '" + this.events[i].title + "' (" + this.events[i].date + ") @ " + index + " (offset=" + offset + ")");
 				element = Elements.fromString("<div class='calendar_event'>\
 												<span class='title'>" + this.events[i].title + "</span>\
 												<span class='location'>" + this.events[i].location + "</span>\
