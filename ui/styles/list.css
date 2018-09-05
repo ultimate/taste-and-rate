@@ -71,6 +71,10 @@
 	
 }
 
+.list.compact .image img {
+	width: 100%;
+}
+
 .list.compact .rating {
 	
 }
