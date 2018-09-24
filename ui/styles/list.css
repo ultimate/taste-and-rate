@@ -5,6 +5,16 @@
 	list-style: none;
     padding-left: 0;
 	display: flex;
+    margin: 0;
+    overflow: hidden;
+}
+
+.list .product {
+	font-size: 75%;	
+}
+
+.list .details {
+	font-size: 50%;	
 }
 
 .list > ul > li {
@@ -35,16 +45,26 @@
 	height: 100%; 
 }
 
-.list.standard .rating {
-	
+.list.standard .text {
+	width: 80%;
+}
+
+.list.standard .rating {	
+    height: 1em;
 }
 
 .list.standard .product {
 	display: inline-block;
+    max-height: 1em;
+    overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .list.standard .details {
-	
+    max-height: 3em;
+    overflow: hidden;
+	line-height: 1em;
+	text-overflow: ellipsis;
 }
 
 /* view style "compact" */
@@ -75,8 +95,12 @@
 	width: 100%;
 }
 
-.list.compact .rating {
+.list.compact .text {
 	
+}
+
+.list.compact .rating {
+    height: 1em;	
 }
 
 .list.compact .product {
@@ -84,5 +108,5 @@
 }
 
 .list.compact .details {
-	
+
 }
