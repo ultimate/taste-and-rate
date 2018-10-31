@@ -58,10 +58,12 @@
     max-height: 1em;
     overflow: hidden;
 	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 100%;
 }
 
 .list.standard .details {
-    max-height: 3em;
+    height: 3em;
     overflow: hidden;
 	line-height: 1em;
 	text-overflow: ellipsis;

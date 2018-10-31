@@ -66,3 +66,47 @@ Elements.createSVG = function(viewBox, classes, useID)
 	
 	return svg;
 };
+
+Elements.addEllipsis = function(element) {
+	if(element.scrollHeight > 2*element.offsetHeight)
+	{
+		// incrementally ADD words until the container scroll size is BIGGER than the display size
+		var wordArray = element.innerHTML.split(" ");
+		var wordArray2 = [];
+		element.innerHTML = wordArray2.join(" ") + "...";
+		while(element.scrollHeight <= element.offsetHeight && wordArray.length > 0) {
+			wordArray2.push(wordArray.shift());
+			element.innerHTML = wordArray2.join(" ") + "...";
+		}
+		wordArray2.pop();
+		element.innerHTML = wordArray2.join(" ") + "...";
+	}
+	else
+	{
+		// incrementally REMOVE words until the container scroll size is SMALLER than the display size
+		var wordArray = element.innerHTML.split(" ");
+		while(element.scrollHeight > element.offsetHeight && wordArray.length > 0) {
+			wordArray.pop();
+			element.innerHTML = wordArray.join(" ") + "...";
+		}
+	}
+	
+	/* alternate option
+	var wordArray = element.innerHTML.split(" ");
+	Elements.removeChildren(element);
+	
+	for(var w in wordArray)
+	{
+		if(w > 0)
+			element.appendChild(document.createTextNode(" " + wordArray[w]));
+		else 
+			element.appendChild(document.createTextNode(wordArray[w]));
+		
+		if(element.scrollHeight > element.offsetHeight)
+		{
+			element.replaceChild(document.createTextNode("..."), element.childNodes[element.childNodes.length-1]);
+			break;
+		}
+	}
+	*/
+};

@@ -12,6 +12,13 @@ var app = function() {
 						Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.\
 						At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.\
 						Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus.";
+	this.LOREM_IPSUM_ARR = this.LOREM_IPSUM.split(" ");
+						
+	this.loremIpsum = function()
+	{
+		var l = Math.floor(Math.random()*LOREM_IPSUM_ARR.length);
+		return LOREM_IPSUM_ARR.slice(0, -l).join(" ");
+	}
 
 	
 	this.getString = function(key) {
@@ -201,7 +208,7 @@ var app = function() {
 						criteria.push({
 							ref: 		category.criteria[cr].id,
 							stars: 		(category.criteria[cr].stars 	? Math.ceil(Math.random()*5) : 0),
-							text: 		(category.criteria[cr].text 	? "Criterion " + cr + " text. " + this.LOREM_IPSUM : ""),
+							text: 		(category.criteria[cr].text 	? "Criterion " + cr + " text. " + this.loremIpsum() : ""),
 							spider: 	(category.criteria[cr].spider 	? spider : []),
 							tags: 		(category.criteria[cr].tags 	? new Array(tags[Math.floor(Math.random()*tags.length)]) : [])
 						});
@@ -211,7 +218,7 @@ var app = function() {
 						id: -id,
 						category: category.id,
 						creator:	Math.round(Math.random()*10),
-						product: "The very special " + categoryName + " #" + i + " " + this.LOREM_IPSUM,
+						product: "The very special " + categoryName + " #" + i + " " + this.loremIpsum(),
 						summary: "Random Rating " + id,
 						image: "images/bottle.jpg",
 						date: d,

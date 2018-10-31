@@ -258,6 +258,9 @@ var UI = function() {
 				div.classList.add("text");
 				li.append(div)
 			list.append(li);
+			
+			// create ellipsis
+			Elements.addEllipsis(div2);
 		}
 	};
 	
