@@ -51,6 +51,10 @@
 	padding-bottom: 0.2em;
 }
 
+.window .frame h3 label {
+	width: inherit !important;
+}
+
 .window .close {
 	display: inline;
 	float: right;
@@ -111,24 +115,35 @@
 .window.form .content form {
 	display: inline-block;
 	margin-top: 1em;
+    width: 100%;
 }
 
-.window.form .content form>label {
+.window.form .content form label {
 	width: 35%;
-	float: left;	
-	display: block;
+    /*float: left;
+	display: block;*/
+	display: inline-block;
 }
 
-.window.form .content form>input {
+.window.form .content form input {
 	width: 63%;
-    float: left;
+    /*float: left;*/
 }
 
-.window.form .content form>textarea {
+.window.form .content form select {
+	width: 63%;
+    /*float: left;*/
+}
+
+.window.form .content form textarea {
 	width: 98%;
-	float: left;	
+    /*float: left;*/
 	display: block;
     height: 8em;
+}
+
+.window.form .content form div.validatable {
+	display: inline-block;
 }
 
 .window.form .content .validatable.invalid {

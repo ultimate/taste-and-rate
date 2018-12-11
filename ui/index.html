@@ -430,14 +430,29 @@
 				<label key="rating.create.description" class="create fullwidth"></label>
 				<label key="rating.edit.description" class="edit fullwidth"></label>
 				<form>
-					<label key="rating.product"></label><input type="text" id="rating_product" class="validatable"/><span class="marker">!</span>
-					<label key="rating.date"></label><input type="datetime-local" id="rating_date" class="validatable"/><span class="marker">!</span>
-					<label key="rating.event"></label><input type="text" id="rating_location" class="validatable"/><span class="marker">!</span>
-					<label key="rating.location"></label><input type="text" id="rating_location" class="validatable"/><span class="marker">!</span>
-					<label key="rating.description"></label><textarea id="rating_description" class="validatable"></textarea><span class="marker">!</span>
-					<div id="category_specific">
-						<!-- generated from category definition< -->
-					</div>
+					<h3 class="title"><label key="rating.general" class="group"></label></h3>
+					<label key="rating.category"></label><select id="rating_category" class="validatable"><option>a</option><option>a</option></select><span class="marker">!</span><br/>
+					<label key="rating.product"></label><input type="text" id="rating_product" class="validatable"/><span class="marker">!</span><br/>
+					<label key="rating.date"></label><input type="datetime-local" id="rating_date" class="validatable"/><span class="marker">!</span><br/>
+					<label key="rating.event"></label><input type="text" id="rating_event" class="validatable"/><span class="marker">!</span><br/>
+					<label key="rating.location"></label><input type="text" id="rating_location" class="validatable"/><span class="marker">!</span><br/>
+					<!-- TODO image -->
+					
+					<h3 class="title"><label key="rating.overall" class="group"></label></h3>
+					<label key="rating.stars"></label><div class="rating validatable"><div class="stars"><div class="percent"></div></div></div><span class="marker">!</span><br/>
+					<label key="rating.summary"></label><textarea id="rating_summary" class="validatable"></textarea><span class="marker">!</span><br/>
+					
+					<h3 class="title"><label key="rating.nose" class="group"></label></h3>
+					<label key="rating.text"></label><textarea id="rating_nose_text" class="validatable"></textarea><span class="marker">!</span><br/>
+					<label key="rating.tags"></label><input type="text" id="rating_nose_tags" class="validatable"/><span class="marker">!</span><br/>
+					
+					<h3 class="title"><label key="rating.taste" class="group"></label></h3>
+					<label key="rating.text"></label><textarea id="rating_taste_text" class="validatable"></textarea><span class="marker">!</span><br/>
+					<label key="rating.tags"></label><input type="text" id="rating_taste_tags" class="validatable"/><span class="marker">!</span><br/>
+					
+					<h3 class="title"><label key="rating.finish" class="group"></label></h3>
+					<label key="rating.text"></label><textarea id="rating_finish_text" class="validatable"></textarea><span class="marker">!</span><br/>
+					<label key="rating.tags"></label><input type="text" id="rating_finish_tags" class="validatable"/><span class="marker">!</span><br/>
 				</form>
 			</div>
 			<div class="control">
@@ -463,10 +478,10 @@
 				<label key="event.create.description" class="create fullwidth"></label>
 				<label key="event.edit.description" class="edit fullwidth"></label>
 				<form>
-					<label key="event.title"></label><input type="text" id="event_title" class="validatable"/><span class="marker">!</span>
-					<label key="event.date"></label><input type="datetime-local" id="event_date" class="validatable"/><span class="marker">!</span>
-					<label key="event.location"></label><input type="text" id="event_location" class="validatable"/><span class="marker">!</span>
-					<label key="event.description"></label><textarea id="event_description" class="validatable"></textarea><span class="marker">!</span>
+					<label key="event.title"></label><input type="text" id="event_title" class="validatable"/><span class="marker">!</span><br/>
+					<label key="event.date"></label><input type="datetime-local" id="event_date" class="validatable"/><span class="marker">!</span><br/>
+					<label key="event.location"></label><input type="text" id="event_location" class="validatable"/><span class="marker">!</span><br/>
+					<label key="event.description"></label><textarea id="event_description" class="validatable"></textarea><span class="marker">!</span><br/>
 				</form>
 			</div>
 			<div class="control">

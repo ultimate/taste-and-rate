@@ -13,7 +13,7 @@
 	font-size: 75%;	
 }
 
-.list .details {
+.list .summary {
 	font-size: 50%;	
 }
 
@@ -62,7 +62,7 @@
 	width: 100%;
 }
 
-.list.standard .details {
+.list.standard .summary {
     height: 3em;
     overflow: hidden;
 	line-height: 1em;
@@ -109,6 +109,6 @@
 	
 }
 
-.list.compact .details {
+.list.compact .summary {
 
 }

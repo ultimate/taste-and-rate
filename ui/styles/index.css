@@ -342,7 +342,8 @@
 
 /* components */
 body input[type="text"],
-body input[type="datetime-local"] {
+body input[type="datetime-local"],
+body select {
 	position: relative;	
     top: -0.2em;
 	height: 1.2em;
@@ -351,4 +352,9 @@ body input[type="datetime-local"] {
 
 body input[type="datetime-local"] {
 	height: 1.3em;
+}
+
+body select {
+    height: 1.7em;
+	font-size: 1em;
 }

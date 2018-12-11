@@ -176,8 +176,7 @@ var app = function() {
 			var category;
 			var categoryName;
 			var id;
-			var criteria;
-			var value;
+			var spiderValues;
 			for(var c = 0; c < categories.length; c++)
 			{		
 				category = categories[c].category;
@@ -190,50 +189,30 @@ var app = function() {
 					
 					id = (category.id*1000 + i);
 					
-					criteria = [];
-					for(var cr = 0; cr < category.criteria.length; cr++)
+					spiderValues = [];
+					for(var si = 0; si < category.spider.length; si++)
 					{
-						if(category.criteria[cr].type == "stars")
-						{
-							value = Math.ceil(Math.random()*5);
-						}
-						else if(category.criteria[cr].type == "text" || category.criteria[cr].type == "summary")
-						{
-							value = "Criterion " + category.criteria[cr].id + " text. " + this.loremIpsum();
-						}
-						else if(category.criteria[cr].type == "spider")
-						{
-							value = Math.round(Math.random()*10);
-						}
-						else if(category.criteria[cr].type == "tags")
-						{
-							tags.shuffle();
-							value = new Array(tags[Math.floor(Math.random()*tags.length)]);
-						}
-						else
-						{
-							value = null;
-						}
-						
-						//console.log(category.criteria[cr].id + " = " + value);
-						
-						criteria.push({
-							ref: 		category.criteria[cr].id,
-							value: 		value,
-						});
-					}					
+						spiderValues.push(Math.round(Math.random()*10));
+					}				
 					
 					this.ratings.push({
 						id: -id,
 						category: category.id,
-						creator:	Math.round(Math.random()*10),
+						creator: Math.round(Math.random()*10),
 						product: "The very special " + categoryName + " #" + i + " " + this.loremIpsum(),
-						productId:	-id,
 						image: "images/bottle.jpg",
 						date: d,
 						event: null, // TODO
 						location: null, // TODO
-						criteria: criteria,
+						stars: Math.ceil(Math.random()*5),
+						summary: "Summary " + id + ": " + this.loremIpsum(),
+						noseText: "Nose " + id + ": " + this.loremIpsum(),
+						noseTags: new Array(tags[Math.floor(Math.random()*tags.length)]),						
+						tasteText: "Taste " + id + ": " + this.loremIpsum(),
+						tasteTags: new Array(tags[Math.floor(Math.random()*tags.length)]),						
+						finishText: "Finish " + id + ": " + this.loremIpsum(),
+						finishTags: new Array(tags[Math.floor(Math.random()*tags.length)]),
+						spider: spiderValues,
 					});
 				}
 			}

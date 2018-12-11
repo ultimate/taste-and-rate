@@ -4,21 +4,12 @@
 var TEST_CAT_BEER = {
 	id: 3,
 	key: "categories.beer",
-	criteria: [
-		{	id: 301,	group: "Overall",	type: "stars"	},
-		{	id: 302,	group: "Overall",	type: "summary"	},	
-		
-		{	id: 311,	group: "Overall",	type: "spider", key: "Bitterness",	min: "not at all",		max: "very bitter"	},
-		{	id: 312,	group: "Overall",	type: "spider",	key: "Head",		min: "short lasting",	max: "long lasting"	},
-		{	id: 313,	group: "Overall",	type: "spider",	key: "Color",		min: "bright",			max: "dark"			},
-		
-		{	id: 312,	group: "Nose",		type: "text" 	},
-		{	id: 313,	group: "Nose",		type: "tags" 	},
-	
-		{	id: 322,	group: "Taste",		type: "text" 	},
-		{	id: 323,	group: "Taste",		type: "tags" 	},
-			
-		{	id: 332,	group: "Finish",	type: "text" 	},
-		{	id: 333,	group: "Finish",	type: "tags" 	},
+	nose: true,
+	taste: true,
+	finish: true,
+	spider: [
+		{	id: 101,	key: "Bitterness",	min: "not at all",		max: "intensive"	},
+		{	id: 102,	key: "Head",		min: "short lasting",	max: "long lasting"	},
+		{	id: 103,	key: "Color",		min: "bright",			max: "dark"			},
 	]
 };

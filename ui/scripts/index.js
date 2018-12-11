@@ -188,35 +188,10 @@ var UI = function() {
 		
 		for(var r = 0; r < ratings.length; r++)
 		{
-			var category = null;
-			for(var c = 0; c < categories.length; c++)
-			{
-				if(ratings[r].category == categories[c].category.id)
-					category = categories[c].category;
-			}
-			if(category == null)
-				console.err("category not found");
-			
-			var starsRef;
-			var summaryRef;
-			for(var c = 0; c < category.criteria.length; c++)
-			{
-				if(category.criteria[c].type == "stars")
-					starsRef = category.criteria[c].id;
-				else if(category.criteria[c].type == "summary")
-					summaryRef = category.criteria[c].id;
-			}
-			
-			var percent = 0;
-			var details = app.getString("rating.no_text");
-			for(var c = 0; c < ratings[r].criteria.length; c++)
-			{
-				console.log(ratings[r].criteria[c].ref + " = " + ratings[r].criteria[c].value);
-				if(ratings[r].criteria[c].ref == starsRef)
-					percent = Math.round(ratings[r].criteria[c].value*2)*10;
-				else if(ratings[r].criteria[c].ref == summaryRef && ratings[r].criteria[c].value != null && ratings[r].criteria[c].value != "")
-					details = ratings[r].criteria[c].value;					
-			}
+			var percent = Math.round(ratings[r].stars*2)*10;
+			var summary = app.getString("rating.no_text");
+			if(ratings[r].summary != null && ratings[r].summary != "")
+				summary = ratings[r].summary;
 			
 			/*
 			list.append(Elements.fromString("<li>\
@@ -224,7 +199,7 @@ var UI = function() {
 												<div class='text'>\
 													<div class='rating'><div class='stars'><div class='percent' style='width: " + percent + "%;'></div></div></div>\
 													<div class='product'>" + ratings[r].product + "</div>\
-													<div class='details'>" + details + "</div>\
+													<div class='summary'>" + summary + "</div>\
 												</div>\
 											</li>"));
 			*/
@@ -257,8 +232,8 @@ var UI = function() {
 					div.append(div2);
 					
 					div2 = document.createElement("div");
-					div2.classList.add("details");
-					div2.append(document.createTextNode(details));
+					div2.classList.add("summary");
+					div2.append(document.createTextNode(summary));
 					div.append(div2);
 				div.classList.add("text");
 				li.append(div)
@@ -314,6 +289,8 @@ var UI = function() {
 	this.showAdd = function()
 	{
 		console.log("showAdd called for '" + this.view + "'");
+		/*
+		// @deprecated
 		if(this.view == this.constants.VIEW_CALENDAR)
 			this.updateEventForm(null);
 		else if(this.view == this.constants.VIEW_PERSONAL_RATINGS)
@@ -322,6 +299,8 @@ var UI = function() {
 			this.updateRatingForm(null, true);
 		else if(this.view == this.constants.VIEW_GLOBAL_RATINGS)
 			this.updateRatingForm(null, true);
+		*/
+		this.updateRatingForm(null, true);
 		UI.menu.hide();
 	};
 	
@@ -362,6 +341,7 @@ var UI = function() {
 		form.classList.remove("hidden");
 	};
 	
+	// @deprecated
 	this.updateEventForm = function(event)
 	{
 		form = document.getElementById("form_event");	
@@ -384,6 +364,7 @@ var UI = function() {
 		this.updateForm(form, event);
 	};
 	
+	// @deprecated
 	this.submitEventForm = function(form)
 	{
 		// validate
@@ -416,10 +397,40 @@ var UI = function() {
 		if(rating != null)
 		{
 			// populate all fields
+			document.getElementById("rating_category").value = null; // TODO
+			document.getElementById("rating_product").value = rating.product;
+			document.getElementById("rating_date").value = rating.date.toDatetimeLocal(); // convert date to datetimelocal ISO-string using lib first	
+			document.getElementById("rating_event").value = rating.event;
+			document.getElementById("rating_location").value = rating.location;
+			document.getElementById("rating_summary").value = rating.summary;	
+			
+			document.getElementById("rating_nose_text").value = rating.noseText;	
+			document.getElementById("rating_nose_tags").value = rating.noseTags;	
+			
+			document.getElementById("rating_taste_text").value = rating.tasteText;	
+			document.getElementById("rating_taste_tags").value = rating.tasteTags;
+			
+			document.getElementById("rating_finish_text").value = rating.finishText;	
+			document.getElementById("rating_finish_tags").value = rating.finishTags;
 		}
 		else
 		{
 			// clear all fields
+			document.getElementById("rating_category").value = null; // TODO
+			document.getElementById("rating_product").value = "";
+			document.getElementById("rating_date").value = null	;
+			document.getElementById("rating_event").value = "";
+			document.getElementById("rating_location").value = "";
+			document.getElementById("rating_summary").value = "";	
+			
+			document.getElementById("rating_nose_text").value = "";	
+			document.getElementById("rating_nose_tags").value = "";	
+			
+			document.getElementById("rating_taste_text").value = "";	
+			document.getElementById("rating_taste_tags").value = "";
+			
+			document.getElementById("rating_finish_text").value = "";	
+			document.getElementById("rating_finish_tags").value = "";
 		}
 		this.updateForm(form, rating);
 	};
