@@ -419,6 +419,39 @@
 			</div>
 		</div>
 	</div>
+	<div id="form_rating" class="window modal hidden form" type="rating">
+		<div class="frame">
+			<h2 class="title">
+				<label key="rating.create.title" class="create"></label>
+				<label key="rating.edit.title" class="edit"></label>
+				<!-- no close -->
+			</h2>
+			<div class="content">
+				<label key="rating.create.description" class="create fullwidth"></label>
+				<label key="rating.edit.description" class="edit fullwidth"></label>
+				<form>
+					<label key="rating.product"></label><input type="text" id="rating_product" class="validatable"/><span class="marker">!</span>
+					<label key="rating.date"></label><input type="datetime-local" id="rating_date" class="validatable"/><span class="marker">!</span>
+					<label key="rating.event"></label><input type="text" id="rating_location" class="validatable"/><span class="marker">!</span>
+					<label key="rating.location"></label><input type="text" id="rating_location" class="validatable"/><span class="marker">!</span>
+					<label key="rating.description"></label><textarea id="rating_description" class="validatable"></textarea><span class="marker">!</span>
+					<div id="category_specific">
+						<!-- generated from category definition< -->
+					</div>
+				</form>
+			</div>
+			<div class="control">
+				<div class="button ok">
+					<label key="rating.create.ok" class="create"></label>
+					<label key="rating.edit.ok" class="edit"></label>
+				</div>
+				<div class="button cancel">
+					<label key="rating.create.cancel" class="create"></label>
+					<label key="rating.edit.cancel" class="edit"></label>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div id="form_event" class="window modal hidden form" type="event">
 		<div class="frame">
 			<h2 class="title">

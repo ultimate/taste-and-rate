@@ -5,64 +5,21 @@ var TEST_CAT_RUM = {
 	id: 1,
 	key: "categories.rum",
 	criteria: [
-		{
-			id: 101,
-			key: "Overall",
-			stars: true,
-			text: true,
-			spider: true,
-			tags: false,
-		},
-		{
-			id: 102,
-			key: "Nose",
-			stars: false,
-			text: true,
-			spider: false,
-			tags: true,
-		},
-		{
-			id: 103,
-			key: "Taste",
-			stars: false,
-			text: true,
-			spider: false,
-			tags: true,
-		},
-		{
-			id: 104,
-			key: "Finish",
-			stars: false,
-			text: true,
-			spider: false,
-			tags: true,
-		},
-	],
-	spider: [
-		{
-			id: 111,
-			key: "Sweetness",
-			min: "not at all",
-			max: "intensive"
-		},
-		{
-			id: 112,
-			key: "Oak",
-			min: "mild",
-			max: "intensive"
-		},
-		{
-			id: 113,
-			key: "Color",
-			min: "bright",
-			max: "dark"
-		},
-		{
-			id: 114,
-			key: "Complexity",
-			min: "simple",
-			max: "complex"
-		}
-	],
-	overallCriteria: 101,
+		{	id: 101,	group: "Overall",	type: "stars"	},
+		{	id: 102,	group: "Overall",	type: "summary" },	
+		
+		{	id: 111,	group: "Overall",	type: "spider", key: "Sweetness",	min: "not at all",	max: "intensive"	},
+		{	id: 112,	group: "Overall",	type: "spider",	key: "Oak",			min: "mild",		max: "intensive"	},
+		{	id: 113,	group: "Overall",	type: "spider",	key: "Color",		min: "bright",		max: "dark"			},
+		{	id: 114,	group: "Overall",	type: "spider",	key: "Complexity",	min: "simple",		max: "complex"		},
+		
+		{	id: 112,	group: "Nose",		type: "text" 	},
+		{	id: 113,	group: "Nose",		type: "tags" 	},
+		
+		{	id: 122,	group: "Taste",		type: "text" 	},
+		{	id: 123,	group: "Taste",		type: "tags" 	},
+			
+		{	id: 132,	group: "Finish",	type: "text" 	},
+		{	id: 133,	group: "Finish",	type: "tags" 	},
+	]
 };

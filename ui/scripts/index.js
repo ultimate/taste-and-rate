@@ -197,21 +197,26 @@ var UI = function() {
 			if(category == null)
 				console.err("category not found");
 			
-			var overallCriteria;
-			for(var c = 0; c < ratings[r].criteria.length; c++)
+			var starsRef;
+			var summaryRef;
+			for(var c = 0; c < category.criteria.length; c++)
 			{
-				if(ratings[r].criteria[c].ref == category.overallCriteria)
-					overallCriteria = ratings[r].criteria[c];
+				if(category.criteria[c].type == "stars")
+					starsRef = category.criteria[c].id;
+				else if(category.criteria[c].type == "summary")
+					summaryRef = category.criteria[c].id;
 			}
 			
 			var percent = 0;
 			var details = app.getString("rating.no_text");
-			if(overallCriteria != null)
+			for(var c = 0; c < ratings[r].criteria.length; c++)
 			{
-				percent = Math.round(overallCriteria.stars*2)*10;
-				if(overallCriteria.text != null && overallCriteria.text != "")
-					details = overallCriteria.text;
-			}		
+				console.log(ratings[r].criteria[c].ref + " = " + ratings[r].criteria[c].value);
+				if(ratings[r].criteria[c].ref == starsRef)
+					percent = Math.round(ratings[r].criteria[c].value*2)*10;
+				else if(ratings[r].criteria[c].ref == summaryRef && ratings[r].criteria[c].value != null && ratings[r].criteria[c].value != "")
+					details = ratings[r].criteria[c].value;					
+			}
 			
 			/*
 			list.append(Elements.fromString("<li>\

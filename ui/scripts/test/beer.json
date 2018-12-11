@@ -5,58 +5,20 @@ var TEST_CAT_BEER = {
 	id: 3,
 	key: "categories.beer",
 	criteria: [
-		{
-			id: 301,
-			key: "Overall",
-			stars: true,
-			text: true,
-			spider: true,
-			tags: false,
-		},
-		{
-			id: 302,
-			key: "Nose",
-			stars: false,
-			text: true,
-			spider: false,
-			tags: true,
-		},
-		{
-			id: 303,
-			key: "Taste",
-			stars: false,
-			text: true,
-			spider: false,
-			tags: true,
-		},
-		{
-			id: 304,
-			key: "Finish",
-			stars: false,
-			text: true,
-			spider: false,
-			tags: true,
-		},
-	],
-	spider: [
-		{
-			id: 311,
-			key: "Bitterness",
-			min: "not at all",
-			max: "very bitter"
-		},
-		{
-			id: 312,
-			key: "Head",
-			min: "short lasting",
-			max: "long lasting"
-		},
-		{
-			id: 313,
-			key: "Color",
-			min: "bright",
-			max: "dark"
-		}
-	],
-	overallCriteria: 301,
+		{	id: 301,	group: "Overall",	type: "stars"	},
+		{	id: 302,	group: "Overall",	type: "summary"	},	
+		
+		{	id: 311,	group: "Overall",	type: "spider", key: "Bitterness",	min: "not at all",		max: "very bitter"	},
+		{	id: 312,	group: "Overall",	type: "spider",	key: "Head",		min: "short lasting",	max: "long lasting"	},
+		{	id: 313,	group: "Overall",	type: "spider",	key: "Color",		min: "bright",			max: "dark"			},
+		
+		{	id: 312,	group: "Nose",		type: "text" 	},
+		{	id: 313,	group: "Nose",		type: "tags" 	},
+	
+		{	id: 322,	group: "Taste",		type: "text" 	},
+		{	id: 323,	group: "Taste",		type: "tags" 	},
+			
+		{	id: 332,	group: "Finish",	type: "text" 	},
+		{	id: 333,	group: "Finish",	type: "tags" 	},
+	]
 };

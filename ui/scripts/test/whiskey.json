@@ -5,64 +5,21 @@ var TEST_CAT_WHISKEY = {
 	id: 2,
 	key: "categories.whiskey",
 	criteria: [
-		{
-			id: 201,
-			key: "Overall",
-			stars: true,
-			text: true,
-			spider: true,
-			tags: false,
-		},
-		{
-			id: 202,
-			key: "Nose",
-			stars: false,
-			text: true,
-			spider: false,
-			tags: true,
-		},
-		{
-			id: 203,
-			key: "Taste",
-			stars: false,
-			text: true,
-			spider: false,
-			tags: true,
-		},
-		{
-			id: 204,
-			key: "Finish",
-			stars: false,
-			text: true,
-			spider: false,
-			tags: true,
-		},
-	],
-	spider: [
-		{
-			id: 211,
-			key: "Smoke",
-			min: "not at all",
-			max: "intensive"
-		},
-		{
-			id: 212,
-			key: "Oak",
-			min: "mild",
-			max: "intensive"
-		},
-		{
-			id: 213,
-			key: "Color",
-			min: "bright",
-			max: "dark"
-		},
-		{
-			id: 214,
-			key: "Complexity",
-			min: "simple",
-			max: "complex"
-		}
-	],
-	overallCriteria: 201,
+		{	id: 201,	group: "Overall",	type: "stars"	},
+		{	id: 202,	group: "Overall",	type: "summary"	},	
+		
+		{	id: 211,	group: "Overall",	type: "spider", key: "Smoke",		min: "not at all",	max: "intensive"	},
+		{	id: 212,	group: "Overall",	type: "spider",	key: "Oak",			min: "mild",		max: "intensive"	},
+		{	id: 213,	group: "Overall",	type: "spider",	key: "Color",		min: "bright",		max: "dark"			},
+		{	id: 214,	group: "Overall",	type: "spider",	key: "Complexity",	min: "simple",		max: "complex"		},
+		
+		{	id: 212,	group: "Nose",		type: "text" 	},
+		{	id: 213,	group: "Nose",		type: "tags" 	},
+	
+		{	id: 222,	group: "Taste",		type: "text" 	},
+		{	id: 223,	group: "Taste",		type: "tags" 	},
+			
+		{	id: 232,	group: "Finish",	type: "text" 	},
+		{	id: 233,	group: "Finish",	type: "tags" 	},
+	]
 };

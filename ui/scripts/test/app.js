@@ -177,7 +177,7 @@ var app = function() {
 			var categoryName;
 			var id;
 			var criteria;
-			var spider;
+			var value;
 			for(var c = 0; c < categories.length; c++)
 			{		
 				category = categories[c].category;
@@ -193,24 +193,33 @@ var app = function() {
 					criteria = [];
 					for(var cr = 0; cr < category.criteria.length; cr++)
 					{
-						spider = [];
-						if(category.criteria[cr].spider)
-						{	
-							for(var s = 0; s < category.spider.length; s++)
-							{
-								spider.push({
-									ref: category.spider[s].id,
-									value: Math.round(Math.random()*10)
-								});
-							}
+						if(category.criteria[cr].type == "stars")
+						{
+							value = Math.ceil(Math.random()*5);
 						}
+						else if(category.criteria[cr].type == "text" || category.criteria[cr].type == "summary")
+						{
+							value = "Criterion " + category.criteria[cr].id + " text. " + this.loremIpsum();
+						}
+						else if(category.criteria[cr].type == "spider")
+						{
+							value = Math.round(Math.random()*10);
+						}
+						else if(category.criteria[cr].type == "tags")
+						{
+							tags.shuffle();
+							value = new Array(tags[Math.floor(Math.random()*tags.length)]);
+						}
+						else
+						{
+							value = null;
+						}
+						
+						//console.log(category.criteria[cr].id + " = " + value);
 						
 						criteria.push({
 							ref: 		category.criteria[cr].id,
-							stars: 		(category.criteria[cr].stars 	? Math.ceil(Math.random()*5) : 0),
-							text: 		(category.criteria[cr].text 	? "Criterion " + cr + " text. " + this.loremIpsum() : ""),
-							spider: 	(category.criteria[cr].spider 	? spider : []),
-							tags: 		(category.criteria[cr].tags 	? new Array(tags[Math.floor(Math.random()*tags.length)]) : [])
+							value: 		value,
 						});
 					}					
 					
@@ -219,10 +228,11 @@ var app = function() {
 						category: category.id,
 						creator:	Math.round(Math.random()*10),
 						product: "The very special " + categoryName + " #" + i + " " + this.loremIpsum(),
-						summary: "Random Rating " + id,
+						productId:	-id,
 						image: "images/bottle.jpg",
 						date: d,
 						event: null, // TODO
+						location: null, // TODO
 						criteria: criteria,
 					});
 				}

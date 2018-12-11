@@ -74,3 +74,15 @@ Array.prototype.binaryIndexOfId = function(whatId)
 {
 	return this.binaryIndexOf({id: whatId}, function(o1, o2) { return o1.id - o2.id; });
 };
+
+// shuffle an array
+Array.prototype.shuffle = function() {
+    var j, i;
+	var tmp;
+    for (i = this.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        tmp = this[i];
+        this[i] = this[j];
+        this[j] = tmp;
+    }
+}
