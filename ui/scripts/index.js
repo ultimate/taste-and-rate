@@ -473,6 +473,7 @@ var UI = function() {
 		form = document.getElementById("form_rating");
 		if(rating != null)
 		{
+			var percent = Math.round(rating.stars*2)*10;
 			// populate all fields
 			document.getElementById("rating_category").value = rating.category;
 			document.getElementById("rating_product").value = rating.product;
@@ -480,7 +481,7 @@ var UI = function() {
 			document.getElementById("rating_event").value = rating.event;
 			document.getElementById("rating_location").value = rating.location;
 			// TODO image
-			// TODO stars
+			document.getElementById("rating_stars").style.width = percent + "%";
 			document.getElementById("rating_summary").value = rating.summary;	
 			// TODO spider
 			
@@ -502,7 +503,7 @@ var UI = function() {
 			document.getElementById("rating_event").value = "";
 			document.getElementById("rating_location").value = "";
 			// TODO image
-			// TODO stars
+			document.getElementById("rating_stars").style.width = "0%";
 			document.getElementById("rating_summary").value = "";	
 			// TODO spider
 			
