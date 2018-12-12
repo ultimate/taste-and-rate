@@ -29,6 +29,7 @@
 
 .list.standard > ul > li {	
 	height: 4em; 
+    margin-bottom: 0.5em;
 }
 
 
@@ -39,10 +40,10 @@
 }
 
 .list.standard .image {
-}
-
-.list.standard .image img {
-	height: 100%; 
+    width: 4em;
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
 .list.standard .text {
@@ -90,11 +91,10 @@
 }
 
 .list.compact .image {
-	
-}
-
-.list.compact .image img {
-	width: 100%;
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+    height: 25vw;
 }
 
 .list.compact .text {

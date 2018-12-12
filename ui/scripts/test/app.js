@@ -19,7 +19,6 @@ var app = function() {
 		var l = Math.floor(Math.random()*LOREM_IPSUM_ARR.length);
 		return LOREM_IPSUM_ARR.slice(0, -l).join(" ");
 	}
-
 	
 	this.getString = function(key) {
 		if(key == null || key == "")
@@ -217,7 +216,7 @@ var app = function() {
 						category: category.id,
 						creator: Math.round(Math.random()*10),
 						product: "The very special " + categoryName + " #" + i + " " + this.loremIpsum(),
-						image: "images/bottle.jpg",
+						image: (Math.random() < 0.33 ? "images/bottle1.jpg" : (Math.random() < 0.5 ? "images/bottle2.png" : "images/bottle3.jpg")),
 						date: d,
 						event: null, // TODO
 						location: null, // TODO

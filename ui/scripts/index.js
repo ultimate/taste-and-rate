@@ -259,10 +259,8 @@ var UI = function() {
 			// - below = few milleseconds
 			li = document.createElement("li");
 				div = document.createElement("div");
-					img = document.createElement("img");
-					img.setAttribute("src", ratings[r].image);
-					div.append(img);
 				div.classList.add("image");
+				div.style.backgroundImage = "url(" + ratings[r].image + ")" ; 
 				li.append(div);
 				
 				div = document.createElement("div");
@@ -546,23 +544,24 @@ var UI = function() {
 			rating = form.object;
 			if(rating == null) rating = {};
 			// get all fields
-			event.category = document.getElementById("rating_category").value;
-			event.product = document.getElementById("rating_product").value;
-			event.date = new Date(document.getElementById("rating_date").value); // timezone is applied only, when using ISO-string constructor
-			event.event = document.getElementById("rating_event").value;
-			event.location = document.getElementById("rating_location").value;
+			rating.category = Number(document.getElementById("rating_category").value);
+			rating.product = document.getElementById("rating_product").value;
+			rating.date = new Date(document.getElementById("rating_date").value); // timezone is applied only, when using ISO-string constructor
+			rating.event = document.getElementById("rating_event").value;
+			rating.location = document.getElementById("rating_location").value;
 			// TODO image
 			// TODO stars
-			event.summary = document.getElementById("rating_summary").value;
+			rating.summary = document.getElementById("rating_summary").value;
 			// TODO spider	
-			event.noseText = document.getElementById("rating_nose_text").value;	
-			event.noseTags = document.getElementById("rating_nose_tags").value;	
-			event.tasteText = document.getElementById("rating_taste_text").value;	
-			event.tasteText = document.getElementById("rating_taste_tags").value;	
-			event.finishText = document.getElementById("rating_finish_text").value;	
-			event.finishText = document.getElementById("rating_finish_tags").value;	
-			// additional fields added by app (e.g. creator)
+			rating.noseText = document.getElementById("rating_nose_text").value;	
+			rating.noseTags = document.getElementById("rating_nose_tags").value;	
+			rating.tasteText = document.getElementById("rating_taste_text").value;	
+			rating.tasteText = document.getElementById("rating_taste_tags").value;	
+			rating.finishText = document.getElementById("rating_finish_text").value;	
+			rating.finishText = document.getElementById("rating_finish_tags").value;	
 			app.saveRating(rating);
+			// update personal view
+			// TODO
 		}
 		return valid;
 	};
