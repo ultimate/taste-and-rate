@@ -14,6 +14,7 @@ var UI = function() {
 	};
 	
 	this.view = this.constants.VIEW_CALENDAR;
+	this.defaultCategory = 0;
 	
 	this.populateMenu = function()
 	{
@@ -186,33 +187,34 @@ var UI = function() {
 					categorySelects[i].append(option);
 				}
 			}
-			this.labelManager.updateLabels(categorySelects[i]);
-						
-			var numberOfFavorites = 0;	
-			var numberOfActives = 0;			
-			var firstFavoriteValue = 0;		
-			var firstActiveValue = 0;
-			for(var j = 0; j < UI.categories.length; j++)
-			{
-				if(UI.categories[j].favorite)
-				{
-					numberOfFavorites++;
-					if(firstFavoriteValue == 0)
-						firstFavoriteValue = UI.categories[j].category.id;
-				}	
-				if(UI.categories[j].active)
-				{
-					numberOfActives++;
-					if(firstActiveValue == 0)
-						firstActiveValue = UI.categories[j].category.id;
-				}					
-			}
-			if(numberOfFavorites == 1)
-				categorySelects[i].defaultValue = firstFavoriteValue;
-			else if(numberOfActives == 1)
-				categorySelects[i].defaultValue = firstActiveValue;
-				
+			this.labelManager.updateLabels(categorySelects[i]);				
 		}
+		// calculate default value						
+		var numberOfFavorites = 0;	
+		var numberOfActives = 0;			
+		var firstFavoriteValue = 0;		
+		var firstActiveValue = 0;
+		for(var j = 0; j < UI.categories.length; j++)
+		{
+			if(UI.categories[j].favorite)
+			{
+				numberOfFavorites++;
+				if(firstFavoriteValue == 0)
+					firstFavoriteValue = UI.categories[j].category.id;
+			}	
+			if(UI.categories[j].active)
+			{
+				numberOfActives++;
+				if(firstActiveValue == 0)
+					firstActiveValue = UI.categories[j].category.id;
+			}					
+		}
+		if(numberOfFavorites == 1)
+			this.defaultCategory = firstFavoriteValue;
+		else if(numberOfActives == 1)
+			this.defaultCategory = firstActiveValue;
+		else
+			this.defaultCategory = 0;
 	};
 	
 	this.populateRatings = function(view) {
@@ -496,7 +498,7 @@ var UI = function() {
 		else
 		{
 			// clear all fields
-			document.getElementById("rating_category").value = document.getElementById("rating_category").defaultValue; // calculated on update of categories
+			document.getElementById("rating_category").value = this.defaultCategory; // calculated on update of categories
 			document.getElementById("rating_product").value = "";
 			document.getElementById("rating_date").value = null	;
 			document.getElementById("rating_event").value = "";
