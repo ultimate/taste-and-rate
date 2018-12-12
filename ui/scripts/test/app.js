@@ -76,6 +76,21 @@ var app = function() {
 				}				
 				return true;
 			case UI.constants.TYPE_RATING:
+				switch(field)
+				{
+					case "category":	if(value == null || value == "") return false;
+					case "product":		if(value == null || value == "") return false;
+					case "date":		if(value == null || value == "") return false;
+					case "event":		if(value == null) return false;
+					case "location":	if(value == null) return false;
+					case "summary":		if(value == null) return false;
+					case "nose_text":	if(value == null) return false;
+					case "nose_tags":	if(value == null) return false;
+					case "taste_text":	if(value == null) return false;
+					case "taste_tags":	if(value == null) return false;
+					case "finish_text":	if(value == null) return false;
+					case "finish_tags":	if(value == null) return false;
+				}
 				return true;
 			default:
 				throw new Error("unsupported type");
@@ -100,6 +115,7 @@ var app = function() {
 		if(object.id == null)
 		{
 			object.id = Storage.loadLocalObject(type + "_id") + 1;
+			object.creator = this.CURRENT_USER;
 			Storage.saveLocalObject(type + "_id", object.id);
 			if(list != null)
 				list.push(object);
@@ -138,6 +154,7 @@ var app = function() {
 				
 				this.events.push({
 					id: -i,
+					creator: Math.round(Math.random()*10),
 					title: "Random Event " + i,
 					location: "Somewhere " + i,
 					date: d,

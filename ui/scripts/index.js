@@ -43,6 +43,7 @@ var UI = function() {
 						else
 							e.classList.remove("active");
 						app.setCategories(UI.categories);
+						UI.populateCategorySelects();
 					};
 				}(c, element), element);
 				menuCategories.append(element);
@@ -186,6 +187,31 @@ var UI = function() {
 				}
 			}
 			this.labelManager.updateLabels(categorySelects[i]);
+						
+			var numberOfFavorites = 0;	
+			var numberOfActives = 0;			
+			var firstFavoriteValue = 0;		
+			var firstActiveValue = 0;
+			for(var j = 0; j < UI.categories.length; j++)
+			{
+				if(UI.categories[j].favorite)
+				{
+					numberOfFavorites++;
+					if(firstFavoriteValue == 0)
+						firstFavoriteValue = UI.categories[j].category.id;
+				}	
+				if(UI.categories[j].active)
+				{
+					numberOfActives++;
+					if(firstActiveValue == 0)
+						firstActiveValue = UI.categories[j].category.id;
+				}					
+			}
+			if(numberOfFavorites == 1)
+				categorySelects[i].defaultValue = firstFavoriteValue;
+			else if(numberOfActives == 1)
+				categorySelects[i].defaultValue = firstActiveValue;
+				
 		}
 	};
 	
@@ -261,7 +287,7 @@ var UI = function() {
 				div.classList.add("text");
 				li.append(div)
 				
-				Events.addEventListener(Events.CLICK, function(rating) { return function(event) { UI.updateRatingForm(rating); }; }(ratings[r]), li);
+				Events.addEventListener(Events.CLICK, function(rating) { return function(event) { UI.updateRatingForm(rating, true); }; }(ratings[r]), li);
 			list.append(li);
 			
 			// create ellipsis
@@ -317,7 +343,7 @@ var UI = function() {
 		/*
 		// @deprecated
 		if(this.view == this.constants.VIEW_CALENDAR)
-			this.updateEventForm(null);
+			this.updateEventForm(null, true);
 		else if(this.view == this.constants.VIEW_PERSONAL_RATINGS)
 			this.updateRatingForm(null, true);
 		else if(this.view == this.constants.VIEW_FRIENDS_RATINGS)
@@ -329,13 +355,30 @@ var UI = function() {
 		UI.menu.hide();
 	};
 	
-	this.updateForm = function(form, object)
+	this.updateForm = function(form, object, viewmode)
 	{
 		form.object = object;
 		createElements = form.getElementsByClassName("create");
 		editElements = form.getElementsByClassName("edit");
+		viewElements = form.getElementsByClassName("view");
 		validatableElements = form.getElementsByClassName("validatable");
-		if(object != null)
+		if(viewmode)
+		{
+			// show/hide create/edit/view elements
+			for(var i = 0; i < createElements.length; i++)
+			{
+				createElements[i].classList.add("hidden");
+			}
+			for(var i = 0; i < editElements.length; i++)
+			{
+				editElements[i].classList.add("hidden");
+			}
+			for(var i = 0; i < viewElements.length; i++)
+			{
+				viewElements[i].classList.remove("hidden");
+			}
+		}
+		else if(object != null)
 		{
 			// show/hide create/edit elements
 			for(var i = 0; i < createElements.length; i++)
@@ -346,19 +389,28 @@ var UI = function() {
 			{
 				editElements[i].classList.remove("hidden");
 			}
+			for(var i = 0; i < viewElements.length; i++)
+			{
+				viewElements[i].classList.add("hidden");
+			}
 		}
 		else
 		{
 			// show/hide create/edit elements
-			for(var i = 0; i < editElements.length; i++)
-			{
-				editElements[i].classList.add("hidden");
-			}
 			for(var i = 0; i < createElements.length; i++)
 			{
 				createElements[i].classList.remove("hidden");
 			}
+			for(var i = 0; i < editElements.length; i++)
+			{
+				editElements[i].classList.add("hidden");
+			}
+			for(var i = 0; i < viewElements.length; i++)
+			{
+				viewElements[i].classList.add("hidden");
+			}
 		}
+		// TODO disable form elements
 		for(var i = 0; i < validatableElements.length; i++)
 		{
 			validatableElements[i].classList.remove("invalid");
@@ -367,7 +419,7 @@ var UI = function() {
 	};
 	
 	// @deprecated
-	this.updateEventForm = function(event)
+	this.updateEventForm = function(event, viewmode)
 	{
 		form = document.getElementById("form_event");	
 		if(event != null)
@@ -386,7 +438,7 @@ var UI = function() {
 			document.getElementById("event_location").value = "";
 			document.getElementById("event_description").value = "";	
 		}
-		this.updateForm(form, event);
+		this.updateForm(form, event, viewmode);
 	};
 	
 	// @deprecated
@@ -416,18 +468,21 @@ var UI = function() {
 		return valid;
 	};
 	
-	this.updateRatingForm = function(rating)
+	this.updateRatingForm = function(rating, viewmode)
 	{
 		form = document.getElementById("form_rating");
 		if(rating != null)
 		{
 			// populate all fields
-			document.getElementById("rating_category").value = rating.category; // TODO
+			document.getElementById("rating_category").value = rating.category;
 			document.getElementById("rating_product").value = rating.product;
 			document.getElementById("rating_date").value = rating.date.toDatetimeLocal(); // convert date to datetimelocal ISO-string using lib first	
 			document.getElementById("rating_event").value = rating.event;
 			document.getElementById("rating_location").value = rating.location;
+			// TODO image
+			// TODO stars
 			document.getElementById("rating_summary").value = rating.summary;	
+			// TODO spider
 			
 			document.getElementById("rating_nose_text").value = rating.noseText;	
 			document.getElementById("rating_nose_tags").value = rating.noseTags; // TODO should be treated differently
@@ -441,12 +496,15 @@ var UI = function() {
 		else
 		{
 			// clear all fields
-			document.getElementById("rating_category").value = null; // TODO
+			document.getElementById("rating_category").value = document.getElementById("rating_category").defaultValue; // calculated on update of categories
 			document.getElementById("rating_product").value = "";
 			document.getElementById("rating_date").value = null	;
 			document.getElementById("rating_event").value = "";
 			document.getElementById("rating_location").value = "";
+			// TODO image
+			// TODO stars
 			document.getElementById("rating_summary").value = "";	
+			// TODO spider
 			
 			document.getElementById("rating_nose_text").value = "";	
 			document.getElementById("rating_nose_tags").value = "";	
@@ -457,20 +515,51 @@ var UI = function() {
 			document.getElementById("rating_finish_text").value = "";	
 			document.getElementById("rating_finish_tags").value = "";
 		}
-		this.updateForm(form, rating);
+		this.updateForm(form, rating, viewmode);
 	};
 	
 	this.submitRatingForm = function(form)
 	{
 		// validate
 		valid = true;
-		// TODO
+		// Note: use "&& valid" at end to ensure method call
+		valid = UI.validateElement(document.getElementById("rating_category"),	 	"value", UI.constants.TYPE_RATING, "category") && valid;
+		valid = UI.validateElement(document.getElementById("rating_product"), 		"value", UI.constants.TYPE_RATING, "product") && valid;
+		valid = UI.validateElement(document.getElementById("rating_date"), 			"value", UI.constants.TYPE_RATING, "date") && valid;
+		valid = UI.validateElement(document.getElementById("rating_event"), 		"value", UI.constants.TYPE_RATING, "event") && valid;
+		valid = UI.validateElement(document.getElementById("rating_location"), 		"value", UI.constants.TYPE_RATING, "location") && valid;
+			// TODO image
+			// TODO stars
+		valid = UI.validateElement(document.getElementById("rating_summary"), 		"value", UI.constants.TYPE_RATING, "summary") && valid;
+			// TODO spider
+		valid = UI.validateElement(document.getElementById("rating_nose_text"), 	"value", UI.constants.TYPE_RATING, "nose_text") && valid;
+		valid = UI.validateElement(document.getElementById("rating_nose_tags"), 	"value", UI.constants.TYPE_RATING, "nose_tags") && valid;
+		valid = UI.validateElement(document.getElementById("rating_taste_text"), 	"value", UI.constants.TYPE_RATING, "taste_text") && valid;
+		valid = UI.validateElement(document.getElementById("rating_taste_tags"), 	"value", UI.constants.TYPE_RATING, "taste_tags") && valid;
+		valid = UI.validateElement(document.getElementById("rating_finish_text"), 	"value", UI.constants.TYPE_RATING, "finish_text") && valid;
+		valid = UI.validateElement(document.getElementById("rating_finish_tags"), 	"value", UI.constants.TYPE_RATING, "finish_tags") && valid;
 		
 		if(valid)
 		{	
 			rating = form.object;
 			if(rating == null) rating = {};
 			// get all fields
+			event.category = document.getElementById("rating_category").value;
+			event.product = document.getElementById("rating_product").value;
+			event.date = new Date(document.getElementById("rating_date").value); // timezone is applied only, when using ISO-string constructor
+			event.event = document.getElementById("rating_event").value;
+			event.location = document.getElementById("rating_location").value;
+			// TODO image
+			// TODO stars
+			event.summary = document.getElementById("rating_summary").value;
+			// TODO spider	
+			event.noseText = document.getElementById("rating_nose_text").value;	
+			event.noseTags = document.getElementById("rating_nose_tags").value;	
+			event.tasteText = document.getElementById("rating_taste_text").value;	
+			event.tasteText = document.getElementById("rating_taste_tags").value;	
+			event.finishText = document.getElementById("rating_finish_text").value;	
+			event.finishText = document.getElementById("rating_finish_tags").value;	
+			// additional fields added by app (e.g. creator)
 			app.saveRating(rating);
 		}
 		return valid;
@@ -587,7 +676,7 @@ var UI = function() {
 		/* initialize calendar */
 		this.calendar = new Calendar("calendar", true, 1, app.getEvents());
 		this.calendar.onUpdate = function() { UI.labelManager.updateLabels(); };
-		this.calendar.onSelect = function(event) { UI.updateEventForm(event); };
+		this.calendar.onSelect = function(event) { UI.updateEventForm(event, true); };
 		
 		/* initialize rating lists */
 
