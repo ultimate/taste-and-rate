@@ -260,6 +260,8 @@ var UI = function() {
 					div.append(div2);
 				div.classList.add("text");
 				li.append(div)
+				
+				Events.addEventListener(Events.CLICK, function(rating) { return function(event) { UI.updateRatingForm(rating); }; }(ratings[r]), li);
 			list.append(li);
 			
 			// create ellipsis
@@ -420,7 +422,7 @@ var UI = function() {
 		if(rating != null)
 		{
 			// populate all fields
-			document.getElementById("rating_category").value = null; // TODO
+			document.getElementById("rating_category").value = rating.category; // TODO
 			document.getElementById("rating_product").value = rating.product;
 			document.getElementById("rating_date").value = rating.date.toDatetimeLocal(); // convert date to datetimelocal ISO-string using lib first	
 			document.getElementById("rating_event").value = rating.event;
@@ -428,13 +430,13 @@ var UI = function() {
 			document.getElementById("rating_summary").value = rating.summary;	
 			
 			document.getElementById("rating_nose_text").value = rating.noseText;	
-			document.getElementById("rating_nose_tags").value = rating.noseTags;	
+			document.getElementById("rating_nose_tags").value = rating.noseTags; // TODO should be treated differently
 			
 			document.getElementById("rating_taste_text").value = rating.tasteText;	
-			document.getElementById("rating_taste_tags").value = rating.tasteTags;
+			document.getElementById("rating_taste_tags").value = rating.tasteTags; // TODO should be treated differently
 			
 			document.getElementById("rating_finish_text").value = rating.finishText;	
-			document.getElementById("rating_finish_tags").value = rating.finishTags;
+			document.getElementById("rating_finish_tags").value = rating.finishTags; // TODO should be treated differently
 		}
 		else
 		{

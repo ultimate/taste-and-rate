@@ -48,6 +48,9 @@ lang.event.edit.title = "Edit event";
 lang.event.edit.description = "description on how to edit events";
 lang.event.edit.ok = "Save event";
 lang.event.edit.cancel = "Discard changes";
+lang.event.view = {};
+lang.event.view.title = "View event";
+lang.event.view.description = "description on how to view events";
 
 lang.rating = {};
 lang.rating.general = "General Information";
@@ -74,3 +77,6 @@ lang.rating.edit.title = "Edit rating";
 lang.rating.edit.description = "description on how to edit ratings";
 lang.rating.edit.ok = "Save rating";
 lang.rating.edit.cancel = "Discard changes";
+lang.rating.view = {};
+lang.rating.view.title = "View rating";
+lang.rating.view.description = "description on how to view ratings";
