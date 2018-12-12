@@ -25,11 +25,20 @@
 
 .window .frame {
     position: absolute;
+	/* fensteransicht */
+	/*
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
 	max-height: 70%;
 	width: 80%;
+	*/
+	/* fullscreen */
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;	
+	
 	overflow-y: auto;
 	background: white;
 	border-top: 0.2em solid rgb(150,85,0);
@@ -44,11 +53,17 @@
 .window .frame h2,
 .window .frame h3 {	
 	color: rgb(150,85,0);
-	margin-top: 0.25em;
-	margin-bottom: 0.75em;
+    margin-top: 0.75em;
+    margin-bottom: 0.25em;
 	border-bottom: 1px solid;
 	font-weight: unset;
 	padding-bottom: 0.2em;
+}
+
+.window .frame>h1:nth-child(1),
+.window .frame>h2:nth-child(1),
+.window .frame>h3:nth-child(1) {
+    margin-top: 0em;
 }
 
 .window .frame h3 label {
@@ -114,7 +129,7 @@
 
 .window.form .content form {
 	display: inline-block;
-	margin-top: 1em;
+	/*margin-top: 1em;*/
     width: 100%;
 }
 
@@ -130,8 +145,13 @@
     /*float: left;*/
 }
 
+.window.form .content form input[type="datetime-local"] {
+	width: 63.6%;
+    /*float: left;*/
+}
+
 .window.form .content form select {
-	width: 63%;
+	width: 64.2%;
     /*float: left;*/
 }
 
@@ -139,7 +159,8 @@
 	width: 98%;
     /*float: left;*/
 	display: block;
-    height: 8em;
+    height: 4em;
+    margin-bottom: -1em;
 }
 
 .window.form .content form div.validatable {
@@ -151,6 +172,7 @@
 	background: rgba(255, 127, 0, 0.5);
 	*/
 }
+
 .window.form .content .validatable+.marker {
 	opacity: 0;
 	color: rgb(255, 127, 0);
@@ -162,6 +184,10 @@
 .window.form .content .validatable.invalid+.marker {
 	opacity: 1;
 }
+
+
+
+
 /*
 
 .window.form .content .form {

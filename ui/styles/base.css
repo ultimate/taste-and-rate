@@ -19,7 +19,8 @@ body input {
 
 body,
 body input,
-body textarea {	
+body textarea,
+body select {	
 	font-size: 1em;	
 	font-family: Arial;
 }

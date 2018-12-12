@@ -166,6 +166,29 @@ var UI = function() {
 		this.labelManager.updateLabels(manageCategories);
 	};
 	
+	this.populateCategorySelects = function() {
+		var categorySelects = document.getElementsByClassName("category_select");
+		var option, label;
+		for(var i = 0; i < categorySelects.length; i++)
+		{
+			Elements.removeChildren(categorySelects[i]);
+			
+			for(var j = 0; j < UI.categories.length; j++)
+			{
+				if(UI.categories[j].favorite)
+				{
+					option = document.createElement("option");
+					option.setAttribute("value", UI.categories[j].category.id);
+					label = document.createElement("label");
+					label.setAttribute("key", UI.categories[j].category.key + ".title");
+					option.append(label);
+					categorySelects[i].append(option);
+				}
+			}
+			this.labelManager.updateLabels(categorySelects[i]);
+		}
+	};
+	
 	this.populateRatings = function(view) {
 		var scope = 0;
 		if(view == UI.constants.VIEW_PERSONAL_RATINGS)
@@ -500,6 +523,7 @@ var UI = function() {
 		
 				
 		/* initialize windows */
+		this.populateCategorySelects();
 		/* close cancel buttons */
 		//let closeButtons = document.getElementsByClassName("close");
 		let closeButtons = document.querySelectorAll(".window .close, .window .cancel");
@@ -568,7 +592,7 @@ var UI = function() {
 		/* manage categories */
 		this.populateManageCategories();
 		let manageCategoriesCloseButton = document.getElementById("manage_categories").getElementsByClassName("close")[0];
-		Events.addEventListener(Events.CLICK, function(event) { UI.populateMenu(); UI.populateManageCategories(); }, manageCategoriesCloseButton);
+		Events.addEventListener(Events.CLICK, function(event) { UI.populateMenu(); UI.populateManageCategories(); UI.populateCategorySelects(); }, manageCategoriesCloseButton);
 		
 		/* select view */
 		this.showView(this.constants.VIEW_PERSONAL_RATINGS);
