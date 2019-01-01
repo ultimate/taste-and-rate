@@ -364,7 +364,7 @@ var UI = function() {
 		validatableElements = form.getElementsByClassName("validatable");
 		if(viewmode)
 		{
-			// show/hide create/edit/view elements
+			// hide create/edit elements
 			for(var i = 0; i < createElements.length; i++)
 			{
 				createElements[i].classList.add("hidden");
@@ -373,6 +373,7 @@ var UI = function() {
 			{
 				editElements[i].classList.add("hidden");
 			}
+			// show view elements
 			for(var i = 0; i < viewElements.length; i++)
 			{
 				viewElements[i].classList.remove("hidden");
@@ -380,27 +381,24 @@ var UI = function() {
 		}
 		else if(object != null)
 		{
-			// show/hide create/edit elements
+			// hide create/view elements
 			for(var i = 0; i < createElements.length; i++)
 			{
 				createElements[i].classList.add("hidden");
-			}
-			for(var i = 0; i < editElements.length; i++)
-			{
-				editElements[i].classList.remove("hidden");
 			}
 			for(var i = 0; i < viewElements.length; i++)
 			{
 				viewElements[i].classList.add("hidden");
 			}
+			// show edit elements
+			for(var i = 0; i < editElements.length; i++)
+			{
+				editElements[i].classList.remove("hidden");
+			}
 		}
 		else
 		{
-			// show/hide create/edit elements
-			for(var i = 0; i < createElements.length; i++)
-			{
-				createElements[i].classList.remove("hidden");
-			}
+			// hide edit/view elements
 			for(var i = 0; i < editElements.length; i++)
 			{
 				editElements[i].classList.add("hidden");
@@ -408,6 +406,11 @@ var UI = function() {
 			for(var i = 0; i < viewElements.length; i++)
 			{
 				viewElements[i].classList.add("hidden");
+			}
+			// show create elements
+			for(var i = 0; i < createElements.length; i++)
+			{
+				createElements[i].classList.remove("hidden");
 			}
 		}
 		// TODO disable form elements
@@ -637,11 +640,11 @@ var UI = function() {
 			var element;
 			for(var i = 0; i < items.length; i++)
 			{
-				element = Elements.fromString("<li class=''>" + items[i].title + "</li>");
+				element = Elements.fromString("<li class='selectable'>" + items[i].title + "</li>");
 				if(items[i].itemType == UI.constants.TYPE_EVENT)
-					element.onclick = function(item) { return function() { UI.updateEventForm(item); document.getElementById("select_calendar_item").classList.add("hidden"); }; }(items[i].item);
-				else if(items[i].itemType == UI.constants.TYPE_EVENT)
-					element.onclick = function(item) { return function() { UI.updateRatingForm(item); document.getElementById("select_calendar_item").classList.add("hidden"); }; }(items[i].item);
+					element.onclick = function(item) { return function() { UI.updateEventForm(item, true); document.getElementById("select_calendar_item").classList.add("hidden"); }; }(items[i].item);
+				else if(items[i].itemType == UI.constants.TYPE_RATING)
+					element.onclick = function(item) { return function() { UI.updateRatingForm(item, true); document.getElementById("select_calendar_item").classList.add("hidden"); }; }(items[i].item);
 				list.append(element);
 			}
 			

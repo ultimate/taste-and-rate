@@ -277,12 +277,8 @@
 
 #manage_categories ul {
 	padding: 0;
-}
-
-#manage_categories ul {	
 	margin-top: 1em;
 	margin-bottom: 1px;
-	
 	position: relative;
 }
 
@@ -338,6 +334,20 @@
 #manage_categories ul > li.selectable.first .image.up,
 #manage_categories ul > li.selectable.last .image.down {
 	/*opacity: 0;*/
+}
+
+#select_calendar_item ul {
+	padding: 0;
+	margin-top: 1em;
+	margin-bottom: 1px;
+}
+
+#select_calendar_item ul > li.selectable {
+	text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    list-style-type: none;
+    padding: 0.5em;
 }
 
 /* components */
