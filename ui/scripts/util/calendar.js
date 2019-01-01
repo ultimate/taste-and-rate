@@ -57,7 +57,8 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items) {
 		for(var d = 0; d < 7; d++)
 		{
 			index = w*7 + d;
-			element = Elements.fromString("<div class='calendar_day'></div>")
+			element = Elements.fromString("<div class='calendar_day'></div>");
+			element.onclick = function(cal, index) { return function() { cal.onSelect(cal.displayedItems[index]); }; }(this, index);
 			this.elements[index] = element;
 			week.append(element);
 		}
@@ -65,11 +66,12 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items) {
 	}	
 	
 	this.onUpdate = function() {
-		// function to be overwritten by external function to support onUpdate item
+		// function to be overwritten by external function to support UI specific updating after updated content
+		// (e.g. label updating)
 	};
 	
-	this.onSelect = function(item) {
-		// function to be overwritten by external function to support onSelectEvent item
+	this.onSelect = function(items) {
+		// function to be overwritten by external function to allow item displaying, when calendar day is selected
 	};
 	
 	this.update = function(items) {
@@ -185,16 +187,16 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items) {
 				
 				for(var j = 0; j < this.displayedItems[index].length; j++)
 				{
-					if(groups.indexOf() == -1)
+					var group = this.displayedItems[index][j].group;
+					if(groups.indexOf(group) == -1)
 					{
-						var group = this.displayedItems[index][j].group; // TODO
 						var groupCount = 1;
 						if(group != null)
 						{
 							groups.push(group);
 							for(var k = j+1; k < this.displayedItems[index].length; k++)
 							{
-								var group2 = this.displayedItems[index][k].group; // TODO
+								var group2 = this.displayedItems[index][k].group;
 								if(group == group2)
 									groupCount++;
 							}
@@ -209,12 +211,13 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items) {
 														<span class='title'>" + group + "</span>\
 														" + (groupCount != 0 ? "<span class='count'>" + groupCount + " <label key='calendar." + (groupCount != 1 ? "entries" : "entry") + "'></label></span>" : "") + "\
 													   </div>")
-													   // <span class='location'>" + this.displayedItems[index][j].location + "</span>\
-													   
+													   // <span class='location'>" + this.displayedItems[index][j].location + "</span>
+						/*					   
 						if(groupCount <= 1)
 							element.onclick = function(cal, index, j) { return function() { cal.onSelect(cal.displayedItems[index][j]); }; }(this, index, j);
 						else
 							element.onclick = function(cal, index) { return function() { cal.onSelect(cal.displayedItems[index]); }; }(this, index);
+						*/
 						this.elements[index].append(element);		
 					}
 					else
