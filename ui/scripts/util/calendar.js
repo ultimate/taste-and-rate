@@ -208,9 +208,13 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items) {
 						element = Elements.fromString("<div class='calendar_item'>\
 														<span class='title'>" + group + "</span>\
 														" + (groupCount != 0 ? "<span class='count'>" + groupCount + " <label key='calendar." + (groupCount != 1 ? "entries" : "entry") + "'></label></span>" : "") + "\
-														<span class='location'>" + this.items[index].location + "</span>\
 													   </div>")
-						element.onclick = function(cal, index) { return function() { cal.onSelect(cal.items[index]); }; }(this, index);
+													   // <span class='location'>" + this.displayedItems[index][j].location + "</span>\
+													   
+						if(groupCount <= 1)
+							element.onclick = function(cal, index, j) { return function() { cal.onSelect(cal.displayedItems[index][j]); }; }(this, index, j);
+						else
+							element.onclick = function(cal, index) { return function() { cal.onSelect(cal.displayedItems[index]); }; }(this, index);
 						this.elements[index].append(element);		
 					}
 					else
