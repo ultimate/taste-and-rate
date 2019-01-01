@@ -1,11 +1,11 @@
-var Calendar = function(parent, showNav, firstDayOfWeek, events) {
+var Calendar = function(parent, showNav, firstDayOfWeek, items) {
 	
 	this.today = new Date();
-	if(events)
-		this.events = events;
+	if(items)
+		this.items = items;
 	else 
-		this.events = [];
-	this.displayedEvents = [];
+		this.items = [];
+	this.displayedItems = [];
 	
 	this.FIRST_DAY_OF_WEEK = firstDayOfWeek;
 	this.WEEK_DAY_LABEL = "calendar.weekdays";
@@ -65,16 +65,16 @@ var Calendar = function(parent, showNav, firstDayOfWeek, events) {
 	}	
 	
 	this.onUpdate = function() {
-		// function to be overwritten by external function to support onUpdate event
+		// function to be overwritten by external function to support onUpdate item
 	};
 	
-	this.onSelect = function(event) {
-		// function to be overwritten by external function to support onSelectEvent event
+	this.onSelect = function(item) {
+		// function to be overwritten by external function to support onSelectEvent item
 	};
 	
-	this.update = function(events) {
-		if(events)
-			this.events = events;
+	this.update = function(items) {
+		if(items)
+			this.items = items;
 		// remove all items in calendar days
 		for(var i = 0; i < this.elements.length; i++)
 		{
@@ -127,55 +127,55 @@ var Calendar = function(parent, showNav, firstDayOfWeek, events) {
 			}
 		}
 		
-		// init cache for displayed events		
-		this.displayedEvents = new Array(42);
-		for(var i = 0; i < this.displayedEvents.length; i++)
-			this.displayedEvents[i] = [];
+		// init cache for displayed items		
+		this.displayedItems = new Array(42);
+		for(var i = 0; i < this.displayedItems.length; i++)
+			this.displayedItems[i] = [];
 		
-		// get displayed events
+		// get displayed items
 		console.log("range = " + new Date(rangeStart) + " to " + new Date(rangeEnd));
-		var eventTime;
+		var itemTime;
 		var element;
-		for(var i = 0; i < this.events.length; i++)
+		for(var i = 0; i < this.items.length; i++)
 		{
-			if(this.events[i] == null || this.events[i].date == null)
+			if(this.items[i] == null || this.items[i].date == null)
 			{
-				console.log("invalid event: " + (this.events[i] == null ? "null": "'" + this.events[i].title + "' (" + this.events[i].date + ")"));
+				console.log("invalid item: " + (this.items[i] == null ? "null": "'" + this.items[i].title + "' (" + this.items[i].date + ")"));
 				continue;
 			}
-			eventTime = this.events[i].date.getTime();
-			if(eventTime >= rangeStart && eventTime < rangeEnd)
+			itemTime = this.items[i].date.getTime();
+			if(itemTime >= rangeStart && itemTime < rangeEnd)
 			{
-				index = this.events[i].date.getDate() + offset - 1;
-				if(this.events[i].date.getMonth() != this.currentMonth)
+				index = this.items[i].date.getDate() + offset - 1;
+				if(this.items[i].date.getMonth() != this.currentMonth)
 				{
-					if(this.events[i].date.getFullYear() > this.currentYear || (this.events[i].date.getMonth() > this.currentMonth && this.events[i].date.getFullYear() == this.currentYear))
+					if(this.items[i].date.getFullYear() > this.currentYear || (this.items[i].date.getMonth() > this.currentMonth && this.items[i].date.getFullYear() == this.currentYear))
 					{
 						index += daysInThisMonth;
 					}
-					else if(this.events[i].date.getFullYear() < this.currentYear || (this.events[i].date.getMonth() < this.currentMonth && this.events[i].date.getFullYear() == this.currentYear))
+					else if(this.items[i].date.getFullYear() < this.currentYear || (this.items[i].date.getMonth() < this.currentMonth && this.items[i].date.getFullYear() == this.currentYear))
 					{
 						index -= daysInPrevMonth;
 					}
 					else
 					{
-						console.err("how did we get here: " + this.events[i].date);
+						console.err("how did we get here: " + this.items[i].date);
 					}
 				}
 				
-				console.log("displaying event: '" + this.events[i].title + "' (" + this.events[i].date + ") @ " + index);
-				this.displayedEvents[index].push(this.events[i]);
+				console.log("displaying item: '" + this.items[i].title + "' (" + this.items[i].date + ") @ " + index);
+				this.displayedItems[index].push(this.items[i]);
 			}
 			else
 			{
-				console.log("skipping event: '" + this.events[i].title + "' (" + this.events[i].date + ") > out of range");
+				console.log("skipping item: '" + this.items[i].title + "' (" + this.items[i].date + ") > out of range");
 			}
 		}
 		
-		// display events
-		for(index = 0; index < this.displayedEvents.length; index++)
+		// display items
+		for(index = 0; index < this.displayedItems.length; index++)
 		{
-			if(this.displayedEvents[index].length == 0)
+			if(this.displayedItems[index].length == 0)
 			{
 				continue;
 			}
@@ -183,37 +183,34 @@ var Calendar = function(parent, showNav, firstDayOfWeek, events) {
 			{
 				var groups = [];
 				
-				for(var j = 0; j < this.displayedEvents[index].length; j++)
+				for(var j = 0; j < this.displayedItems[index].length; j++)
 				{
 					if(groups.indexOf() == -1)
 					{
-						var group = this.displayedEvents[index][j].group; // TODO
+						var group = this.displayedItems[index][j].group; // TODO
 						var groupCount = 1;
 						if(group != null)
 						{
 							groups.push(group);
-							for(var k = j+1; k < this.displayedEvents[index].length; k++)
+							for(var k = j+1; k < this.displayedItems[index].length; k++)
 							{
-								var group2 = this.displayedEvents[index][k].group; // TODO
+								var group2 = this.displayedItems[index][k].group; // TODO
 								if(group == group2)
 									groupCount++;
 							}
 						}
 						else
 						{
-							group = this.displayedEvents[index][j].title;
+							group = this.displayedItems[index][j].title;
 							groupCount = 0; // not a real group, just a single entry
 						}
 						
-						element = Elements.fromString("<div class='calendar_event'>\
+						element = Elements.fromString("<div class='calendar_item'>\
 														<span class='title'>" + group + "</span>\
 														" + (groupCount != 0 ? "<span class='count'>" + groupCount + " <label key='calendar." + (groupCount != 1 ? "entries" : "entry") + "'></label></span>" : "") + "\
-														<span class='location'>" + this.events[index].location + "</span>\
+														<span class='location'>" + this.items[index].location + "</span>\
 													   </div>")
-						if(groupCount == 1)
-							element.onclick = function(cal, index) { return function() { cal.onSelect(cal.events[index]); }; }(this, index);
-						else
-							element.onclick = function(cal, index) { return function() { cal.onSelect(cal.events[index]); }; }(this, index); // TODO select element
+						element.onclick = function(cal, index) { return function() { cal.onSelect(cal.items[index]); }; }(this, index);
 						this.elements[index].append(element);		
 					}
 					else

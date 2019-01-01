@@ -72,22 +72,22 @@
 	color: rgb(150,85,0);
 }
 
-.calendar_day .calendar_event {
+.calendar_day .calendar_item {
 	white-space: nowrap;
 }
 
-.calendar_day .calendar_event .title {
+.calendar_day .calendar_item .title {
 	font-size: 75%;
 	display: block;
 }
 
-.calendar_day .calendar_event .count {
+.calendar_day .calendar_item .count {
 	font-size: 50%;
 	display: block;
 	line-height: 100%;
 }
 
-.calendar_day .calendar_event .location {
+.calendar_day .calendar_item .location {
 	font-size: 50%;
 	display: block;
 	line-height: 100%;
