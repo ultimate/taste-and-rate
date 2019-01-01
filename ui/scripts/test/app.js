@@ -193,43 +193,53 @@ var app = function() {
 			var categoryName;
 			var id;
 			var spiderValues;
+			var group;
 			for(var c = 0; c < categories.length; c++)
 			{		
 				category = categories[c].category;
 				categoryName = this.getString(category.key + ".title");
-				for(var i = 1; i <= NUMBER_OF_SAMPLES; i++)
+				for(var i = 1; i <= NUMBER_OF_SAMPLES;)
 				{
 					d = new Date(Date.now() + (Math.random() * 90 - 45)*24*3600*1000);
 					d.setSeconds(0);
 					d.setMilliseconds(0);
 					
-					id = (category.id*1000 + i);
+					if(Math.random() > 0.8)
+						group = Math.random() * 9 + 2;
+					else
+						group = 1;
 					
-					spiderValues = [];
-					for(var si = 0; si < category.spider.length; si++)
-					{
-						spiderValues.push(Math.round(Math.random()*10));
-					}				
-					
-					this.ratings.push({
-						id: -id,
-						category: category.id,
-						creator: Math.round(Math.random()*10),
-						product: "The very special " + categoryName + " #" + i + " " + this.loremIpsum(),
-						image: (Math.random() < 0.33 ? "images/bottle1.jpg" : (Math.random() < 0.5 ? "images/bottle2.png" : "images/bottle3.jpg")),
-						date: d,
-						event: null, // TODO
-						location: null, // TODO
-						stars: Math.ceil(Math.random()*5),
-						summary: "Summary " + id + ": " + this.loremIpsum(),
-						noseText: "Nose " + id + ": " + this.loremIpsum(),
-						noseTags: new Array(tags[Math.floor(Math.random()*tags.length)]),						
-						tasteText: "Taste " + id + ": " + this.loremIpsum(),
-						tasteTags: new Array(tags[Math.floor(Math.random()*tags.length)]),						
-						finishText: "Finish " + id + ": " + this.loremIpsum(),
-						finishTags: new Array(tags[Math.floor(Math.random()*tags.length)]),
-						spider: spiderValues,
-					});
+					for(var g = 0; g < group; g++)
+					{										
+						id = (category.id*1000 + i);
+						
+						spiderValues = [];
+						for(var si = 0; si < category.spider.length; si++)
+						{
+							spiderValues.push(Math.round(Math.random()*10));
+						}				
+						
+						this.ratings.push({
+							id: -id,
+							category: category.id,
+							creator: Math.round(Math.random()*10),
+							product: "The very special " + categoryName + " #" + i + " " + this.loremIpsum(),
+							image: (Math.random() < 0.33 ? "images/bottle1.jpg" : (Math.random() < 0.5 ? "images/bottle2.png" : "images/bottle3.jpg")),
+							date: d,
+							event: (group > 1 ? "Rating Group " + d : null),
+							location: null, // TODO
+							stars: Math.ceil(Math.random()*5),
+							summary: "Summary " + id + ": " + this.loremIpsum(),
+							noseText: "Nose " + id + ": " + this.loremIpsum(),
+							noseTags: new Array(tags[Math.floor(Math.random()*tags.length)]),						
+							tasteText: "Taste " + id + ": " + this.loremIpsum(),
+							tasteTags: new Array(tags[Math.floor(Math.random()*tags.length)]),						
+							finishText: "Finish " + id + ": " + this.loremIpsum(),
+							finishTags: new Array(tags[Math.floor(Math.random()*tags.length)]),
+							spider: spiderValues,
+						});
+						i++;
+					}
 				}
 			}
 			var maxId = Storage.loadLocalObject(UI.constants.TYPE_EVENT + "_id");
