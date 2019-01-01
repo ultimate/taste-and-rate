@@ -5,6 +5,7 @@ var Calendar = function(parent, showNav, firstDayOfWeek, events) {
 		this.events = events;
 	else 
 		this.events = [];
+	this.displayedEvents = [];
 	
 	this.FIRST_DAY_OF_WEEK = firstDayOfWeek;
 	this.WEEK_DAY_LABEL = "calendar.weekdays";
@@ -126,7 +127,12 @@ var Calendar = function(parent, showNav, firstDayOfWeek, events) {
 			}
 		}
 		
-		// display events
+		// init cache for displayed events		
+		this.displayedEvents = new Array(42);
+		for(var i = 0; i < this.displayedEvents.length; i++)
+			this.displayedEvents[i] = [];
+		
+		// get displayed events
 		console.log("range = " + new Date(rangeStart) + " to " + new Date(rangeEnd));
 		var eventTime;
 		var element;
@@ -143,7 +149,7 @@ var Calendar = function(parent, showNav, firstDayOfWeek, events) {
 				index = this.events[i].date.getDate() + offset - 1;
 				if(this.events[i].date.getMonth() != this.currentMonth)
 				{
-					if(this.events[i].date.getFullYear() > this.currentYear || this.events[i].date.getMonth() > this.currentMonth)
+					if(this.events[i].date.getFullYear() > this.currentYear || (this.events[i].date.getMonth() > this.currentMonth && this.events[i].date.getFullYear() == this.currentYear))
 					{
 						index += daysInThisMonth;
 					}
@@ -156,18 +162,66 @@ var Calendar = function(parent, showNav, firstDayOfWeek, events) {
 						console.err("how did we get here: " + this.events[i].date);
 					}
 				}
+				
 				console.log("displaying event: '" + this.events[i].title + "' (" + this.events[i].date + ") @ " + index);
-				element = Elements.fromString("<div class='calendar_event'>\
-												<span class='title'>" + this.events[i].title + "</span>\
-												<span class='location'>" + this.events[i].location + "</span>\
-											   </div>")
-				element.onclick = function(cal, i) { return function() { cal.onSelect(cal.events[i]); }; }(this, i);
-				this.elements[index].append(element);			
+				this.displayedEvents[index].push(this.events[i]);
 			}
 			else
 			{
 				console.log("skipping event: '" + this.events[i].title + "' (" + this.events[i].date + ") > out of range");
 			}
+		}
+		
+		// display events
+		for(index = 0; index < this.displayedEvents.length; index++)
+		{
+			if(this.displayedEvents[index].length == 0)
+			{
+				continue;
+			}
+			else
+			{
+				var groups = [];
+				
+				for(var j = 0; j < this.displayedEvents[index].length; j++)
+				{
+					if(groups.indexOf() == -1)
+					{
+						var group = this.displayedEvents[index][j].group; // TODO
+						var groupCount = 1;
+						if(group != null)
+						{
+							groups.push(group);
+							for(var k = j+1; k < this.displayedEvents[index].length; k++)
+							{
+								var group2 = this.displayedEvents[index][k].group; // TODO
+								if(group == group2)
+									groupCount++;
+							}
+						}
+						else
+						{
+							group = this.displayedEvents[index][j].title;
+							groupCount = 0; // not a real group, just a single entry
+						}
+						
+						element = Elements.fromString("<div class='calendar_event'>\
+														<span class='title'>" + group + "</span>\
+														" + (groupCount != 0 ? "<span class='count'>" + groupCount + " <label key='calendar." + (groupCount != 1 ? "entries" : "entry") + "'></label></span>" : "") + "\
+														<span class='location'>" + this.events[index].location + "</span>\
+													   </div>")
+						if(groupCount == 1)
+							element.onclick = function(cal, index) { return function() { cal.onSelect(cal.events[index]); }; }(this, index);
+						else
+							element.onclick = function(cal, index) { return function() { cal.onSelect(cal.events[index]); }; }(this, index); // TODO select element
+						this.elements[index].append(element);		
+					}
+					else
+					{
+						continue;
+					}
+				}	
+			}				
 		}
 		
 		currMonthLabel.setAttribute("key", this.MONTH_LABEL + "[" + this.currentMonth + "]");

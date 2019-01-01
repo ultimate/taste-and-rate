@@ -81,6 +81,12 @@
 	display: block;
 }
 
+.calendar_day .calendar_event .count {
+	font-size: 50%;
+	display: block;
+	line-height: 100%;
+}
+
 .calendar_day .calendar_event .location {
 	font-size: 50%;
 	display: block;
