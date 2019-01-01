@@ -319,7 +319,7 @@ var UI = function() {
 		// refresh view
 		if(this.view == this.constants.VIEW_CALENDAR)
 		{
-			this.calendar.update(app.getEvents());
+			this.calendar.update(this.getCalendarItems());
 		}
 		else if(this.view == this.constants.VIEW_PERSONAL_RATINGS)
 		{
@@ -351,7 +351,7 @@ var UI = function() {
 		else if(this.view == this.constants.VIEW_GLOBAL_RATINGS)
 			this.updateRatingForm(null, true);
 		*/
-		this.updateRatingForm(null, true);
+		this.updateRatingForm(null, false);
 		UI.menu.hide();
 	};
 	
@@ -463,7 +463,7 @@ var UI = function() {
 			event.description = document.getElementById("event_description").value;		
 			app.saveEvent(event);	
 			// update calendar
-			calendar.update(app.getEvents());
+			calendar.update(this.getCalendarItems());
 		}
 		return valid;
 	};
@@ -585,6 +585,49 @@ var UI = function() {
 		return valid;
 	};
 	
+	this.getCalendarItems = function() {
+		var calendarItems = [];
+		var events = app.getEvents();
+		var ratings = app.getRatings(UI.constants.SCOPE_PERSONAL);
+		
+		for(var i = 0; i < events.length; i++)
+		{
+			console.log(events[i]);
+			calendarItems.push({
+				title: 		events[i].title,
+				date: 		events[i].date,
+				group: 		null,
+				itemType: 	UI.constants.TYPE_EVENT,
+				item: 		events[i],
+			});
+		}
+		for(var i = 0; i < ratings.length; i++)
+		{
+			console.log(ratings[i]);
+			calendarItems.push({
+				title: 		ratings[i].product,
+				date: 		ratings[i].date,
+				group: 		ratings[i].event,
+				itemType: 	UI.constants.TYPE_RATING,
+				item: 		ratings[i],
+			});
+		}
+		
+		return calendarItems;
+	};
+	
+	this.selectCalendarItem = function(item)
+	{
+		console.log(item);
+		console.log("calendar select: " + item.itemType + " = " + item.title);
+		if(item instanceof Array)			
+			UI.updateRatingForm(item[0].item, true); // TODO show popup to select item
+		else if(item.itemType == UI.constants.TYPE_EVENT)
+			UI.updateEventForm(item.item, true);
+		else if(item.itemType == UI.constants.TYPE_RATING)
+			UI.updateRatingForm(item.item, true);
+	};
+	
 	this.initialize = function()
 	{		
 		/* create LabelManager for updating locale dependent labels */
@@ -676,9 +719,9 @@ var UI = function() {
 		*/
 		
 		/* initialize calendar */
-		this.calendar = new Calendar("calendar", true, 1, app.getEvents());
+		this.calendar = new Calendar("calendar", true, 1, this.getCalendarItems());
 		this.calendar.onUpdate = function() { UI.labelManager.updateLabels(); };
-		this.calendar.onSelect = function(event) { UI.updateEventForm(event, true); };
+		this.calendar.onSelect = this.selectCalendarItem;
 		
 		/* initialize rating lists */
 

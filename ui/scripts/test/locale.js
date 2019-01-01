@@ -3,6 +3,8 @@ var lang = {};
 lang.calendar = {};
 lang.calendar.weekdays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 lang.calendar.months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+lang.calendar.entry = "Entry";
+lang.calendar.entries = "Entries";
 
 lang.menu = {};
 lang.menu.categories = "categories";
@@ -53,6 +55,8 @@ lang.event.view.title = "View event";
 lang.event.view.description = "description on how to view events";
 
 lang.rating = {};
+lang.rating.title = "Rating";
+lang.rating.titlePlural = "Rating(s)";
 lang.rating.general = "General Information";
 lang.rating.category = "Category";
 lang.rating.product = "Product";
