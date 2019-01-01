@@ -419,7 +419,25 @@
 			</div>
 		</div>
 	</div>
-	<div id="form_rating" class="window modal hidden form" type="rating">
+	<div id="select_calendar_item" class="window modal hidden">
+		<div class="frame">
+			<h2 class="title">
+				<label key="select_calendar_item.title"></label>
+				<div class="close">
+					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" class="image">
+						<use xlink:href="#img_cross"/>
+					</svg>
+				</div>
+			</h2>
+			<div class="content">
+				<label key="select_calendar_item.description"></label>
+				<ul id="select_calendar_item_list">
+					<!-- will be populated by script -->
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div id="form_rating" class="window modal hidden form maximized" type="rating">
 		<div class="frame">
 			<h2 class="title">
 				<label key="rating.create.title" class="create"></label>
@@ -473,7 +491,7 @@
 			</div>
 		</div>
 	</div>
-	<div id="form_event" class="window modal hidden form" type="event">
+	<div id="form_event" class="window modal hidden form maximized" type="event">
 		<div class="frame">
 			<h2 class="title">
 				<label key="event.create.title" class="create"></label>

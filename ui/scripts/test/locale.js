@@ -6,6 +6,10 @@ lang.calendar.months = ["January", "February", "March", "April", "May", "June", 
 lang.calendar.entry = "Entry";
 lang.calendar.entries = "Entries";
 
+lang.select_calendar_item = {};
+lang.select_calendar_item.title = "Select entry";
+lang.select_calendar_item.description = "Select an entry to display:";
+
 lang.menu = {};
 lang.menu.categories = "categories";
 lang.menu.profile = "profile";

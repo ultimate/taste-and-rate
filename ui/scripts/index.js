@@ -616,16 +616,41 @@ var UI = function() {
 		return calendarItems;
 	};
 	
-	this.selectCalendarItem = function(item)
+	this.selectCalendarItem = function(items)
 	{
-		console.log(item);
-		console.log("calendar select: " + item.itemType + " = " + item.title);
-		if(item instanceof Array)			
-			UI.updateRatingForm(item[0].item, true); // TODO show popup to select item
-		else if(item.itemType == UI.constants.TYPE_EVENT)
-			UI.updateEventForm(item.item, true);
-		else if(item.itemType == UI.constants.TYPE_RATING)
-			UI.updateRatingForm(item.item, true);
+		console.log("calendar select:");
+		console.log(items);
+		
+		if(items.length == 1)
+		{
+			var item = items[0];
+			if(item.itemType == UI.constants.TYPE_EVENT)
+				UI.updateEventForm(item.item, true);
+			else if(item.itemType == UI.constants.TYPE_RATING)
+				UI.updateRatingForm(item.item, true);
+		}
+		else if(items.length > 1)
+		{
+			var list = document.getElementById("select_calendar_item_list");
+			Elements.removeChildren(list);
+			
+			var element;
+			for(var i = 0; i < items.length; i++)
+			{
+				element = Elements.fromString("<li class=''>" + items[i].title + "</li>");
+				if(items[i].itemType == UI.constants.TYPE_EVENT)
+					element.onclick = function(item) { return function() { UI.updateEventForm(item); document.getElementById("select_calendar_item").classList.add("hidden"); }; }(items[i].item);
+				else if(items[i].itemType == UI.constants.TYPE_EVENT)
+					element.onclick = function(item) { return function() { UI.updateRatingForm(item); document.getElementById("select_calendar_item").classList.add("hidden"); }; }(items[i].item);
+				list.append(element);
+			}
+			
+			document.getElementById("select_calendar_item").classList.remove("hidden");
+		}
+		else
+		{
+			// nothing to display
+		}
 	};
 	
 	this.initialize = function()
