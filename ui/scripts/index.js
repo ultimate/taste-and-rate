@@ -770,9 +770,13 @@ var UI = function() {
 		{
 			Events.addEventListener(Events.CLICK, function(event) {
 				var element = event.target;
+				// find correct target element
+				while(!element.classList.contains("stars"))
+					element = element.parentElement;
+				
 				if(!element.classList.contains("disabled"))
 				{
-					var stars = (event.offsetX/element.offsetWidth)*5+1;
+					var stars = Math.floor((event.offsetX/element.offsetWidth)*5+1);
 					var percent = Math.round(stars*2)*10;
 					console.log("click @ " + event.offsetX + " of " + element.offsetWidth + " => " + stars + " = " + percent + "%");
 					
