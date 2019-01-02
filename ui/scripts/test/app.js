@@ -242,10 +242,10 @@ var app = function() {
 					}
 				}
 			}
-			var maxId = Storage.loadLocalObject(UI.constants.TYPE_EVENT + "_id");
+			var maxId = Storage.loadLocalObject(UI.constants.TYPE_RATING + "_id");
 			for(var i = 1; i <= maxId; i++)
 			{
-				this.ratings.push(this.loadEvent(i));
+				this.ratings.push(this.loadRating(i));
 			}
 		}
 		// get active categories
