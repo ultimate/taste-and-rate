@@ -99,7 +99,33 @@
 	top: -0.05em;
 }
 
-#menu {
+#menu.hidden {
+	opacity: 1;
+}
+
+#menu #overlay {	
+	content: " ";
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 2;
+	visibility: visible;
+}
+
+#menu.hidden #overlay {
+	visibility: hidden;
+}
+
+#menu ul {
+	padding: 0;
+}
+
+#menu > ul {	
+	margin-top: 1px;
+	margin-bottom: 1px;
+	
 	position: absolute;
 	top: 3.0em;
 	z-index: 4;
@@ -114,17 +140,9 @@
 	transition: all 0.5s;
 }
 
-#menu.hidden {
+#menu.hidden > ul {
 	left: -61%;
-}
-
-#menu ul {
-	padding: 0;
-}
-
-#menu > ul {	
-	margin-top: 1px;
-	margin-bottom: 1px;
+	transition: all 0.5s;
 }
 
 #menu li {
