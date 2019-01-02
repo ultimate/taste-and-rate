@@ -165,12 +165,12 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items) {
 					}
 				}
 				
-				console.log("displaying item: '" + this.items[i].title + "' (" + this.items[i].date + ") @ " + index);
+				console.log("displaying item: '" + (this.items[i].title.length <= 25 ? this.items[i].title : this.items[i].title.substring(0,25)) + "' (" + this.items[i].date + ") @ " + index);
 				this.displayedItems[index].push(this.items[i]);
 			}
 			else
 			{
-				console.log("skipping item: '" + this.items[i].title + "' (" + this.items[i].date + ") > out of range");
+				console.log("skipping item: '" + (this.items[i].title.length <= 25 ? this.items[i].title : this.items[i].title.substring(0,25)) + "' (" + this.items[i].date + ") > out of range");
 			}
 		}
 		

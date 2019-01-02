@@ -595,7 +595,7 @@ var UI = function() {
 		
 		for(var i = 0; i < events.length; i++)
 		{
-			console.log(events[i]);
+			//console.log(events[i]);
 			calendarItems.push({
 				title: 		events[i].title,
 				date: 		events[i].date,
@@ -606,7 +606,7 @@ var UI = function() {
 		}
 		for(var i = 0; i < ratings.length; i++)
 		{
-			console.log(ratings[i]);
+			//console.log(ratings[i]);
 			calendarItems.push({
 				title: 		ratings[i].product,
 				date: 		ratings[i].date,
