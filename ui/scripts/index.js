@@ -264,7 +264,10 @@ var UI = function() {
 			li = document.createElement("li");
 				div = document.createElement("div");
 				div.classList.add("image");
-				div.style.backgroundImage = "url(" + ratings[r].image + ")" ; 
+				if(ratings[r].image)
+					div.style.backgroundImage = "url(" + ratings[r].image + ")" ; 
+				else
+					div.style.backgroundImage = "url(images/default.png)" ; 
 				li.append(div);
 				
 				div = document.createElement("div");
