@@ -29,6 +29,11 @@ Events.MOUSEOVER = "mouseover";
 Events.MOUSEOUT = "mouseout";
 Events.TOUCHSTART = "touchstart";
 Events.TOUCHEND = "touchend";
+Events.CUT = "cut";
+Events.PASTE = "paste";
+Events.DROP = "drop";
+Events.CHANGE = "change";
+
 
 // fix IE Events Names
 // do that before defining any further constants or functions!!!

@@ -336,20 +336,6 @@
 	/*opacity: 0;*/
 }
 
-.window ul.select_list {
-	padding: 0;
-	margin-top: 1em;
-	margin-bottom: 1px;
-}
-
-.window ul.select_list > li.selectable {
-	text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    list-style-type: none;
-    padding: 0.5em;
-}
-
 /* components */
 body input[type="text"],
 body input[type="datetime-local"],

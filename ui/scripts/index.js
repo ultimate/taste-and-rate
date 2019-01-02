@@ -783,7 +783,27 @@ var UI = function() {
 					element.getElementsByClassName("percent")[0].style.width = percent + "%";
 				}			
 			}, starSelectors[i]);
-		}		
+		}	
+		/* auto size textareas */
+		let textareas = document.getElementsByTagName("textarea");
+		var autosize = function(event) {
+			console.log(event);
+			var element = event.target;
+			element.style.height = 'auto';
+			element.style.height = element.scrollHeight + "px";						
+		};
+		var delayAutosize = function(event) {
+			// 0-timeout to get the already changed text
+			setTimeout(function(event) {return function() { autosize(event); }; }(event), 0);
+		};
+		for(var i = 0; i < textareas.length; i++)
+		{
+			Events.addEventListener(Events.CHANGE, 	autosize, textareas[i]);
+			Events.addEventListener(Events.CUT, 	delayAutosize, textareas[i]);
+			Events.addEventListener(Events.PASTE, 	delayAutosize, textareas[i]);
+			Events.addEventListener(Events.DROP, 	delayAutosize, textareas[i]);
+			Events.addEventListener(Events.KEYDOWN,	delayAutosize, textareas[i]);
+		}	
 		/* close window on any click outside window (only for non-modal windows!) */
 		/*
 		let frames = document.getElementsByClassName("frame");
