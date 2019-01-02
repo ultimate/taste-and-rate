@@ -10,6 +10,12 @@ lang.select_calendar_item = {};
 lang.select_calendar_item.title = "Select entry";
 lang.select_calendar_item.description = "Select an entry to display:";
 
+lang.select_type = {};
+lang.select_type.title = "Select type";
+lang.select_type.description = "Select a type of object to create:";
+lang.select_type.event = "Event";
+lang.select_type.rating = "Rating";
+
 lang.menu = {};
 lang.menu.categories = "categories";
 lang.menu.profile = "profile";
@@ -59,8 +65,6 @@ lang.event.view.title = "View event";
 lang.event.view.description = "description on how to view events";
 
 lang.rating = {};
-lang.rating.title = "Rating";
-lang.rating.titlePlural = "Rating(s)";
 lang.rating.general = "General Information";
 lang.rating.category = "Category";
 lang.rating.product = "Product";

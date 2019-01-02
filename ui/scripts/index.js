@@ -11,7 +11,11 @@ var UI = function() {
 		SCOPE_PERSONAL: 1,
 		SCOPE_FRIENDS: 2,
 		SCOPE_GLOBAL: 4,
+		ADVANCED_ADD: true,
+		ADVANCED_ADD_TIMEOUT: 1000,
 	};
+	
+	this.timers = {};
 	
 	this.view = this.constants.VIEW_CALENDAR;
 	this.defaultCategory = 0;
@@ -339,20 +343,50 @@ var UI = function() {
 	
 	this.showAdd = function()
 	{
-		console.log("showAdd called for '" + this.view + "'");
-		/*
-		// @deprecated
-		if(this.view == this.constants.VIEW_CALENDAR)
-			this.updateEventForm(null, true);
-		else if(this.view == this.constants.VIEW_PERSONAL_RATINGS)
-			this.updateRatingForm(null, true);
-		else if(this.view == this.constants.VIEW_FRIENDS_RATINGS)
-			this.updateRatingForm(null, true);
-		else if(this.view == this.constants.VIEW_GLOBAL_RATINGS)
-			this.updateRatingForm(null, true);
-		*/
-		this.updateRatingForm(null, false);
+		var timer = this.getTimer("ADD");
+		this.clearTimer("ADD");
+		
+		console.log("showAdd called for '" + this.view + "' (advanced=" + UI.constants.ADVANCED_ADD + ", timer=" + timer + ")");
+		
+		if(UI.constants.ADVANCED_ADD && (timer > UI.constants.ADVANCED_ADD_TIMEOUT))
+		{
+			console.log("advanced add...");
+			
+			var list = document.getElementById("select_type_list");
+			Elements.removeChildren(list);
+			
+			// event
+			element = Elements.fromString("<li class='selectable'><label key='select_type.event'></label></li>");
+			element.onclick = function(event) { UI.updateEventForm(null, false); document.getElementById("select_type").classList.add("hidden"); };
+			list.append(element);
+			// rating
+			element = Elements.fromString("<li class='selectable'><label key='select_type.rating'></label></li>");
+			element.onclick = function(event) { UI.updateRatingForm(null, false); document.getElementById("select_type").classList.add("hidden"); };
+			list.append(element);
+						
+			this.labelManager.updateLabels(list);
+			document.getElementById("select_type").classList.remove("hidden");
+		}
+		else
+		{
+			this.updateRatingForm(null, false);			
+		}
 		UI.menu.hide();
+	};
+	
+	this.startTimer = function(timer)
+	{
+		this.timers[timer] = new Date().getTime();
+	};
+	
+	this.getTimer = function(timer)
+	{
+		return new Date().getTime() - this.timers[timer];
+	};
+	
+	this.clearTimer = function(timer)
+	{
+		this.timers[timer] = null;
 	};
 	
 	this.updateForm = function(form, object, viewmode)
@@ -663,8 +697,11 @@ var UI = function() {
 		
 		/* initialize top bar */
 		this.searchInput = new AutoHide("search", 5000, [Events.KEYDOWN, Events.KEYPRESSED, Events.KEYUP, Events.CLICK, Events.MOUSEDOWN, Events.MOUSEUP]);
-		Events.addEventListener(Events.CLICK, function(event) { UI.searchInput.show(); 							}, document.getElementById("search_button"));
-		Events.addEventListener(Events.CLICK, function(event) { UI.showAdd(); 			event.preventDefault(); }, document.getElementById("add_button"));
+		Events.addEventListener(Events.CLICK, 		function(event) { UI.searchInput.show(); 							}, 	document.getElementById("search_button"));
+		Events.addEventListener(Events.MOUSEDOWN, 	function(event) { UI.startTimer("ADD"); }, 								document.getElementById("add_button"));
+		Events.addEventListener(Events.TOUCHSTART, 	function(event) { UI.startTimer("ADD"); }, 								document.getElementById("add_button"));
+		Events.addEventListener(Events.MOUSEUP, 	function(event) { UI.showAdd(); 			event.preventDefault(); }, 	document.getElementById("add_button"));
+		Events.addEventListener(Events.TOUCHEND, 	function(event) { UI.showAdd(); 			event.preventDefault(); }, 	document.getElementById("add_button"));
 		
 		/* initialize menu */
 		this.menu = new Hideable("menu", false);
