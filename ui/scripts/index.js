@@ -761,6 +761,22 @@ var UI = function() {
 				}
 			}, okButtons[i]);
 		}		
+		/* star selectors */
+		let starSelectors = document.querySelectorAll(".stars");
+		for(var i = 0; i < starSelectors.length; i++)
+		{
+			Events.addEventListener(Events.CLICK, function(event) {
+				var element = event.target;
+				if(!element.classList.contains("disabled"))
+				{
+					var stars = (event.offsetX/element.offsetWidth)*5+1;
+					var percent = Math.round(stars*2)*10;
+					console.log("click @ " + event.offsetX + " of " + element.offsetWidth + " => " + stars + " = " + percent + "%");
+					
+					element.getElementsByClassName("percent")[0].style.width = percent + "%";
+				}			
+			}, starSelectors[i]);
+		}		
 		/* close window on any click outside window (only for non-modal windows!) */
 		/*
 		let frames = document.getElementsByClassName("frame");
