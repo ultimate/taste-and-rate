@@ -47,6 +47,7 @@
 
 .calendar_week {
 	flex: 1;
+	width: 100%; /* tested on FF only */
 }
 
 .calendar_labels .calendar_day {
