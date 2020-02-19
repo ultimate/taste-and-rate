@@ -14,10 +14,7 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items) {
 	this.FIRST_MONTH = 0;
 	this.LAST_MONTH = 11;
 	this.MONTH_OFFSET = 0;
-	
-	this.currentYear = this.today.getFullYear();
-	this.currentMonth = this.today.getMonth() + this.MONTH_OFFSET;
-	
+		
 	if(typeof(parent) == "string")
 		parent = document.getElementById(parent);
 	this.parent = parent;
@@ -234,9 +231,9 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items) {
 			this.onUpdate();
 	};
 	
-	this.showMonth = function(year, month) {
-		this.currentYear = year;
-		this.currentMonth = month;
+	this.show = function(date) {
+		this.currentYear = date.getFullYear();
+		this.currentMonth = date.getMonth() + this.MONTH_OFFSET;
 		this.update();
 	};
 	
@@ -262,6 +259,7 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items) {
 		
 	Events.addEventListener(Events.CLICK, function(c) { return function(event) { c.previousMonth() }; }(this), prevMonthButton);
 	Events.addEventListener(Events.CLICK, function(c) { return function(event) { c.nextMonth()     }; }(this), nextMonthButton);
+	Events.addEventListener(Events.CLICK, function(c) { return function(event) { c.show(c.today)     }; }(this), navLabel);
 	
-	this.update();
+	this.show(this.today);
 };
