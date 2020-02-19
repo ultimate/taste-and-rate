@@ -267,7 +267,7 @@ var UI = function() {
 				if(ratings[r].image)
 					div.style.backgroundImage = "url(" + ratings[r].image + ")" ; 
 				else
-					div.style.backgroundImage = "url(images/default.png)" ; 
+					div.style.backgroundImage = "url(" + this.getCategory(ratings[r].category).category.defaultImage + ")" ; 
 				li.append(div);
 				
 				div = document.createElement("div");
@@ -623,6 +623,15 @@ var UI = function() {
 		else
 			element.classList.add("invalid");
 		return valid;
+	};
+	
+	this.getCategory = function(id) {
+		for(var i = 0; i < this.categories.length; i++)
+		{
+			if(this.categories[i].category.id == id)
+				return this.categories[i];
+		}
+		return null;
 	};
 	
 	this.getCalendarItems = function() {

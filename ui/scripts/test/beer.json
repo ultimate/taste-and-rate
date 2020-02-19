@@ -7,6 +7,7 @@ var TEST_CAT_BEER = {
 	nose: true,
 	taste: true,
 	finish: true,
+	defaultImage: "images/default.png",
 	spider: [
 		{	id: 101,	key: "Bitterness",	min: "not at all",		max: "intensive"	},
 		{	id: 102,	key: "Head",		min: "short lasting",	max: "long lasting"	},
