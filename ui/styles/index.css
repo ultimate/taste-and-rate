@@ -92,6 +92,7 @@
 	max-width: 30em;
 	border: none;
 	border-bottom: 0.05em solid rgb(150,85,0);
+	text-align: center;
 }
 
 #add_button > span {
