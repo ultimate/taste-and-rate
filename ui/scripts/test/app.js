@@ -16,7 +16,8 @@ var app = function() {
 						
 	this.loremIpsum = function()
 	{
-		var l = Math.floor(Math.random()*LOREM_IPSUM_ARR.length);
+		var r = Math.random();
+		var l = Math.floor(r*r*LOREM_IPSUM_ARR.length);
 		return LOREM_IPSUM_ARR.slice(0, -l).join(" ");
 	}
 	
