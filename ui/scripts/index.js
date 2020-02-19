@@ -601,8 +601,8 @@ var UI = function() {
 			rating.finishText = document.getElementById("rating_finish_text").value;	
 			rating.finishText = document.getElementById("rating_finish_tags").value;	
 			app.saveRating(rating);
-			// update personal view
-			// TODO
+			// update views
+			this.showView(this.view);
 		}
 		return valid;
 	};
