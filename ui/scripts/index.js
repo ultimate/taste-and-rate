@@ -846,7 +846,7 @@ var UI = function() {
 				while(!element.classList.contains("stars"))
 					element = element.parentElement;
 				
-				if(!element.classList.contains("disabled"))
+				if(!element.parentElement.disabled)
 				{
 					var stars = Math.floor((event.offsetX/element.offsetWidth)*5+1);
 					var percent = Math.round(stars*2)*10;
