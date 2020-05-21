@@ -74,7 +74,8 @@
 	width: inherit !important;
 }
 
-.window .close {
+.window .close,
+.window .showEdit {
 	display: inline;
 	float: right;
 	width: 1.2em;

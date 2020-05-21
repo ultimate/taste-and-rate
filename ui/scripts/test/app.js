@@ -126,7 +126,9 @@ var app = function() {
 	this.load = function(type, id) {
 		if(id == null)
 			return null;
-		return Storage.loadLocalObject(type + "_" + id);
+		var object = Storage.loadLocalObject(type + "_" + id);
+		object.editable = (object.creator == this.CURRENT_USER);
+		return object;
 	};
 	
 	this.events = null;
@@ -146,15 +148,19 @@ var app = function() {
 		{
 			this.events = [];
 			var d;
+			var creator;
 			for(var i = 1; i <= NUMBER_OF_SAMPLES; i++)
 			{
 				d = new Date(Date.now() + (Math.random()*360-180)*24*3600*1000);
 				d.setSeconds(0);
 				d.setMilliseconds(0);
 				
+				creator = Math.round(Math.random()*10);		
+				
 				this.events.push({
 					id: -i,
-					creator: Math.round(Math.random()*10),
+					creator: creator,
+					editable: (creator == this.CURRENT_USER),
 					title: "Random Event " + i,
 					location: "Somewhere " + i,
 					date: d,
@@ -195,6 +201,7 @@ var app = function() {
 			var id;
 			var spiderValues;
 			var group;
+			var creator;
 			for(var c = 0; c < categories.length; c++)
 			{		
 				category = categories[c].category;
@@ -218,12 +225,15 @@ var app = function() {
 						for(var si = 0; si < category.spider.length; si++)
 						{
 							spiderValues.push(Math.round(Math.random()*10));
-						}				
+						}	
+						
+						creator = Math.round(Math.random()*10);			 
 						
 						this.ratings.push({
 							id: -id,
 							category: category.id,
-							creator: Math.round(Math.random()*10),
+							creator: creator,
+							editable: (creator == this.CURRENT_USER),
 							product: "The very special " + categoryName + " #" + i + " " + this.loremIpsum(),
 							image: (Math.random() < 0.33 ? "images/bottle1.jpg" : (Math.random() < 0.5 ? "images/bottle2.png" : "images/bottle3.jpg")),
 							date: d,

@@ -398,6 +398,7 @@ var UI = function() {
 		createElements = form.getElementsByClassName("create");
 		editElements = form.getElementsByClassName("edit");
 		viewElements = form.getElementsByClassName("view");
+		editButton = form.getElementsByClassName("showEdit")[0];
 		validatableElements = form.getElementsByClassName("validatable");
 		if(viewmode)
 		{
@@ -415,6 +416,12 @@ var UI = function() {
 			{
 				viewElements[i].classList.remove("hidden");
 			}
+			// hide showEdit button
+			if(object.editable && editButton)
+				editButton.classList.remove("hidden");
+			else if(editButton)
+				editButton.classList.add("hidden");
+				
 		}
 		else if(object != null)
 		{
@@ -432,6 +439,9 @@ var UI = function() {
 			{
 				editElements[i].classList.remove("hidden");
 			}
+			// hide showEdit button
+			if(editButton)
+				editButton.classList.add("hidden");
 		}
 		else
 		{
@@ -449,6 +459,9 @@ var UI = function() {
 			{
 				createElements[i].classList.remove("hidden");
 			}
+			// hide showEdit button
+			if(editButton)
+				editButton.classList.add("hidden");
 		}
 		// TODO disable form elements
 		for(var i = 0; i < validatableElements.length; i++)
@@ -773,7 +786,27 @@ var UI = function() {
 					element = element.parentElement;
 				}
 			}, okButtons[i]);
-		}		
+		}	
+		/* edit buttons */
+		let editButtons = document.querySelectorAll(".window .showEdit");
+		for(var i = 0; i < okButtons.length; i++)
+		{
+			Events.addEventListener(Events.CLICK, function(event) {
+				var element = event.target;
+				while(element != null)
+				{
+					if(element.classList.contains("form"))
+					{
+						var object = form.object;
+						console.log("editing...")
+						console.log(object);
+						UI.updateForm(form, object, false);
+						break;
+					}
+					element = element.parentElement;
+				}
+			}, editButtons[i]);
+		}	
 		/* star selectors */
 		let starSelectors = document.querySelectorAll(".stars");
 		for(var i = 0; i < starSelectors.length; i++)

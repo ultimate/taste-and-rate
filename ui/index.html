@@ -86,6 +86,10 @@
 					<circle cx="60" cy="40" r="20" />
 					<line x1="20" y1="80" x2="45" y2="55"/>
 				</g>
+				<g id="shape_pen">
+					<polygon points="30,60 75,15 85,25 40,70"/>
+					<polygon points="22,72 28,78 20,80"/>
+				</g>
 				<g id="shape_plus">				
 					<line x1="50" y1="20" x2="50" y2="80"/>
 					<line x1="20" y1="50" x2="80" y2="50"/>
@@ -195,7 +199,7 @@
 					<use xlink:href="#shape_checkmark" transform="translate(60,30) scale(0.7)" style="stroke: #FFFFFF; stroke-width: 7; fill: #FFFFFF; " filter="url(#secondaryColor)" stroke-linejoin="round"/>
 				</g>
 				<g id="img_filter_inactive">
-					<use xlink:href="#shape_filter" style="stroke: #FFFFFF; stroke-width: 10; fill: none; " filter="url(#primaryColor)"/>
+					<use xlink:href="#shape_filter" style="stroke: #FFFFFF; stroke-width: 10; fill: none;" filter="url(#primaryColor)"/>
 					<use xlink:href="#shape_cross" transform="translate(70,40) scale(0.6)" style="stroke: #FFFFFF; stroke-width: 15; fill: #FFFFFF; " filter="url(#secondaryColor)" stroke-linecap="round"/>
 				</g>
 				<g id="img_profile">
@@ -212,6 +216,9 @@
 				</g>
 				<g id="img_cross">
 					<use xlink:href="#shape_cross" style="stroke: #FFFFFF; stroke-width: 10; fill: none;" filter="url(#primaryColor)"/>
+				</g>
+				<g id="img_edit">
+					<use xlink:href="#shape_pen" style="stroke: #FFFFFF; stroke-width: 10; fill: none;" filter="url(#primaryColor)"/>
 				</g>
 				<g id="img_arrow_up">
 					<use xlink:href="#shape_arrow_bold" transform="translate(50,50) rotate(-90) translate(-50,-50)" style="fill: #FFFFFF;" filter="url(#primaryColor)"/>
@@ -467,6 +474,11 @@
 						<use xlink:href="#img_cross">
 					</svg>
 				</div>
+				<div class="button showEdit">
+					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" class="image">
+						<use xlink:href="#img_edit">
+					</svg>
+				</div>
 			</h2>
 			<div class="content">
 				<label key="rating.create.description" class="create fullwidth"></label>
@@ -519,6 +531,11 @@
 				<div class="button close">
 					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" class="image">
 						<use xlink:href="#img_cross">
+					</svg>
+				</div>
+				<div class="button showEdit">
+					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" class="image">
+						<use xlink:href="#img_edit">
 					</svg>
 				</div>
 			</h2>
