@@ -463,15 +463,18 @@ var UI = function() {
 			if(editButton)
 				editButton.classList.add("hidden");
 		}
-		// TODO disable form elements
+		// update form elements
 		for(var i = 0; i < validatableElements.length; i++)
 		{
+			// remove input errors
 			validatableElements[i].classList.remove("invalid");
+			
+			// enable/disable form elements
+			validatableElements[i].disabled = viewmode;
 		}
 		form.classList.remove("hidden");
 	};
 	
-	// @deprecated
 	this.updateEventForm = function(event, viewmode)
 	{
 		form = document.getElementById("form_event");	
@@ -494,7 +497,6 @@ var UI = function() {
 		this.updateForm(form, event, viewmode);
 	};
 	
-	// @deprecated
 	this.submitEventForm = function(form)
 	{
 		// validate
@@ -628,6 +630,14 @@ var UI = function() {
 			return this.submitRatingForm(form);
 	};
 	
+	this.resetForm = function(form)
+	{
+		if(form.getAttribute("type") == this.constants.TYPE_EVENT)
+			return this.updateEventForm(form.object, true);
+		else if(form.getAttribute("type") == this.constants.TYPE_RATING)
+			return this.updateRatingForm(form.object, true);
+	};
+	
 	this.validateElement = function(element, property, type, field)
 	{
 		var valid = app.validate(type, field, element[property]);
@@ -751,9 +761,8 @@ var UI = function() {
 				
 		/* initialize windows */
 		this.populateCategorySelects();
-		/* close cancel buttons */
-		//let closeButtons = document.getElementsByClassName("close");
-		let closeButtons = document.querySelectorAll(".window .close, .window .cancel");
+		/* close buttons */
+		let closeButtons = document.querySelectorAll(".window .close");
 		for(var i = 0; i < closeButtons.length; i++)
 		{
 			Events.addEventListener(Events.CLICK, function(event) {
@@ -786,10 +795,30 @@ var UI = function() {
 					element = element.parentElement;
 				}
 			}, okButtons[i]);
+		}
+		/* cancel buttons */
+		let cancelButtons = document.querySelectorAll(".window .cancel");
+		for(var i = 0; i < cancelButtons.length; i++)
+		{
+			Events.addEventListener(Events.CLICK, function(event) {
+				var element = event.target;
+				while(element != null)
+				{
+					if(element.classList.contains("form"))
+					{
+						var object = form.object;
+						console.log("discarding...")
+						console.log(object);
+						UI.resetForm(form);
+						break;
+					}
+					element = element.parentElement;
+				}
+			}, cancelButtons[i]);
 		}	
 		/* edit buttons */
 		let editButtons = document.querySelectorAll(".window .showEdit");
-		for(var i = 0; i < okButtons.length; i++)
+		for(var i = 0; i < editButtons.length; i++)
 		{
 			Events.addEventListener(Events.CLICK, function(event) {
 				var element = event.target;
