@@ -537,6 +537,7 @@ var UI = function() {
 			document.getElementById("rating_location").value = rating.location;
 			// TODO image
 			document.getElementById("rating_stars").style.width = percent + "%";
+			document.getElementById("rating_stars").value = rating.stars;
 			document.getElementById("rating_summary").value = rating.summary;	
 			// TODO spider
 			
@@ -606,7 +607,7 @@ var UI = function() {
 			rating.event = document.getElementById("rating_event").value;
 			rating.location = document.getElementById("rating_location").value;
 			// TODO image
-			// TODO stars
+			rating.stars = document.getElementById("rating_stars").value;
 			rating.summary = document.getElementById("rating_summary").value;
 			// TODO spider	
 			rating.noseText = document.getElementById("rating_nose_text").value;	
@@ -844,15 +845,17 @@ var UI = function() {
 				var element = event.target;
 				// find correct target element
 				while(!element.classList.contains("stars"))
-					element = element.parentElement;
+					element = element.parentElement;			
 				
 				if(!element.parentElement.disabled)
 				{
 					var stars = Math.floor((event.offsetX/element.offsetWidth)*5+1);
 					var percent = Math.round(stars*2)*10;
 					console.log("click @ " + event.offsetX + " of " + element.offsetWidth + " => " + stars + " = " + percent + "%");
+					console.log(element);
 					
 					element.getElementsByClassName("percent")[0].style.width = percent + "%";
+					element.getElementsByClassName("percent")[0].value = stars;
 				}			
 			}, starSelectors[i]);
 		}	
