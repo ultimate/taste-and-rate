@@ -34,6 +34,22 @@ Elements.isChildOrSame = function(parent, element)
 	return below >= 0;
 };
 
+Elements.isVisible = function(element, completeVisibilityRequired)
+{
+	// https://stackoverflow.com/a/22480938/4090157
+	
+	var rect = element.getBoundingClientRect();
+    var elemTop = rect.top;
+    var elemBottom = rect.bottom;
+	
+	if(completeVisibilityRequired)
+		// Only completely visible elements return true:
+		return (elemTop >= 0) && (elemBottom <= window.innerHeight);   
+	else
+		// Partially visible elements return true:
+		return elemTop < window.innerHeight && elemBottom >= 0;
+};
+
 Elements.fromString = function(html)
 {	
     var container = document.createElement("container");
