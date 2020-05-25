@@ -42,9 +42,6 @@ lang.categories.beer = {};
 lang.categories.beer.title = "Beer";
 lang.categories.beer.description = "Drink from different kind of grain";
 
-lang.rating = {};
-lang.rating.no_text = "<i>no detailed description</i>"
-
 lang.event = {};
 lang.event.title = "Name";
 lang.event.date = "Date & Time";
@@ -78,6 +75,7 @@ lang.rating.nose = "Nose";
 lang.rating.taste = "Taste";
 lang.rating.finish = "Finish";
 lang.rating.text = "Description";
+lang.rating.no_text = "<i>no detailed description</i>"
 lang.rating.tags = "Tags";
 lang.rating.create = {};
 lang.rating.create.title = "Create new rating";
@@ -92,3 +90,4 @@ lang.rating.edit.cancel = "Discard changes";
 lang.rating.view = {};
 lang.rating.view.title = "View rating";
 lang.rating.view.description = "description on how to view ratings";
+lang.rating.no_more = "End of list. No more ratings available.";
