@@ -17,6 +17,35 @@
 	font-size: 50%;	
 }
 
+.list .more {
+	text-align: center;
+	height: 4em;
+}
+
+.list .more > div {
+    transform: scale(0.5);
+}
+
+.list .more > div > div {
+	background: #555555;
+}
+
+.list .more label {
+	display: none;
+	line-height: 4em;
+}
+
+.list .more.allLoaded label {
+    line-height: 4em;
+    font-size: 80%;
+    color: #555555;
+	display: inline;
+}
+
+.list .more.allLoaded > div {
+	display: none;
+}
+
 .list > ul > li {
 	
 }
