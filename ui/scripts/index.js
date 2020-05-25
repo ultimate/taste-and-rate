@@ -13,11 +13,15 @@ var UI = function() {
 		SCOPE_GLOBAL: 4,
 		ADVANCED_ADD: true,
 		ADVANCED_ADD_TIMEOUT: 1000,
+		RATINGS_PAGE_SIZE: 12,
 	};
 	
 	this.timers = {};
 	
 	this.view = this.constants.VIEW_CALENDAR;
+	this.viewRangeStart = 0;
+	this.viewRangeEnd = 0;
+	this.viewLoading = false;
 	this.defaultCategory = 0;
 	
 	this.populateMenu = function()
@@ -221,7 +225,7 @@ var UI = function() {
 			this.defaultCategory = 0;
 	};
 	
-	this.populateRatings = function(view) {
+	this.populateRatingsView = function(view) {
 		var scope = 0;
 		if(view == UI.constants.VIEW_PERSONAL_RATINGS)
 			scope = UI.constants.SCOPE_PERSONAL;
@@ -231,14 +235,46 @@ var UI = function() {
 			scope = UI.constants.SCOPE_GLOBAL;	
 		
 		var container = document.getElementById(view);
-		Elements.removeChildren(container);
+		var list = container.firstElementChild;
+		Elements.removeChildren(list);
+		var more = container.lastElementChild;
+		more.classList.remove("allLoaded");
 		
-		var list = document.createElement("ul");
-		container.append(list);
+		this.viewRangeStart = 0;
+		this.viewRangeEnd = 0;
 		
-		var ratings = app.getRatings(scope);
-		var categories = app.getCategories();
+		var loadPage = function(ui, list) {		
+			ui.viewLoading = true;	
+			var page = app.getRatings(scope, ui.viewRangeEnd, ui.constants.RATINGS_PAGE_SIZE);
+			ui.viewRangeEnd += page.length;
+			if(page.length > 0)
+				populateRatings(list, page);
+			else
+				list.parentElement.lastElementChild.classList.add("allLoaded");
+			ui.viewLoading = false;
+		};
 		
+		Events.addEventListener(Events.SCROLL, function(loadPage, ui, list) {
+			return function(event) {
+				var element = event.target;
+				var bottomRemaining = element.scrollHeight - element.offsetHeight - element.scrollTop;
+				if(bottomRemaining < container.lastElementChild.offsetHeight/2)
+				{
+					// more-element is scrolled into view
+					if(!ui.viewLoading)
+					{
+						console.log("loading more content");
+						loadPage(ui, list);
+					}
+				}
+			};
+		} (loadPage, this, list), container.parentElement);
+				
+		loadPage(this, list);
+	};
+	
+	this.populateRatings = function(list, ratings)
+	{
 		var li, div, div2, img, stars, perc;
 		
 		for(var r = 0; r < ratings.length; r++)
@@ -330,15 +366,15 @@ var UI = function() {
 		}
 		else if(this.view == this.constants.VIEW_PERSONAL_RATINGS)
 		{
-			this.populateRatings(this.view);
+			this.populateRatingsView(this.view);
 		}
 		else if(this.view == this.constants.VIEW_FRIENDS_RATINGS)
 		{
-			this.populateRatings(this.view);
+			this.populateRatingsView(this.view);
 		}
 		else if(this.view == this.constants.VIEW_GLOBAL_RATINGS)
 		{
-			this.populateRatings(this.view);
+			this.populateRatingsView(this.view);
 		}
 		
 		// TODO remove load screen

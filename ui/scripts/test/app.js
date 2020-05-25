@@ -188,7 +188,7 @@ var app = function() {
 		return this.load(UI.constants.TYPE_RATING, id);
 	};
 	
-	this.getRatings = function(scope) {
+	this.getRatings = function(scope, startIndex, amount) {
 		if(this.ratings == null)
 		{
 			var tags = ["sweet", "old", "dark", "bright", "fruity", "high alcohol", "spicy"];
@@ -281,7 +281,7 @@ var app = function() {
 			if((scope & UI.constants.SCOPE_GLOBAL) != 0 && this.CURRENT_USER != this.ratings[r].creator && this.FRIENDS.indexOf(this.ratings[r].creator) == -1)
 				result.push(this.ratings[r]);
 		}
-		return result;
+		return result.slice(startIndex, startIndex + amount);
 	};
 	
 	this.clearDatabase = function() {
