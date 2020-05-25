@@ -21,7 +21,7 @@ Events.CLICK = "click";
 Events.KEYUP = "keyup";
 Events.KEYDOWN = "keydown";
 Events.KEYPRESS = "keypress";
-Events.ONRESIZE = "resize";
+Events.RESIZE = "resize";
 Events.MOUSEDOWN = "mousedown";
 Events.MOUSEUP = "mouseup";
 Events.MOUSEMOVE = "mousemove";
@@ -33,6 +33,7 @@ Events.CUT = "cut";
 Events.PASTE = "paste";
 Events.DROP = "drop";
 Events.CHANGE = "change";
+Events.SCROLL = "scroll";
 
 
 // fix IE Events Names
