@@ -1,33 +1,33 @@
 var app = function() {
 	
-	this.CURRENT_USER = 1;
-	this.FRIENDS = [2,3,4];
+	var CURRENT_USER = 1;
+	var FRIENDS = [2,3,4];
 	
-	this.NUMBER_OF_SAMPLES = 200;
+	var NUMBER_OF_SAMPLES = 200;
 	
-	this.LOREM_IPSUM = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.\
+	var LOREM_IPSUM = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.\
 						Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.\
 						Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.\
 						Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.\
 						Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.\
 						At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.\
 						Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus.";
-	this.LOREM_IPSUM_ARR = this.LOREM_IPSUM.split(" ");
+	var LOREM_IPSUM_ARR = LOREM_IPSUM.split(" ");
 						
-	this.loremIpsum = function()
+	var loremIpsum = function()
 	{
 		var r = Math.random();
 		var l = Math.floor(r*r*LOREM_IPSUM_ARR.length);
 		return LOREM_IPSUM_ARR.slice(0, -l).join(" ");
 	}
 	
-	this.getString = function(key) {
+	var getString = function(key) {
 		if(key == null || key == "")
 			return key; // otherwise the following eval would fail!
 		return eval("lang." + key);
 	};
 	
-	this.getCategoryNames = function() {
+	var getCategoryNames = function() {
 		var result = [];
 		var categories = getCategories();
 		for(var c = 0; c < categories.length; c++)
@@ -37,16 +37,7 @@ var app = function() {
 		return result;
 	};
 	
-	this.setCategories = function(categories) {
-		for(var c = 0; c < categories.length; c++)
-		{
-			console.log(categories[c]);
-		}
-		Storage.removeLocalObject("categories");
-		Storage.saveLocalObject("categories", categories);
-	};
-	
-	this.getCategories = function() {
+	var getCategories = function() {
 		console.log("loading categories");
 		var categories = Storage.loadLocalObject("categories");
 		if(categories == null)
@@ -58,11 +49,21 @@ var app = function() {
 				{ position: 2, favorite: false, active: false, category: TEST_CAT_BEER }
 			];
 		}
-		this.setCategories(categories);
+		setCategories(categories);
 		return categories;
 	};
 	
-	this.validate = function(type, field, value) {
+	var setCategories = function(categories) {
+		for(var c = 0; c < categories.length; c++)
+		{
+			console.log(categories[c]);
+		}
+		Storage.removeLocalObject("categories");
+		Storage.saveLocalObject("categories", categories);
+	};	
+	
+	
+	var validate = function(type, field, value) {
 		console.log(type + "." + field + "?" + value);
 		switch(type)
 		{
@@ -97,15 +98,17 @@ var app = function() {
 		}
 	};
 	
-	this.save = function(type, object) {
+	// general save & load
+	
+	var save = function(type, object) {
 		var list = null;
 		switch(type)
 		{
 			case UI.constants.TYPE_EVENT:
-				list = this.events;
+				list = events;
 				break;
 			case UI.constants.TYPE_RATING:
-				list = this.ratings;
+				list = ratings;
 				break;
 			default:
 				throw new Error("unsupported type");
@@ -115,7 +118,7 @@ var app = function() {
 		if(object.id == null)
 		{
 			object.id = Storage.loadLocalObject(type + "_id") + 1;
-			object.creator = this.CURRENT_USER;
+			object.creator = CURRENT_USER;
 			Storage.saveLocalObject(type + "_id", object.id);
 			if(list != null)
 				list.push(object);
@@ -123,30 +126,32 @@ var app = function() {
 		Storage.saveLocalObject(type + "_" + object.id, object);
 	};
 	
-	this.load = function(type, id) {
+	var load = function(type, id) {
 		if(id == null)
 			return null;
 		var object = Storage.loadLocalObject(type + "_" + id);
-		object.editable = (object.creator == this.CURRENT_USER);
+		object.editable = (object.creator == CURRENT_USER);
 		return object;
 	};
 	
-	this.events = null;
+	// save & load for events
+	
+	var events = null;
 		
-	this.saveEvent = function(event) {
+	var saveEvent = function(event) {
 		//if(event.id == null)
-		//	this.events.push(event);
-		this.save(UI.constants.TYPE_EVENT, event);
+		//	events.push(event);
+		save(UI.constants.TYPE_EVENT, event);
 	};	
 	
-	this.loadEvent = function(id) {
-		return this.load(UI.constants.TYPE_EVENT, id);
+	var loadEvent = function(id) {
+		return load(UI.constants.TYPE_EVENT, id);
 	};
 	
-	this.getEvents = function() {
-		if(this.events == null)
+	var getEvents = function() {
+		if(events == null)
 		{
-			this.events = [];
+			events = [];
 			var d;
 			var creator;
 			for(var i = 1; i <= NUMBER_OF_SAMPLES; i++)
@@ -157,10 +162,10 @@ var app = function() {
 				
 				creator = Math.round(Math.random()*10);		
 				
-				this.events.push({
+				events.push({
 					id: -i,
 					creator: creator,
-					editable: (creator == this.CURRENT_USER),
+					editable: (creator == CURRENT_USER),
 					title: "Random Event " + i,
 					location: "Somewhere " + i,
 					date: d,
@@ -170,31 +175,33 @@ var app = function() {
 			var maxId = Storage.loadLocalObject(UI.constants.TYPE_EVENT + "_id");
 			for(var i = 1; i <= maxId; i++)
 			{
-				this.events.push(this.loadEvent(i));
+				events.push(loadEvent(i));
 			}
 		}
-		return this.events;
+		return events;
 	};
 	
-	this.ratings = null;
+	// save & load for ratings
+		
+	var ratings = null;
 	
-	this.saveRating = function(rating) {
+	var saveRating = function(rating) {
 		//if(rating.id == null)
-		//	this.ratings.push(rating);
-		this.save(UI.constants.TYPE_RATING, rating);
+		//	ratings.push(rating);
+		save(UI.constants.TYPE_RATING, rating);
 	};	
 	
-	this.loadRating = function(id) {
-		return this.load(UI.constants.TYPE_RATING, id);
+	var loadRating = function(id) {
+		return load(UI.constants.TYPE_RATING, id);
 	};
 	
-	this.getRatings = function(scope, startIndex, amount) {
-		if(this.ratings == null)
+	var getRatings = function(scope, startIndex, amount) {
+		if(ratings == null)
 		{
 			var tags = ["sweet", "old", "dark", "bright", "fruity", "high alcohol", "spicy"];
 			
-			this.ratings = [];
-			var categories = this.getCategories();
+			ratings = [];
+			var categories = getCategories();
 			var d;
 			var category;
 			var categoryName;
@@ -205,7 +212,7 @@ var app = function() {
 			for(var c = 0; c < categories.length; c++)
 			{		
 				category = categories[c].category;
-				categoryName = this.getString(category.key + ".title");
+				categoryName = getString(category.key + ".title");
 				for(var i = 1; i <= NUMBER_OF_SAMPLES;)
 				{
 					d = new Date(Date.now() + (Math.random() * 90 - 45)*24*3600*1000);
@@ -229,23 +236,23 @@ var app = function() {
 						
 						creator = Math.round(Math.random()*10);			 
 						
-						this.ratings.push({
+						ratings.push({
 							id: -id,
 							category: category.id,
 							creator: creator,
-							editable: (creator == this.CURRENT_USER),
-							product: "The very special " + categoryName + " #" + i + " " + this.loremIpsum(),
+							editable: (creator == CURRENT_USER),
+							product: "The very special " + categoryName + " #" + i + " " + loremIpsum(),
 							image: (Math.random() < 0.33 ? "images/bottle1.jpg" : (Math.random() < 0.5 ? "images/bottle2.png" : "images/bottle3.jpg")),
 							date: d,
 							event: (group > 1 ? "Rating Group " + d : null),
 							location: null, // TODO
 							stars: Math.ceil(Math.random()*5),
-							summary: "Summary " + id + ": " + this.loremIpsum(),
-							noseText: "Nose " + id + ": " + this.loremIpsum(),
+							summary: "Summary " + id + ": " + loremIpsum(),
+							noseText: "Nose " + id + ": " + loremIpsum(),
 							noseTags: new Array(tags[Math.floor(Math.random()*tags.length)]),						
-							tasteText: "Taste " + id + ": " + this.loremIpsum(),
+							tasteText: "Taste " + id + ": " + loremIpsum(),
 							tasteTags: new Array(tags[Math.floor(Math.random()*tags.length)]),						
-							finishText: "Finish " + id + ": " + this.loremIpsum(),
+							finishText: "Finish " + id + ": " + loremIpsum(),
 							finishTags: new Array(tags[Math.floor(Math.random()*tags.length)]),
 							spider: spiderValues,
 						});
@@ -256,11 +263,11 @@ var app = function() {
 			var maxId = Storage.loadLocalObject(UI.constants.TYPE_RATING + "_id");
 			for(var i = 1; i <= maxId; i++)
 			{
-				this.ratings.push(this.loadRating(i));
+				ratings.push(loadRating(i));
 			}
 		}
 		// get active categories
-		var categories = this.getCategories();
+		var categories = getCategories();
 		var activeCategories = [];
 		for(var c = 0; c < categories.length; c++)
 		{	
@@ -270,28 +277,90 @@ var app = function() {
 		console.log("active categories: " + activeCategories);		
 		// filter by scope
 		var result = [];
-		for(var r = 0; r < this.ratings.length; r++)
+		for(var r = 0; r < ratings.length; r++)
 		{
-			if(activeCategories.indexOf(this.ratings[r].category) == -1)
+			if(activeCategories.indexOf(ratings[r].category) == -1)
 				continue;
-			if((scope & UI.constants.SCOPE_PERSONAL) != 0 && this.CURRENT_USER == this.ratings[r].creator)
-				result.push(this.ratings[r]);
-			if((scope & UI.constants.SCOPE_FRIENDS) != 0 && this.FRIENDS.indexOf(this.ratings[r].creator) != -1)
-				result.push(this.ratings[r]);
-			if((scope & UI.constants.SCOPE_GLOBAL) != 0 && this.CURRENT_USER != this.ratings[r].creator && this.FRIENDS.indexOf(this.ratings[r].creator) == -1)
-				result.push(this.ratings[r]);
+			if((scope & UI.constants.SCOPE_PERSONAL) != 0 && CURRENT_USER == ratings[r].creator)
+				result.push(ratings[r]);
+			if((scope & UI.constants.SCOPE_FRIENDS) != 0 && FRIENDS.indexOf(ratings[r].creator) != -1)
+				result.push(ratings[r]);
+			if((scope & UI.constants.SCOPE_GLOBAL) != 0 && CURRENT_USER != ratings[r].creator && FRIENDS.indexOf(ratings[r].creator) == -1)
+				result.push(ratings[r]);
 		}
 		return result.slice(startIndex, startIndex + amount);
 	};
 	
-	this.clearDatabase = function() {
+	// fusioned list for events & ratings
+		
+	var getCalendarItems = function(scope, rangeStart, rangeEnd) {
+		var calendarItems = [];
+		var events = getEvents();
+		var ratings = getRatings(scope, 0, 1000000);
+		
+		var itemTime;
+		
+		for(var i = 0; i < events.length; i++)
+		{			
+			//console.log(events[i]);
+			itemTime = events[i].date.getTime();
+			if(itemTime >= rangeStart && itemTime < rangeEnd)
+				calendarItems.push({
+					title: 		events[i].title,
+					date: 		events[i].date,
+					group: 		null,
+					itemType: 	UI.constants.TYPE_EVENT,
+					item: 		events[i],
+				});
+		}
+		for(var i = 0; i < ratings.length; i++)
+		{
+			//console.log(ratings[i]);
+			itemTime = ratings[i].date.getTime();
+			if(itemTime >= rangeStart && itemTime < rangeEnd)
+				calendarItems.push({
+					title: 		ratings[i].product,
+					date: 		ratings[i].date,
+					group: 		ratings[i].event,
+					itemType: 	UI.constants.TYPE_RATING,
+					item: 		ratings[i],
+				});
+		}
+		
+		return calendarItems;
+	};	
+	
+	// general purposes
+	
+	var clearDatabase = function() {
 		console.log("clearing database");
 		Storage.clear();
 	};
 	
-	this.exit = function() {
+	var exit = function() {
 		window.location.reload(true);
 	};
 	
-	return this;
+	return {
+		// localization
+		getString: getString,
+		// category access
+		getCategories: getCategories,
+		setCategories: setCategories,
+		// item validation
+		validate: validate,
+		// events
+		loadEvent: loadEvent,
+		saveEvent: saveEvent,
+		getEvents: getEvents,
+		// ratings
+		loadRating: loadRating,
+		saveRating: saveRating,
+		getRatings: getRatings,
+		// fusioned list for events & ratings
+		getCalendarItems: getCalendarItems,
+		// general purposes
+		clearDatabase: clearDatabase,
+		exit: exit,
+	};
 }();

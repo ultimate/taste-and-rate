@@ -1,6 +1,5 @@
 var UI = function() {
-	
-	this.constants = {
+	var constants = {
 		CATEGORIES_LIST_LINE_HEIGHT: 2.5,
 		TYPE_EVENT: "event",
 		TYPE_RATING: "rating",
@@ -16,71 +15,79 @@ var UI = function() {
 		RATINGS_PAGE_SIZE: 12,
 	};
 	
-	this.timers = {};
+	var labelManager;
 	
-	this.view = this.constants.VIEW_CALENDAR;
-	this.viewRangeStart = 0;
-	this.viewRangeEnd = 0;
-	this.viewLoading = false;
-	this.defaultCategory = 0;
+	var searchInput;
+	var menu;
+	var calendar;
 	
-	this.populateMenu = function()
+	var categories;
+	var defaultCategory = 0;
+	
+	var view = constants.VIEW_CALENDAR;
+	var viewRangeStart = 0;
+	var viewRangeEnd = 0;
+	var viewLoading = false;
+	
+	var timers = {};
+	
+	var populateMenu = function()
 	{
 		var menuCategories = document.getElementById("menu_categories_list")
 		Elements.removeChildren(menuCategories);
 				
-		this.categories = app.getCategories();
+		categories = app.getCategories();
 		
 		var element;
-		for(var c = 0; c < this.categories.length; c++)
+		for(var c = 0; c < categories.length; c++)
 		{
-			console.log(this.categories[c]);
+			console.log(categories[c]);
 			// populate menu
-			if(this.categories[c].favorite)
+			if(categories[c].favorite)
 			{
-				element = Elements.fromString("<li class='selectable'><label key='" + this.categories[c].category.key + ".title'/></li>");
+				element = Elements.fromString("<li class='selectable'><label key='" + categories[c].category.key + ".title'/></li>");
 				element.append(Elements.createSVG("0 0 150 100", "image active", "#img_filter_active"));	
 				element.append(Elements.createSVG("0 0 150 100", "image not_active", "#img_filter_inactive"));	
 										
-				if(this.categories[c].active)
+				if(categories[c].active)
 					element.classList.add("active");
 				Events.addEventListener(Events.CLICK, function(i, e) {
 					return function(event) {
-						UI.categories[i].active = !UI.categories[i].active;						
-						if(UI.categories[i].active)
+						categories[i].active = !categories[i].active;						
+						if(categories[i].active)
 							e.classList.add("active");
 						else
 							e.classList.remove("active");
-						app.setCategories(UI.categories);
-						UI.populateCategorySelects();
+						app.setCategories(categories);
+						populateCategorySelects();
 					};
 				}(c, element), element);
 				menuCategories.append(element);
 			}
 		}
-		this.labelManager.updateLabels(menuCategories);
+		labelManager.updateLabels(menuCategories);
 	};	
 	
-	this.swapManageCategories = function(element, fromIndex, toIndex)
+	var swapManageCategories = function(element, fromIndex, toIndex)
 	{
 		console.log("swap " + fromIndex + "->" + toIndex);
-		let tmp = this.categories[fromIndex];
-		this.categories[fromIndex] = this.categories[toIndex];
-		this.categories[toIndex] = tmp
+		let tmp = categories[fromIndex];
+		categories[fromIndex] = categories[toIndex];
+		categories[toIndex] = tmp
 		
-		this.categories[fromIndex].position = fromIndex;
-		this.categories[toIndex].position = toIndex;
+		categories[fromIndex].position = fromIndex;
+		categories[toIndex].position = toIndex;
 		
 		// TODO
 		let other = element.parentElement.getElementsByClassName("position" + toIndex)[0];
 		
 		other.classList.add("position" + fromIndex);
 		other.classList.remove("position" + toIndex);
-		other.style.top = (this.constants.CATEGORIES_LIST_LINE_HEIGHT * fromIndex) + "em";
+		other.style.top = (constants.CATEGORIES_LIST_LINE_HEIGHT * fromIndex) + "em";
 		
 		element.classList.add("position" + toIndex);
 		element.classList.remove("position" + fromIndex);
-		element.style.top = (this.constants.CATEGORIES_LIST_LINE_HEIGHT * toIndex) + "em";
+		element.style.top = (constants.CATEGORIES_LIST_LINE_HEIGHT * toIndex) + "em";
 		
 		// update "first" and "last" tag
 		if(fromIndex == 1 && toIndex == 0)
@@ -94,186 +101,138 @@ var UI = function() {
 			element.classList.remove("first");
 		}
 		// no else here, in case list length is 2
-		if(fromIndex == this.categories.length-1 && toIndex == this.categories.length-2)
+		if(fromIndex == categories.length-1 && toIndex == categories.length-2)
 		{
 			other.classList.add("last");
 			element.classList.remove("last");
 		}
-		else if(fromIndex == this.categories.length-2 && toIndex == this.categories.length-1)
+		else if(fromIndex == categories.length-2 && toIndex == categories.length-1)
 		{
 			element.classList.add("last");
 			other.classList.remove("last");
 		}
-	};			
+	};	
 	
-	this.populateManageCategories = function()
+	var populateManageCategories = function()
 	{
 		let manageCategories = document.getElementById("manage_categories_list")
 		Elements.removeChildren(manageCategories);
 		
-		this.categories = app.getCategories();
+		categories = app.getCategories();
 		
 		let element;
-		for(var c = 0; c < this.categories.length; c++)
+		for(var c = 0; c < categories.length; c++)
 		{
 		// populate manage categories	
-			var posClasses = "position" + this.categories[c].position;
+			var posClasses = "position" + categories[c].position;
 			if(c == 0)
 				posClasses += " first";
-			else if(c == this.categories.length-1)
+			else if(c == categories.length-1)
 				posClasses += " last";
 			
-			element = Elements.fromString("<li class='draggable selectable " + posClasses + "'><label key='" + this.categories[c].category.key + ".title'/></li>");
+			element = Elements.fromString("<li class='draggable selectable " + posClasses + "'><label key='" + categories[c].category.key + ".title'/></li>");
 			element.append(Elements.createSVG("0 0 100 100", "image star favorite", "#img_star_active"));	
 			element.append(Elements.createSVG("0 0 100 100", "image star no_favorite", "#img_star_inactive"));	
 			element.append(Elements.createSVG("0 0 100 100", "image down", "#img_arrow_down"));	
 			element.append(Elements.createSVG("0 0 100 100", "image up", "#img_arrow_up"));	
 
-			element.style.top = (this.constants.CATEGORIES_LIST_LINE_HEIGHT * c) + "em";
+			element.style.top = (constants.CATEGORIES_LIST_LINE_HEIGHT * c) + "em";
 				
 			console.log(element);
-			if(this.categories[c].favorite)
+			if(categories[c].favorite)
 				element.classList.add("favorite");
 			Events.addEventListener(Events.CLICK, function(category, e) {
 				return function(event) {
 					var i = category.position;
-					console.log("click star " + UI.categories[i].category.key + " @ pos=" + i);
-					UI.categories[i].favorite = !UI.categories[i].favorite;						
-					if(UI.categories[i].favorite)
+					console.log("click star " + categories[i].category.key + " @ pos=" + i);
+					categories[i].favorite = !categories[i].favorite;						
+					if(categories[i].favorite)
 						e.classList.add("favorite");
 					else
 						e.classList.remove("favorite");
-					app.setCategories(UI.categories);
+					app.setCategories(categories);
 				};
-			}(this.categories[c], element), element.getElementsByClassName("star"));
+			}(categories[c], element), element.getElementsByClassName("star"));
 			Events.addEventListener(Events.CLICK, function(category, e) {
 				return function(event) {
 					var i = category.position;
-					console.log("click up " + UI.categories[i].category.key + " @ pos=" + i);
+					console.log("click up " + categories[i].category.key + " @ pos=" + i);
 					if(i > 0)
 					{
-						UI.swapManageCategories(e, i, i-1);
+						swapManageCategories(e, i, i-1);
 					}
-					app.setCategories(UI.categories);
+					app.setCategories(categories);
 				};
-			}(this.categories[c], element), element.getElementsByClassName("up"));
+			}(categories[c], element), element.getElementsByClassName("up"));
 			Events.addEventListener(Events.CLICK, function(category, e) {
 				return function(event) {
 					var i = category.position;
-					console.log("click down " + UI.categories[i].category.key + " @ pos=" + i);
-					if(i < UI.categories.length-1)
+					console.log("click down " + categories[i].category.key + " @ pos=" + i);
+					if(i < categories.length-1)
 					{
-						UI.swapManageCategories(e, i, i+1);
+						swapManageCategories(e, i, i+1);
 					}
-					app.setCategories(UI.categories);
+					app.setCategories(categories);
 				};
-			}(this.categories[c], element), element.getElementsByClassName("down"));
+			}(categories[c], element), element.getElementsByClassName("down"));
 			
 			manageCategories.append(element);
 		}
 		
-		manageCategories.style.height = (this.categories.length * this.constants.CATEGORIES_LIST_LINE_HEIGHT) + "em";
-		this.labelManager.updateLabels(manageCategories);
+		manageCategories.style.height = (categories.length * constants.CATEGORIES_LIST_LINE_HEIGHT) + "em";
+		labelManager.updateLabels(manageCategories);
 	};
 	
-	this.populateCategorySelects = function() {
+	var populateCategorySelects = function() {
 		var categorySelects = document.getElementsByClassName("category_select");
 		var option, label;
 		for(var i = 0; i < categorySelects.length; i++)
 		{
 			Elements.removeChildren(categorySelects[i]);
 			
-			for(var j = 0; j < UI.categories.length; j++)
+			for(var j = 0; j < categories.length; j++)
 			{
-				if(UI.categories[j].favorite)
+				if(categories[j].favorite)
 				{
 					option = document.createElement("option");
-					option.setAttribute("value", UI.categories[j].category.id);
+					option.setAttribute("value", categories[j].category.id);
 					label = document.createElement("label");
-					label.setAttribute("key", UI.categories[j].category.key + ".title");
+					label.setAttribute("key", categories[j].category.key + ".title");
 					option.append(label);
 					categorySelects[i].append(option);
 				}
 			}
-			this.labelManager.updateLabels(categorySelects[i]);				
+			labelManager.updateLabels(categorySelects[i]);				
 		}
 		// calculate default value						
 		var numberOfFavorites = 0;	
 		var numberOfActives = 0;			
 		var firstFavoriteValue = 0;		
 		var firstActiveValue = 0;
-		for(var j = 0; j < UI.categories.length; j++)
+		for(var j = 0; j < categories.length; j++)
 		{
-			if(UI.categories[j].favorite)
+			if(categories[j].favorite)
 			{
 				numberOfFavorites++;
 				if(firstFavoriteValue == 0)
-					firstFavoriteValue = UI.categories[j].category.id;
+					firstFavoriteValue = categories[j].category.id;
 			}	
-			if(UI.categories[j].active)
+			if(categories[j].active)
 			{
 				numberOfActives++;
 				if(firstActiveValue == 0)
-					firstActiveValue = UI.categories[j].category.id;
+					firstActiveValue = categories[j].category.id;
 			}					
 		}
 		if(numberOfFavorites == 1)
-			this.defaultCategory = firstFavoriteValue;
+			defaultCategory = firstFavoriteValue;
 		else if(numberOfActives == 1)
-			this.defaultCategory = firstActiveValue;
+			defaultCategory = firstActiveValue;
 		else
-			this.defaultCategory = 0;
+			defaultCategory = 0;
 	};
 	
-	this.populateRatingsView = function(view) {
-		var scope = 0;
-		if(view == UI.constants.VIEW_PERSONAL_RATINGS)
-			scope = UI.constants.SCOPE_PERSONAL;
-		else if(view == UI.constants.VIEW_FRIENDS_RATINGS)
-			scope = UI.constants.SCOPE_FRIENDS;
-		if(view == UI.constants.VIEW_GLOBAL_RATINGS)
-			scope = UI.constants.SCOPE_GLOBAL;	
-		
-		var container = document.getElementById(view);
-		var list = container.firstElementChild;
-		Elements.removeChildren(list);
-		var more = container.lastElementChild;
-		more.classList.remove("allLoaded");
-		
-		this.viewRangeStart = 0;
-		this.viewRangeEnd = 0;
-		
-		var loadPage = function(ui, list) {		
-			ui.viewLoading = true;	
-			var page = app.getRatings(scope, ui.viewRangeEnd, ui.constants.RATINGS_PAGE_SIZE);
-			ui.viewRangeEnd += page.length;
-			if(page.length > 0)
-				populateRatings(list, page);
-			else
-				list.parentElement.lastElementChild.classList.add("allLoaded");
-			ui.viewLoading = false;
-		};
-		
-		Events.addEventListener(Events.SCROLL, function(loadPage, ui, list) {
-			return function(event) {
-				var element = event.target;
-				var bottomRemaining = element.scrollHeight - element.offsetHeight - element.scrollTop;
-				if(bottomRemaining < container.lastElementChild.offsetHeight/2)
-				{
-					// more-element is scrolled into view
-					if(!ui.viewLoading)
-					{
-						console.log("loading more content");
-						loadPage(ui, list);
-					}
-				}
-			};
-		} (loadPage, this, list), container.parentElement);
-				
-		loadPage(this, list);
-	};
-	
-	this.populateRatings = function(list, ratings)
+	var populateRatings = function(list, ratings)
 	{
 		var li, div, div2, img, stars, perc;
 		
@@ -294,7 +253,7 @@ var UI = function() {
 												</div>\
 											</li>"));
 			*/
-			// this is the same as above, but much faster!!! ~ factor 1000:
+			// the following is the same as above, but much faster!!! ~ factor 1000:
 			// - above = several seconds (dependings on number of elements
 			// - below = few milleseconds
 			li = document.createElement("li");
@@ -303,7 +262,7 @@ var UI = function() {
 				if(ratings[r].image)
 					div.style.backgroundImage = "url(" + ratings[r].image + ")" ; 
 				else
-					div.style.backgroundImage = "url(" + this.getCategory(ratings[r].category).category.defaultImage + ")" ; 
+					div.style.backgroundImage = "url(" + getCategory(ratings[r].category).category.defaultImage + ")" ; 
 				li.append(div);
 				
 				div = document.createElement("div");
@@ -330,7 +289,7 @@ var UI = function() {
 				div.classList.add("text");
 				li.append(div)
 				
-				Events.addEventListener(Events.CLICK, function(rating) { return function(event) { UI.updateRatingForm(rating, true); }; }(ratings[r]), li);
+				Events.addEventListener(Events.CLICK, function(rating) { return function(event) { updateRatingForm(rating, true); }; }(ratings[r]), li);
 			list.append(li);
 			
 			// create ellipsis
@@ -338,9 +297,57 @@ var UI = function() {
 		}
 	};
 	
-	this.showView = function(view) {
+	var populateRatingsView = function(view) {
+		var scope = 0;
+		if(view == constants.VIEW_PERSONAL_RATINGS)
+			scope = constants.SCOPE_PERSONAL;
+		else if(view == constants.VIEW_FRIENDS_RATINGS)
+			scope = constants.SCOPE_FRIENDS;
+		if(view == constants.VIEW_GLOBAL_RATINGS)
+			scope = constants.SCOPE_GLOBAL;	
+		
+		var container = document.getElementById(view);
+		var list = container.firstElementChild;
+		Elements.removeChildren(list);
+		var more = container.lastElementChild;
+		more.classList.remove("allLoaded");
+		
+		viewRangeStart = 0;
+		viewRangeEnd = 0;
+		
+		var loadPage = function(list) {		
+			viewLoading = true;	
+			var page = app.getRatings(scope, viewRangeEnd, constants.RATINGS_PAGE_SIZE);
+			viewRangeEnd += page.length;
+			if(page.length > 0)
+				populateRatings(list, page);
+			else
+				list.parentElement.lastElementChild.classList.add("allLoaded");
+			viewLoading = false;
+		};
+		
+		Events.addEventListener(Events.SCROLL, function(loadPage, list) {
+			return function(event) {
+				var element = event.target;
+				var bottomRemaining = element.scrollHeight - element.offsetHeight - element.scrollTop;
+				if(bottomRemaining < container.lastElementChild.offsetHeight/2)
+				{
+					// more-element is scrolled into view
+					if(!viewLoading)
+					{
+						console.log("loading more content");
+						loadPage(list);
+					}
+				}
+			};
+		} (loadPage, list), container.parentElement);
+				
+		loadPage(list);
+	};
+	
+	var showView = function(view) {
 		var frame = document.getElementById("content_frame");
-		this.view = view;		
+		view = view;		
 		
 		var child;
 		for(var i = 0; i < frame.children.length; i++)
@@ -360,34 +367,34 @@ var UI = function() {
 		
 		// TODO only refresh, if last refresh is 
 		// refresh view
-		if(this.view == this.constants.VIEW_CALENDAR)
+		if(view == constants.VIEW_CALENDAR)
 		{
-			this.calendar.update(this.getCalendarItems());
+			calendar.update(getCalendarItems());
 		}
-		else if(this.view == this.constants.VIEW_PERSONAL_RATINGS)
+		else if(view == constants.VIEW_PERSONAL_RATINGS)
 		{
-			this.populateRatingsView(this.view);
+			populateRatingsView(view);
 		}
-		else if(this.view == this.constants.VIEW_FRIENDS_RATINGS)
+		else if(view == constants.VIEW_FRIENDS_RATINGS)
 		{
-			this.populateRatingsView(this.view);
+			populateRatingsView(view);
 		}
-		else if(this.view == this.constants.VIEW_GLOBAL_RATINGS)
+		else if(view == constants.VIEW_GLOBAL_RATINGS)
 		{
-			this.populateRatingsView(this.view);
+			populateRatingsView(view);
 		}
 		
 		// TODO remove load screen
 	};
 	
-	this.showAdd = function()
+	var showAdd = function()
 	{
-		var timer = this.getTimer("ADD");
-		this.clearTimer("ADD");
+		var timer = getTimer("ADD");
+		clearTimer("ADD");
 		
-		console.log("showAdd called for '" + this.view + "' (advanced=" + UI.constants.ADVANCED_ADD + ", timer=" + timer + ")");
+		console.log("showAdd called for '" + view + "' (advanced=" + constants.ADVANCED_ADD + ", timer=" + timer + ")");
 		
-		if(UI.constants.ADVANCED_ADD && (timer > UI.constants.ADVANCED_ADD_TIMEOUT))
+		if(constants.ADVANCED_ADD && (timer > constants.ADVANCED_ADD_TIMEOUT))
 		{
 			console.log("advanced add...");
 			
@@ -396,39 +403,39 @@ var UI = function() {
 			
 			// event
 			element = Elements.fromString("<li class='selectable'><label key='select_type.event'></label></li>");
-			element.onclick = function(event) { UI.updateEventForm(null, false); document.getElementById("select_type").classList.add("hidden"); };
+			element.onclick = function(event) { updateEventForm(null, false); document.getElementById("select_type").classList.add("hidden"); };
 			list.append(element);
 			// rating
 			element = Elements.fromString("<li class='selectable'><label key='select_type.rating'></label></li>");
-			element.onclick = function(event) { UI.updateRatingForm(null, false); document.getElementById("select_type").classList.add("hidden"); };
+			element.onclick = function(event) { updateRatingForm(null, false); document.getElementById("select_type").classList.add("hidden"); };
 			list.append(element);
 						
-			this.labelManager.updateLabels(list);
+			labelManager.updateLabels(list);
 			document.getElementById("select_type").classList.remove("hidden");
 		}
 		else
 		{
-			this.updateRatingForm(null, false);			
+			updateRatingForm(null, false);			
 		}
-		UI.menu.hide();
+		menu.hide();
 	};
 	
-	this.startTimer = function(timer)
+	var startTimer = function(timer)
 	{
-		this.timers[timer] = new Date().getTime();
+		timers[timer] = new Date().getTime();
 	};
 	
-	this.getTimer = function(timer)
+	var getTimer = function(timer)
 	{
-		return new Date().getTime() - this.timers[timer];
+		return new Date().getTime() - timers[timer];
 	};
 	
-	this.clearTimer = function(timer)
+	var clearTimer = function(timer)
 	{
-		this.timers[timer] = null;
+		timers[timer] = null;
 	};
 	
-	this.updateForm = function(form, object, viewmode)
+	var updateForm = function(form, object, viewmode)
 	{
 		form.object = object;
 		createElements = form.getElementsByClassName("create");
@@ -511,7 +518,7 @@ var UI = function() {
 		form.classList.remove("hidden");
 	};
 	
-	this.updateEventForm = function(event, viewmode)
+	var updateEventForm = function(event, viewmode)
 	{
 		form = document.getElementById("form_event");	
 		if(event != null)
@@ -530,18 +537,18 @@ var UI = function() {
 			document.getElementById("event_location").value = "";
 			document.getElementById("event_description").value = "";	
 		}
-		this.updateForm(form, event, viewmode);
+		updateForm(form, event, viewmode);
 	};
 	
-	this.submitEventForm = function(form)
+	var submitEventForm = function(form)
 	{
 		// validate
 		valid = true;
 		// Note: use "&& valid" at end to ensure method call
-		valid = UI.validateElement(document.getElementById("event_title"),	 		"value", UI.constants.TYPE_EVENT, "title") && valid;
-		valid = UI.validateElement(document.getElementById("event_date"), 			"value", UI.constants.TYPE_EVENT, "date") && valid;
-		valid = UI.validateElement(document.getElementById("event_location"), 		"value", UI.constants.TYPE_EVENT, "location") && valid;
-		valid = UI.validateElement(document.getElementById("event_description"), 	"value", UI.constants.TYPE_EVENT, "description") && valid;
+		valid = validateElement(document.getElementById("event_title"),	 		"value", constants.TYPE_EVENT, "title") && valid;
+		valid = validateElement(document.getElementById("event_date"), 			"value", constants.TYPE_EVENT, "date") && valid;
+		valid = validateElement(document.getElementById("event_location"), 		"value", constants.TYPE_EVENT, "location") && valid;
+		valid = validateElement(document.getElementById("event_description"), 	"value", constants.TYPE_EVENT, "description") && valid;
 		console.log("from valid ? " + valid);
 		if(valid)
 		{		
@@ -554,12 +561,12 @@ var UI = function() {
 			event.description = document.getElementById("event_description").value;		
 			app.saveEvent(event);	
 			// update calendar
-			calendar.update(this.getCalendarItems());
+			calendar.update(getCalendarItems());
 		}
 		return valid;
 	};
 	
-	this.updateRatingForm = function(rating, viewmode)
+	var updateRatingForm = function(rating, viewmode)
 	{
 		form = document.getElementById("form_rating");
 		if(rating != null)
@@ -589,7 +596,7 @@ var UI = function() {
 		else
 		{
 			// clear all fields
-			document.getElementById("rating_category").value = this.defaultCategory; // calculated on update of categories
+			document.getElementById("rating_category").value = defaultCategory; // calculated on update of categories
 			document.getElementById("rating_product").value = "";
 			document.getElementById("rating_date").value = null	;
 			document.getElementById("rating_event").value = "";
@@ -608,29 +615,29 @@ var UI = function() {
 			document.getElementById("rating_finish_text").value = "";	
 			document.getElementById("rating_finish_tags").value = "";
 		}
-		this.updateForm(form, rating, viewmode);
+		updateForm(form, rating, viewmode);
 	};
 	
-	this.submitRatingForm = function(form)
+	var submitRatingForm = function(form)
 	{
 		// validate
 		valid = true;
 		// Note: use "&& valid" at end to ensure method call
-		valid = UI.validateElement(document.getElementById("rating_category"),	 	"value", UI.constants.TYPE_RATING, "category") && valid;
-		valid = UI.validateElement(document.getElementById("rating_product"), 		"value", UI.constants.TYPE_RATING, "product") && valid;
-		valid = UI.validateElement(document.getElementById("rating_date"), 			"value", UI.constants.TYPE_RATING, "date") && valid;
-		valid = UI.validateElement(document.getElementById("rating_event"), 		"value", UI.constants.TYPE_RATING, "event") && valid;
-		valid = UI.validateElement(document.getElementById("rating_location"), 		"value", UI.constants.TYPE_RATING, "location") && valid;
+		valid = validateElement(document.getElementById("rating_category"),	 	"value", constants.TYPE_RATING, "category") && valid;
+		valid = validateElement(document.getElementById("rating_product"), 		"value", constants.TYPE_RATING, "product") && valid;
+		valid = validateElement(document.getElementById("rating_date"), 			"value", constants.TYPE_RATING, "date") && valid;
+		valid = validateElement(document.getElementById("rating_event"), 		"value", constants.TYPE_RATING, "event") && valid;
+		valid = validateElement(document.getElementById("rating_location"), 		"value", constants.TYPE_RATING, "location") && valid;
 			// TODO image
 			// TODO stars
-		valid = UI.validateElement(document.getElementById("rating_summary"), 		"value", UI.constants.TYPE_RATING, "summary") && valid;
+		valid = validateElement(document.getElementById("rating_summary"), 		"value", constants.TYPE_RATING, "summary") && valid;
 			// TODO spider
-		valid = UI.validateElement(document.getElementById("rating_nose_text"), 	"value", UI.constants.TYPE_RATING, "nose_text") && valid;
-		valid = UI.validateElement(document.getElementById("rating_nose_tags"), 	"value", UI.constants.TYPE_RATING, "nose_tags") && valid;
-		valid = UI.validateElement(document.getElementById("rating_taste_text"), 	"value", UI.constants.TYPE_RATING, "taste_text") && valid;
-		valid = UI.validateElement(document.getElementById("rating_taste_tags"), 	"value", UI.constants.TYPE_RATING, "taste_tags") && valid;
-		valid = UI.validateElement(document.getElementById("rating_finish_text"), 	"value", UI.constants.TYPE_RATING, "finish_text") && valid;
-		valid = UI.validateElement(document.getElementById("rating_finish_tags"), 	"value", UI.constants.TYPE_RATING, "finish_tags") && valid;
+		valid = validateElement(document.getElementById("rating_nose_text"), 	"value", constants.TYPE_RATING, "nose_text") && valid;
+		valid = validateElement(document.getElementById("rating_nose_tags"), 	"value", constants.TYPE_RATING, "nose_tags") && valid;
+		valid = validateElement(document.getElementById("rating_taste_text"), 	"value", constants.TYPE_RATING, "taste_text") && valid;
+		valid = validateElement(document.getElementById("rating_taste_tags"), 	"value", constants.TYPE_RATING, "taste_tags") && valid;
+		valid = validateElement(document.getElementById("rating_finish_text"), 	"value", constants.TYPE_RATING, "finish_text") && valid;
+		valid = validateElement(document.getElementById("rating_finish_tags"), 	"value", constants.TYPE_RATING, "finish_tags") && valid;
 		
 		if(valid)
 		{	
@@ -654,28 +661,28 @@ var UI = function() {
 			rating.finishText = document.getElementById("rating_finish_tags").value;	
 			app.saveRating(rating);
 			// update views
-			this.showView(this.view);
+			showView(view);
 		}
 		return valid;
 	};
 	
-	this.submitForm = function(form)
+	var submitForm = function(form)
 	{
-		if(form.getAttribute("type") == this.constants.TYPE_EVENT)
-			return this.submitEventForm(form);
-		else if(form.getAttribute("type") == this.constants.TYPE_RATING)
-			return this.submitRatingForm(form);
+		if(form.getAttribute("type") == constants.TYPE_EVENT)
+			return submitEventForm(form);
+		else if(form.getAttribute("type") == constants.TYPE_RATING)
+			return submitRatingForm(form);
 	};
 	
-	this.resetForm = function(form)
+	var resetForm = function(form)
 	{
-		if(form.getAttribute("type") == this.constants.TYPE_EVENT)
-			return this.updateEventForm(form.object, true);
-		else if(form.getAttribute("type") == this.constants.TYPE_RATING)
-			return this.updateRatingForm(form.object, true);
+		if(form.getAttribute("type") == constants.TYPE_EVENT)
+			return updateEventForm(form.object, true);
+		else if(form.getAttribute("type") == constants.TYPE_RATING)
+			return updateRatingForm(form.object, true);
 	};
 	
-	this.validateElement = function(element, property, type, field)
+	var validateElement = function(element, property, type, field)
 	{
 		var valid = app.validate(type, field, element[property]);
 		if(valid)
@@ -685,47 +692,21 @@ var UI = function() {
 		return valid;
 	};
 	
-	this.getCategory = function(id) {
-		for(var i = 0; i < this.categories.length; i++)
+	var getCategory = function(id) {
+		for(var i = 0; i < categories.length; i++)
 		{
-			if(this.categories[i].category.id == id)
-				return this.categories[i];
+			if(categories[i].category.id == id)
+				return categories[i];
 		}
 		return null;
 	};
 	
-	this.getCalendarItems = function() {
-		var calendarItems = [];
-		var events = app.getEvents();
-		var ratings = app.getRatings(UI.constants.SCOPE_PERSONAL);
-		
-		for(var i = 0; i < events.length; i++)
-		{
-			//console.log(events[i]);
-			calendarItems.push({
-				title: 		events[i].title,
-				date: 		events[i].date,
-				group: 		null,
-				itemType: 	UI.constants.TYPE_EVENT,
-				item: 		events[i],
-			});
-		}
-		for(var i = 0; i < ratings.length; i++)
-		{
-			//console.log(ratings[i]);
-			calendarItems.push({
-				title: 		ratings[i].product,
-				date: 		ratings[i].date,
-				group: 		ratings[i].event,
-				itemType: 	UI.constants.TYPE_RATING,
-				item: 		ratings[i],
-			});
-		}
-		
-		return calendarItems;
+	// deprecated
+	var getCalendarItems = function() {
+		return app.getCalendarItems(constants.SCOPE_PERSONAL, 0, new Date(2099, 12, 31).getTime());
 	};
 	
-	this.selectCalendarItem = function(items)
+	var selectCalendarItem = function(items)
 	{
 		console.log("calendar select:");
 		console.log(items);
@@ -733,10 +714,10 @@ var UI = function() {
 		if(items.length == 1)
 		{
 			var item = items[0];
-			if(item.itemType == UI.constants.TYPE_EVENT)
-				UI.updateEventForm(item.item, true);
-			else if(item.itemType == UI.constants.TYPE_RATING)
-				UI.updateRatingForm(item.item, true);
+			if(item.itemType == constants.TYPE_EVENT)
+				updateEventForm(item.item, true);
+			else if(item.itemType == constants.TYPE_RATING)
+				updateRatingForm(item.item, true);
 		}
 		else if(items.length > 1)
 		{
@@ -747,10 +728,10 @@ var UI = function() {
 			for(var i = 0; i < items.length; i++)
 			{
 				element = Elements.fromString("<li class='selectable'>" + items[i].title + "</li>");
-				if(items[i].itemType == UI.constants.TYPE_EVENT)
-					element.onclick = function(item) { return function() { UI.updateEventForm(item, true); document.getElementById("select_calendar_item").classList.add("hidden"); }; }(items[i].item);
-				else if(items[i].itemType == UI.constants.TYPE_RATING)
-					element.onclick = function(item) { return function() { UI.updateRatingForm(item, true); document.getElementById("select_calendar_item").classList.add("hidden"); }; }(items[i].item);
+				if(items[i].itemType == constants.TYPE_EVENT)
+					element.onclick = function(item) { return function() { updateEventForm(item, true); document.getElementById("select_calendar_item").classList.add("hidden"); }; }(items[i].item);
+				else if(items[i].itemType == constants.TYPE_RATING)
+					element.onclick = function(item) { return function() { updateRatingForm(item, true); document.getElementById("select_calendar_item").classList.add("hidden"); }; }(items[i].item);
 				list.append(element);
 			}
 			
@@ -762,42 +743,42 @@ var UI = function() {
 		}
 	};
 	
-	this.initialize = function()
+	var initialize = function()
 	{		
 		/* create LabelManager for updating locale dependent labels */
-		this.labelManager = new LabelManager(app, app.getString);
+		labelManager = new LabelManager(app, app.getString);
 		
 		/* initialize top bar */
-		this.searchInput = new AutoHide("search", 5000, [Events.KEYDOWN, Events.KEYPRESSED, Events.KEYUP, Events.CLICK, Events.MOUSEDOWN, Events.MOUSEUP]);
-		Events.addEventListener(Events.CLICK, 		function(event) { UI.searchInput.show(); 							}, 	document.getElementById("search_button"));
-		Events.addEventListener(Events.MOUSEDOWN, 	function(event) { UI.startTimer("ADD"); }, 								document.getElementById("add_button"));
-		Events.addEventListener(Events.TOUCHSTART, 	function(event) { UI.startTimer("ADD"); }, 								document.getElementById("add_button"));
-		Events.addEventListener(Events.MOUSEUP, 	function(event) { UI.showAdd(); 			event.preventDefault(); }, 	document.getElementById("add_button"));
-		Events.addEventListener(Events.TOUCHEND, 	function(event) { UI.showAdd(); 			event.preventDefault(); }, 	document.getElementById("add_button"));
+		searchInput = new AutoHide("search", 5000, [Events.KEYDOWN, Events.KEYPRESSED, Events.KEYUP, Events.CLICK, Events.MOUSEDOWN, Events.MOUSEUP]);
+		Events.addEventListener(Events.CLICK, 		function(event) { searchInput.show(); 							}, 	document.getElementById("search_button"));
+		Events.addEventListener(Events.MOUSEDOWN, 	function(event) { startTimer("ADD"); }, 								document.getElementById("add_button"));
+		Events.addEventListener(Events.TOUCHSTART, 	function(event) { startTimer("ADD"); }, 								document.getElementById("add_button"));
+		Events.addEventListener(Events.MOUSEUP, 	function(event) { showAdd(); 			event.preventDefault(); }, 	document.getElementById("add_button"));
+		Events.addEventListener(Events.TOUCHEND, 	function(event) { showAdd(); 			event.preventDefault(); }, 	document.getElementById("add_button"));
 		
 		/* initialize menu */
-		this.menu = new Hideable("menu", false);
-		this.populateMenu();
-		Events.addEventListener(Events.CLICK, function(event) { UI.menu.toggle(); 		event.preventDefault(); }, document.getElementById("menu_button"));
-		//Events.addEventListener(Events.CLICK, function(event) { if(!event.defaultPrevented) UI.menu.hide(); 	}, document.getElementById("main"));
-		Events.addEventListener(Events.CLICK, function(event) { UI.menu.hide(); 								}, document.getElementById("overlay"));
+		menu = new Hideable("menu", false);
+		populateMenu();
+		Events.addEventListener(Events.CLICK, function(event) { menu.toggle(); 		event.preventDefault(); }, document.getElementById("menu_button"));
+		//Events.addEventListener(Events.CLICK, function(event) { if(!event.defaultPrevented) menu.hide(); 	}, document.getElementById("main"));
+		Events.addEventListener(Events.CLICK, function(event) { menu.hide(); 								}, document.getElementById("overlay"));
 		/* menu elements */
-		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_categories"); 	UI.menu.hide(100); document.getElementById("manage_categories").classList.remove("hidden"); }, document.getElementById("menu_categories"));
-		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_profile"); 		UI.menu.hide(100); /* TODO */			}, document.getElementById("menu_profile"));
-		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_settings"); 	UI.menu.hide(100); /* TODO */			}, document.getElementById("menu_settings"));
-		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_help"); 		UI.menu.hide(100); /* TODO */ app.clearDatabase(); }, document.getElementById("menu_help"));
-		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_about"); 		UI.menu.hide(100); /* TODO */			}, document.getElementById("menu_about"));
-		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_exit"); 		UI.menu.hide(100); app.exit(); 			}, document.getElementById("menu_exit"));
+		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_categories"); 	menu.hide(100); document.getElementById("manage_categories").classList.remove("hidden"); }, document.getElementById("menu_categories"));
+		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_profile"); 		menu.hide(100); /* TODO */			}, document.getElementById("menu_profile"));
+		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_settings"); 	menu.hide(100); /* TODO */			}, document.getElementById("menu_settings"));
+		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_help"); 		menu.hide(100); /* TODO */ app.clearDatabase(); }, document.getElementById("menu_help"));
+		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_about"); 		menu.hide(100); /* TODO */			}, document.getElementById("menu_about"));
+		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_exit"); 		menu.hide(100); app.exit(); 			}, document.getElementById("menu_exit"));
 		
 		/* initialize bottom bar */
-		Events.addEventListener(Events.CLICK, function(event) { UI.showView(UI.constants.VIEW_CALENDAR); 			}, document.getElementById(UI.constants.VIEW_CALENDAR 			+ "_button"));
-		Events.addEventListener(Events.CLICK, function(event) { UI.showView(UI.constants.VIEW_PERSONAL_RATINGS); 	}, document.getElementById(UI.constants.VIEW_PERSONAL_RATINGS 	+ "_button"));
-		Events.addEventListener(Events.CLICK, function(event) { UI.showView(UI.constants.VIEW_FRIENDS_RATINGS); 	}, document.getElementById(UI.constants.VIEW_FRIENDS_RATINGS 	+ "_button"));
-		Events.addEventListener(Events.CLICK, function(event) { UI.showView(UI.constants.VIEW_GLOBAL_RATINGS); 		}, document.getElementById(UI.constants.VIEW_GLOBAL_RATINGS 	+ "_button"));
+		Events.addEventListener(Events.CLICK, function(event) { showView(constants.VIEW_CALENDAR); 			}, document.getElementById(constants.VIEW_CALENDAR 			+ "_button"));
+		Events.addEventListener(Events.CLICK, function(event) { showView(constants.VIEW_PERSONAL_RATINGS); 	}, document.getElementById(constants.VIEW_PERSONAL_RATINGS 	+ "_button"));
+		Events.addEventListener(Events.CLICK, function(event) { showView(constants.VIEW_FRIENDS_RATINGS); 	}, document.getElementById(constants.VIEW_FRIENDS_RATINGS 	+ "_button"));
+		Events.addEventListener(Events.CLICK, function(event) { showView(constants.VIEW_GLOBAL_RATINGS); 		}, document.getElementById(constants.VIEW_GLOBAL_RATINGS 	+ "_button"));
 		
 				
 		/* initialize windows */
-		this.populateCategorySelects();
+		populateCategorySelects();
 		/* close buttons */
 		let closeButtons = document.querySelectorAll(".window .close");
 		for(var i = 0; i < closeButtons.length; i++)
@@ -825,7 +806,7 @@ var UI = function() {
 				{
 					if(element.classList.contains("form"))
 					{
-						if(UI.submitForm(element))
+						if(submitForm(element))
 							element.classList.add("hidden");
 						break;
 					}
@@ -846,7 +827,7 @@ var UI = function() {
 						var object = form.object;
 						console.log("discarding...")
 						console.log(object);
-						UI.resetForm(form);
+						resetForm(form);
 						break;
 					}
 					element = element.parentElement;
@@ -866,7 +847,7 @@ var UI = function() {
 						var object = form.object;
 						console.log("editing...")
 						console.log(object);
-						UI.updateForm(form, object, false);
+						updateForm(form, object, false);
 						break;
 					}
 					element = element.parentElement;
@@ -932,30 +913,48 @@ var UI = function() {
 					windows[i].classList.add("hidden");
 				}
 				// hide menu
-				UI.menu.hide();
+				menu.hide();
 			}
 		}, document.getElementById("main"));
 		*/
 		
 		/* initialize calendar */
-		this.calendar = new Calendar("calendar", true, 1, this.getCalendarItems());
-		this.calendar.onUpdate = function() { UI.labelManager.updateLabels(); };
-		this.calendar.onSelect = this.selectCalendarItem;
+		calendar = new Calendar("calendar", true, 1, getCalendarItems());
+		calendar.onUpdate = function() { labelManager.updateLabels(); };
+		calendar.onSelect = selectCalendarItem;
 		
 		/* initialize rating lists */
 
 		/* manage categories */
-		this.populateManageCategories();
+		populateManageCategories();
 		let manageCategoriesCloseButton = document.getElementById("manage_categories").getElementsByClassName("close")[0];
-		Events.addEventListener(Events.CLICK, function(event) { UI.populateMenu(); UI.populateManageCategories(); UI.populateCategorySelects(); }, manageCategoriesCloseButton);
+		Events.addEventListener(Events.CLICK, function(event) { populateMenu(); populateManageCategories(); populateCategorySelects(); }, manageCategoriesCloseButton);
 		
 		/* select view */
-		this.showView(this.constants.VIEW_PERSONAL_RATINGS);
+		showView(constants.VIEW_PERSONAL_RATINGS);
 		
 		/* update locale dependent labels */
-		this.labelManager.updateLabels();
-	};	
+		labelManager.updateLabels();
+	};
 	
-	return this;
+	// export public properties & functions
+	return {
+		// constants
+		constants: constants,
+		// show view elements
+		showView: showView,
+		showAdd: showAdd,
+		// form handling
+		updateEventForm: updateEventForm,
+		submitEventForm: submitEventForm,
+		updateRatingForm: updateRatingForm,
+		submitRatingForm: submitRatingForm,
+		submitForm: submitForm,
+		resetForm: resetForm,
+		// category access
+		getCategory: getCategory,
+		// initialization
+		initialize: initialize,
+	};
 }();
 
