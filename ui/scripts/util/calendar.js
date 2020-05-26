@@ -134,6 +134,7 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items) {
 		// get displayed items
 		console.log("range = " + new Date(rangeStart) + " to " + new Date(rangeEnd));
 		var itemTime;
+		var itemDate;
 		var element;
 		for(var i = 0; i < this.items.length; i++)
 		{
@@ -142,23 +143,24 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items) {
 				console.log("invalid item: " + (this.items[i] == null ? "null": "'" + this.items[i].title + "' (" + this.items[i].date + ")"));
 				continue;
 			}
-			itemTime = this.items[i].date.getTime();
+			itemTime = this.items[i].date; //.getTime();
+			itemDate = new Date(itemTime);
 			if(itemTime >= rangeStart && itemTime < rangeEnd)
 			{
-				index = this.items[i].date.getDate() + offset - 1;
-				if(this.items[i].date.getMonth() != this.currentMonth)
+				index = itemDate.getDate() + offset - 1;
+				if(itemDate.getMonth() != this.currentMonth)
 				{
-					if(this.items[i].date.getFullYear() > this.currentYear || (this.items[i].date.getMonth() > this.currentMonth && this.items[i].date.getFullYear() == this.currentYear))
+					if(itemDate.getFullYear() > this.currentYear || (itemDate.getMonth() > this.currentMonth && itemDate.getFullYear() == this.currentYear))
 					{
 						index += daysInThisMonth;
 					}
-					else if(this.items[i].date.getFullYear() < this.currentYear || (this.items[i].date.getMonth() < this.currentMonth && this.items[i].date.getFullYear() == this.currentYear))
+					else if(itemDate.getFullYear() < this.currentYear || (itemDate.getMonth() < this.currentMonth && itemDate.getFullYear() == this.currentYear))
 					{
 						index -= daysInPrevMonth;
 					}
 					else
 					{
-						console.err("how did we get here: " + this.items[i].date);
+						console.err("how did we get here: " + itemDate);
 					}
 				}
 				
@@ -180,48 +182,20 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items) {
 			}
 			else
 			{
-				var groups = [];
-				
 				for(var j = 0; j < this.displayedItems[index].length; j++)
 				{
-					var group = this.displayedItems[index][j].group;
-					if(groups.indexOf(group) == -1)
-					{
-						var groupCount = 1;
-						if(group != null)
-						{
-							groups.push(group);
-							for(var k = j+1; k < this.displayedItems[index].length; k++)
-							{
-								var group2 = this.displayedItems[index][k].group;
-								if(group == group2)
-									groupCount++;
-							}
-						}
-						else
-						{
-							group = this.displayedItems[index][j].title;
-							groupCount = 0; // not a real group, just a single entry
-						}
-						
-						element = Elements.fromString("<div class='calendar_item'>\
-														<span class='title'>" + group + "</span>\
-														" + (groupCount != 0 ? "<span class='count'>" + groupCount + " <label key='calendar." + (groupCount != 1 ? "entries" : "entry") + "'></label></span>" : "") + "\
-													   </div>")
-													   // <span class='location'>" + this.displayedItems[index][j].location + "</span>
-						/*					   
-						if(groupCount <= 1)
-							element.onclick = function(cal, index, j) { return function() { cal.onSelect(cal.displayedItems[index][j]); }; }(this, index, j);
-						else
-							element.onclick = function(cal, index) { return function() { cal.onSelect(cal.displayedItems[index]); }; }(this, index);
-						*/
-						this.elements[index].append(element);		
-					}
-					else
-					{
-						continue;
-					}
-				}	
+					var title = this.displayedItems[index].title;
+					var entryCount = 0;
+					if(this.displayedItems[index].ratings != null)
+						entryCount = this.displayedItems[index].ratings.length;
+					element = Elements.fromString("<div class='calendar_item'>\
+													<span class='title'>" + title + "</span>\
+													" + (entryCount != 0 ? "<span class='count'>" + entryCount + " <label key='calendar." + (entryCount != 1 ? "entries" : "entry") + "'></label></span>" : "") + "\
+												   </div>");
+												   // <span class='location'>" + this.displayedItems[index][j].location + "</span>
+
+					this.elements[index].append(element);
+				}
 			}				
 		}
 		

@@ -91,3 +91,4 @@ lang.rating.view = {};
 lang.rating.view.title = "View rating";
 lang.rating.view.description = "description on how to view ratings";
 lang.rating.no_more = "End of list. No more ratings available.";
+lang.rating.without_event = "Single Entries";

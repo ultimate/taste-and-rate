@@ -3,7 +3,8 @@ var app = function() {
 	var CURRENT_USER = 1;
 	var FRIENDS = [2,3,4];
 	
-	var NUMBER_OF_SAMPLES = 200;
+	var NUMBER_OF_EVENT_SAMPLES = 30;
+	var NUMBER_OF_RATING_SAMPLES = 300;
 	
 	var LOREM_IPSUM = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.\
 						Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.\
@@ -13,12 +14,14 @@ var app = function() {
 						At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.\
 						Consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus.";
 	var LOREM_IPSUM_ARR = LOREM_IPSUM.split(" ");
+	
+	var EXAMPLE_TAGS = ["sweet", "old", "dark", "bright", "fruity", "high alcohol", "spicy"];
 						
-	var loremIpsum = function()
+	var loremIpsum = function(maxLength)
 	{
 		var r = Math.random();
-		var l = Math.floor(r*r*LOREM_IPSUM_ARR.length);
-		return LOREM_IPSUM_ARR.slice(0, -l).join(" ");
+		var l = Math.floor(r*r*Math.min(LOREM_IPSUM_ARR.length,maxLength));
+		return LOREM_IPSUM_ARR.slice(0, -(LOREM_IPSUM_ARR.length-l)).join(" ");
 	}
 	
 	var getString = function(key) {
@@ -26,6 +29,8 @@ var app = function() {
 			return key; // otherwise the following eval would fail!
 		return eval("lang." + key);
 	};
+	
+	// categories
 	
 	var getCategoryNames = function() {
 		var result = [];
@@ -39,7 +44,7 @@ var app = function() {
 	
 	var getCategories = function() {
 		console.log("loading categories");
-		var categories = Storage.loadLocalObject("categories");
+		var categories = _loadLocal("categories");
 		if(categories == null)
 		{	
 			console.log("no categories found in local storage - loading default")
@@ -58,10 +63,10 @@ var app = function() {
 		{
 			console.log(categories[c]);
 		}
-		Storage.removeLocalObject("categories");
-		Storage.saveLocalObject("categories", categories);
+		_saveLocal("categories", categories);
 	};	
-	
+
+	// item validation
 	
 	var validate = function(type, field, value) {
 		console.log(type + "." + field + "?" + value);
@@ -82,7 +87,7 @@ var app = function() {
 					case "category":	if(value == null || value == "") return false;
 					case "product":		if(value == null || value == "") return false;
 					case "date":		if(value == null || value == "") return false;
-					case "event":		if(value == null) return false;
+					case "event":		break; // if(value == null) return false;
 					case "location":	if(value == null) return false;
 					case "summary":		if(value == null) return false;
 					case "nose_text":	if(value == null) return false;
@@ -98,7 +103,30 @@ var app = function() {
 		}
 	};
 	
+	// localStorage
+	
+	var _saveLocal = function(key, object) {
+		localStorage.setItem(key, JSON.stringify(object));
+	};
+	
+	var _loadLocal = function(key) {
+		var json = localStorage[key];
+		if(json != null)
+			return JSON.parse(json);
+		return null;
+	};
+	
+	var _removeLocal = function(key) {
+		localStorage.removeItem(key);
+	};
+	
+	var _clearLocal = function() {
+		localStorage.clear();
+	};
+	
 	// general save & load
+	
+	
 	
 	var save = function(type, object) {
 		var list = null;
@@ -111,25 +139,26 @@ var app = function() {
 				list = ratings;
 				break;
 			default:
-				throw new Error("unsupported type");
+				throw new Error("unsupported type: '" + type + "'");
 		}
 		if(object == null)
 			return;
 		if(object.id == null)
 		{
-			object.id = Storage.loadLocalObject(type + "_id") + 1;
-			object.creator = CURRENT_USER;
-			Storage.saveLocalObject(type + "_id", object.id);
+			object.id = _loadLocal(type + "_id") + 1;
+			if(object.creator == null)
+				object.creator = CURRENT_USER;
+			_saveLocal(type + "_id", object.id);
 			if(list != null)
 				list.push(object);
 		}
-		Storage.saveLocalObject(type + "_" + object.id, object);
+		_saveLocal(type + "_" + object.id, object);
 	};
 	
 	var load = function(type, id) {
 		if(id == null)
 			return null;
-		var object = Storage.loadLocalObject(type + "_" + id);
+		var object = _loadLocal(type + "_" + id);
 		object.editable = (object.creator == CURRENT_USER);
 		return object;
 	};
@@ -151,32 +180,16 @@ var app = function() {
 	var getEvents = function() {
 		if(events == null)
 		{
+			console.log("loading events from storage");
+			var start = new Date().getTime();
 			events = [];
-			var d;
-			var creator;
-			for(var i = 1; i <= NUMBER_OF_SAMPLES; i++)
-			{
-				d = new Date(Date.now() + (Math.random()*360-180)*24*3600*1000);
-				d.setSeconds(0);
-				d.setMilliseconds(0);
-				
-				creator = Math.round(Math.random()*10);		
-				
-				events.push({
-					id: -i,
-					creator: creator,
-					editable: (creator == CURRENT_USER),
-					title: "Random Event " + i,
-					location: "Somewhere " + i,
-					date: d,
-					description: "Do something " + i + " somewhere..."
-				});
-			}
-			var maxId = Storage.loadLocalObject(UI.constants.TYPE_EVENT + "_id");
+			var maxId = _loadLocal(UI.constants.TYPE_EVENT + "_id");
 			for(var i = 1; i <= maxId; i++)
 			{
 				events.push(loadEvent(i));
+				console.log(".");
 			}
+			console.log("this took " + (new Date().getTime() - start) +  "ms");
 		}
 		return events;
 	};
@@ -197,74 +210,17 @@ var app = function() {
 	
 	var getRatings = function(scope, startIndex, amount) {
 		if(ratings == null)
-		{
-			var tags = ["sweet", "old", "dark", "bright", "fruity", "high alcohol", "spicy"];
-			
+		{	
+			console.log("loading ratings from storage");
+			var start = new Date().getTime();
 			ratings = [];
-			var categories = getCategories();
-			var d;
-			var category;
-			var categoryName;
-			var id;
-			var spiderValues;
-			var group;
-			var creator;
-			for(var c = 0; c < categories.length; c++)
-			{		
-				category = categories[c].category;
-				categoryName = getString(category.key + ".title");
-				for(var i = 1; i <= NUMBER_OF_SAMPLES;)
-				{
-					d = new Date(Date.now() + (Math.random() * 90 - 45)*24*3600*1000);
-					d.setSeconds(0);
-					d.setMilliseconds(0);
-					
-					if(Math.random() > 0.8)
-						group = Math.random() * 9 + 2;
-					else
-						group = 1;
-					
-					for(var g = 0; g < group; g++)
-					{										
-						id = (category.id*1000 + i);
-						
-						spiderValues = [];
-						for(var si = 0; si < category.spider.length; si++)
-						{
-							spiderValues.push(Math.round(Math.random()*10));
-						}	
-						
-						creator = Math.round(Math.random()*10);			 
-						
-						ratings.push({
-							id: -id,
-							category: category.id,
-							creator: creator,
-							editable: (creator == CURRENT_USER),
-							product: "The very special " + categoryName + " #" + i + " " + loremIpsum(),
-							image: (Math.random() < 0.33 ? "images/bottle1.jpg" : (Math.random() < 0.5 ? "images/bottle2.png" : "images/bottle3.jpg")),
-							date: d,
-							event: (group > 1 ? "Rating Group " + d : null),
-							location: null, // TODO
-							stars: Math.ceil(Math.random()*5),
-							summary: "Summary " + id + ": " + loremIpsum(),
-							noseText: "Nose " + id + ": " + loremIpsum(),
-							noseTags: new Array(tags[Math.floor(Math.random()*tags.length)]),						
-							tasteText: "Taste " + id + ": " + loremIpsum(),
-							tasteTags: new Array(tags[Math.floor(Math.random()*tags.length)]),						
-							finishText: "Finish " + id + ": " + loremIpsum(),
-							finishTags: new Array(tags[Math.floor(Math.random()*tags.length)]),
-							spider: spiderValues,
-						});
-						i++;
-					}
-				}
-			}
-			var maxId = Storage.loadLocalObject(UI.constants.TYPE_RATING + "_id");
+			var maxId = _loadLocal(UI.constants.TYPE_RATING + "_id");
 			for(var i = 1; i <= maxId; i++)
 			{
 				ratings.push(loadRating(i));
+				console.log(".");
 			}
+			console.log("this took " + (new Date().getTime() - start) +  "ms");
 		}
 		// get active categories
 		var categories = getCategories();
@@ -303,12 +259,11 @@ var app = function() {
 		for(var i = 0; i < events.length; i++)
 		{			
 			//console.log(events[i]);
-			itemTime = events[i].date.getTime();
-			if(itemTime >= rangeStart && itemTime < rangeEnd)
+			if(events[i].date >= rangeStart && events[i].date < rangeEnd)
 				calendarItems.push({
 					title: 		events[i].title,
 					date: 		events[i].date,
-					group: 		null,
+					group: 		events[i].title,
 					itemType: 	UI.constants.TYPE_EVENT,
 					item: 		events[i],
 				});
@@ -316,8 +271,7 @@ var app = function() {
 		for(var i = 0; i < ratings.length; i++)
 		{
 			//console.log(ratings[i]);
-			itemTime = ratings[i].date.getTime();
-			if(itemTime >= rangeStart && itemTime < rangeEnd)
+			if(ratings[i].date >= rangeStart && ratings[i].date < rangeEnd)
 				calendarItems.push({
 					title: 		ratings[i].product,
 					date: 		ratings[i].date,
@@ -330,12 +284,140 @@ var app = function() {
 		return calendarItems;
 	};	
 	
-	// general purposes
-	
-	var clearDatabase = function() {
-		console.log("clearing database");
-		Storage.clear();
+	// debug purposes
+		
+	var randomEvent = function(eventCount) {
+		
+		var d = new Date(Date.now() + (Math.random()*360-180)*24*3600*1000);
+		d.setSeconds(0);
+		d.setMilliseconds(0);
+		d = d.getTime();
+		
+		var creator = Math.floor(Math.random()*10);
+		
+		return {
+			id: null,
+			type: UI.constants.TYPE_EVENT,
+			creator: creator,
+			editable: (creator == CURRENT_USER),
+			title: "Random Event " + eventCount,
+			location: "Somewhere " + eventCount,
+			date: d,
+			description: "Do something " + eventCount + " somewhere...",
+			ratings: [],
+		};
 	};
+	
+	var randomRating = function(ratingCount, event, categories) {
+			
+		var catIndex = Math.floor(Math.random()*categories.length);
+		var category = categories[catIndex].category;
+		var categoryName = getString(category.key + ".title");
+						
+		var spiderValues = [];
+		for(var si = 0; si < category.spider.length; si++)
+		{
+			spiderValues.push(Math.round(Math.random()*10));
+		}	
+						
+		var creator = Math.floor(Math.random()*10);
+				
+		var d;
+		if(event != null)
+		{
+			d = event.date;
+		}
+		else
+		{
+			d = new Date(Date.now() + (Math.random()*360-180)*24*3600*1000);
+			d.setSeconds(0);
+			d.setMilliseconds(0);
+			d = d.getTime();
+		}
+						
+		return {
+			id: null,
+			type: UI.constants.TYPE_RATING,
+			category: category.id,
+			creator: creator,
+			editable: (creator == CURRENT_USER),
+			product: "The very special " + categoryName + " #" + ratingCount + " " + loremIpsum(10),
+			image: (Math.random() < 0.33 ? "images/bottle1.jpg" : (Math.random() < 0.5 ? "images/bottle2.png" : "images/bottle3.jpg")),
+			date: d,
+			event: (event != null ? event.id : null),
+			location: null, // TODO
+			stars: Math.ceil(Math.random()*5),
+			summary: "Summary " + ratingCount + ": " + loremIpsum(100),
+			noseText: "Nose " + ratingCount + ": " + loremIpsum(20),
+			noseTags: new Array(EXAMPLE_TAGS[Math.floor(Math.random()*EXAMPLE_TAGS.length)]),						
+			tasteText: "Taste " + ratingCount + ": " + loremIpsum(20),
+			tasteTags: new Array(EXAMPLE_TAGS[Math.floor(Math.random()*EXAMPLE_TAGS.length)]),						
+			finishText: "Finish " + ratingCount + ": " + loremIpsum(20),
+			finishTags: new Array(EXAMPLE_TAGS[Math.floor(Math.random()*EXAMPLE_TAGS.length)]),
+			spider: spiderValues,
+		};
+	};
+	
+	var resetDatabase = function(createDummyData) {
+		console.log("clearing database");
+		_clearLocal();
+		events = null;
+		ratings = null;
+		
+		if(createDummyData)
+		{			
+			console.log("creating dummy data");
+			var start = new Date().getTime();
+			
+			events = [];
+			ratings = [];
+			
+			var event;
+			var rating;
+			
+			var eventCount = 0;
+			var ratingCount = 0;
+			
+			var categories = getCategories();
+			
+			for(;eventCount < NUMBER_OF_EVENT_SAMPLES;)
+			{
+				eventCount++;
+				event = randomEvent(eventCount);				
+				saveEvent(event);
+
+				var numberOfRatings = Math.floor(Math.pow(Math.random(),2)*10);	
+							
+				for(var r = 0; r < numberOfRatings; r++)
+				{
+					ratingCount++;
+					rating = randomRating(ratingCount, event, categories);					
+					saveRating(rating);
+					
+					event.ratings.push(rating.id);
+				}				
+				
+				// save again to persist relation to ratings
+				saveEvent(event);
+			}
+			
+			console.log("events  = " + events.length);
+			console.log("ratings = " + ratings.length);
+			
+			for(;ratingCount < NUMBER_OF_RATING_SAMPLES;)
+			{
+				ratingCount++;
+				rating = randomRating(ratingCount, null, categories);					
+				saveRating(rating);
+			}
+			
+			console.log("dummy data successfully created - this took " + (new Date().getTime() - start) +  "ms");
+			console.log("events  = " + events.length);
+			console.log("ratings = " + ratings.length);
+		}
+	};
+	
+	// general purposes
 	
 	var exit = function() {
 		window.location.reload(true);
@@ -360,7 +442,10 @@ var app = function() {
 		// fusioned list for events & ratings
 		getCalendarItems: getCalendarItems,
 		// general purposes
-		clearDatabase: clearDatabase,
 		exit: exit,
+		// debugging purposes
+		resetDatabase: resetDatabase,
+		_getEvents: function() {return events;},
+		_getRatings: function() {return ratings;},
 	};
 }();

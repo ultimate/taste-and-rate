@@ -321,7 +321,7 @@ var UI = function() {
 			viewRangeEnd += page.length;
 			if(page.length > 0)
 				populateRatings(list, page);
-			else
+			if(page.length < constants.RATINGS_PAGE_SIZE)
 				list.parentElement.lastElementChild.classList.add("allLoaded");
 			viewLoading = false;
 		};
@@ -525,7 +525,7 @@ var UI = function() {
 		{
 			// populate all fields
 			document.getElementById("event_title").value = event.title;
-			document.getElementById("event_date").value = event.date.toDatetimeLocal(); // convert date to datetimelocal ISO-string using lib first	
+			document.getElementById("event_date").value = new Date(event.date).toDatetimeLocal(); // convert date to datetimelocal ISO-string using lib first	
 			document.getElementById("event_location").value = event.location;
 			document.getElementById("event_description").value = event.description;			
 		}
@@ -556,7 +556,7 @@ var UI = function() {
 			if(event == null) event = {};
 			// get all fields
 			event.title = document.getElementById("event_title").value;
-			event.date = new Date(document.getElementById("event_date").value); // timezone is applied only, when using ISO-string constructor
+			event.date = new Date(document.getElementById("event_date").value).getTime(); // timezone is applied only, when using ISO-string constructor
 			event.location = document.getElementById("event_location").value;
 			event.description = document.getElementById("event_description").value;		
 			app.saveEvent(event);	
@@ -575,8 +575,9 @@ var UI = function() {
 			// populate all fields
 			document.getElementById("rating_category").value = rating.category;
 			document.getElementById("rating_product").value = rating.product;
-			document.getElementById("rating_date").value = rating.date.toDatetimeLocal(); // convert date to datetimelocal ISO-string using lib first	
-			document.getElementById("rating_event").value = rating.event;
+			document.getElementById("rating_date").value = new Date(rating.date).toDatetimeLocal(); // convert date to datetimelocal ISO-string using lib first	
+			document.getElementById("rating_event").value = (rating.event != null ? rating.event.title : "");
+			document.getElementById("rating_event").object = rating.event;
 			document.getElementById("rating_location").value = rating.location;
 			// TODO image
 			document.getElementById("rating_stars").style.width = percent + "%";
@@ -600,6 +601,7 @@ var UI = function() {
 			document.getElementById("rating_product").value = "";
 			document.getElementById("rating_date").value = null	;
 			document.getElementById("rating_event").value = "";
+			document.getElementById("rating_event").object = null;
 			document.getElementById("rating_location").value = "";
 			// TODO image
 			document.getElementById("rating_stars").style.width = "0%";
@@ -625,9 +627,9 @@ var UI = function() {
 		// Note: use "&& valid" at end to ensure method call
 		valid = validateElement(document.getElementById("rating_category"),	 	"value", constants.TYPE_RATING, "category") && valid;
 		valid = validateElement(document.getElementById("rating_product"), 		"value", constants.TYPE_RATING, "product") && valid;
-		valid = validateElement(document.getElementById("rating_date"), 			"value", constants.TYPE_RATING, "date") && valid;
-		valid = validateElement(document.getElementById("rating_event"), 		"value", constants.TYPE_RATING, "event") && valid;
-		valid = validateElement(document.getElementById("rating_location"), 		"value", constants.TYPE_RATING, "location") && valid;
+		valid = validateElement(document.getElementById("rating_date"), 		"value", constants.TYPE_RATING, "date") && valid;
+		valid = validateElement(document.getElementById("rating_event"), 		"object", constants.TYPE_RATING, "event") && valid;
+		valid = validateElement(document.getElementById("rating_location"), 	"value", constants.TYPE_RATING, "location") && valid;
 			// TODO image
 			// TODO stars
 		valid = validateElement(document.getElementById("rating_summary"), 		"value", constants.TYPE_RATING, "summary") && valid;
@@ -646,8 +648,8 @@ var UI = function() {
 			// get all fields
 			rating.category = Number(document.getElementById("rating_category").value);
 			rating.product = document.getElementById("rating_product").value;
-			rating.date = new Date(document.getElementById("rating_date").value); // timezone is applied only, when using ISO-string constructor
-			rating.event = document.getElementById("rating_event").value;
+			rating.date = new Date(document.getElementById("rating_date").value).getTime(); // timezone is applied only, when using ISO-string constructor
+			rating.event = document.getElementById("rating_event").object; // value contains only the title
 			rating.location = document.getElementById("rating_location").value;
 			// TODO image
 			rating.stars = document.getElementById("rating_stars").value;
@@ -766,7 +768,7 @@ var UI = function() {
 		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_categories"); 	menu.hide(100); document.getElementById("manage_categories").classList.remove("hidden"); }, document.getElementById("menu_categories"));
 		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_profile"); 		menu.hide(100); /* TODO */			}, document.getElementById("menu_profile"));
 		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_settings"); 	menu.hide(100); /* TODO */			}, document.getElementById("menu_settings"));
-		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_help"); 		menu.hide(100); /* TODO */ app.clearDatabase(); }, document.getElementById("menu_help"));
+		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_help"); 		menu.hide(100); /* TODO */ app.resetDatabase(true); }, document.getElementById("menu_help"));
 		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_about"); 		menu.hide(100); /* TODO */			}, document.getElementById("menu_about"));
 		Events.addEventListener(Events.CLICK, function(event) { console.log("click menu_exit"); 		menu.hide(100); app.exit(); 			}, document.getElementById("menu_exit"));
 		
@@ -922,7 +924,7 @@ var UI = function() {
 		calendar = new Calendar("calendar", true, 1, getCalendarItems());
 		calendar.onUpdate = function() { labelManager.updateLabels(); };
 		calendar.onSelect = selectCalendarItem;
-		
+				
 		/* initialize rating lists */
 
 		/* manage categories */
@@ -941,6 +943,12 @@ var UI = function() {
 	return {
 		// constants
 		constants: constants,
+		// elements
+		searchInput: searchInput,
+		menu: menu,
+		calendar: calendar,
+		// utilities
+		labelManager: labelManager,
 		// show view elements
 		showView: showView,
 		showAdd: showAdd,
