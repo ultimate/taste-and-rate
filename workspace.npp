@@ -36,7 +36,6 @@
             </Folder>
             <Folder name="util">
                 <File name="ui\scripts\util\autohide.js" />
-                <File name="ui\scripts\util\storage.js" />
                 <File name="ui\scripts\util\hide.js" />
                 <File name="ui\scripts\util\strings.js" />
                 <File name="ui\scripts\util\labels.js" />
