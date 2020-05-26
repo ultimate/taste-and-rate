@@ -1,5 +1,6 @@
-var LabelManager = function(labelProvider, labelFunction) {
+var LabelManager = function(labelProvider, labelFunction, debug) {
 	
+	this.debug = debug;
 	this.LABEL_TAGNAME = "label";
 	this.BUTTON_TAGNAME = "input";
 	//this.LINK_TAGNAME = "a";
@@ -30,7 +31,8 @@ var LabelManager = function(labelProvider, labelFunction) {
 			key = elements[i].getAttribute(this.KEY_ATTRIBUTE);
 			if(key == "" || key == null)
 				continue;
-			console.log("updating label key='" + key + "'");
+			if(this.debug)
+				console.log("updating label key='" + key + "'");
 			// remove all current children
 			while(elements[i].firstChild)
 				elements[i].removeChild(elements[i].firstChild);

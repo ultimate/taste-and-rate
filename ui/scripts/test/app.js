@@ -3,8 +3,8 @@ var app = function() {
 	var CURRENT_USER = 1;
 	var FRIENDS = [2,3,4];
 	
-	var NUMBER_OF_EVENT_SAMPLES = 30;
-	var NUMBER_OF_RATING_SAMPLES = 300;
+	var NUMBER_OF_EVENT_SAMPLES = 100;
+	var NUMBER_OF_RATING_SAMPLES = 1000;
 	
 	var LOREM_IPSUM = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.\
 						Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.\
@@ -249,35 +249,53 @@ var app = function() {
 	
 	// fusioned list for events & ratings
 		
-	var getCalendarItems = function(scope, rangeStart, rangeEnd) {
+	var getCalendarItems = function(rangeStart, rangeEnd) {
+		
+		console.log("loading items");
+		console.log("from: " + rangeStart);
+		console.log("to:   " + rangeEnd);
+		
+		if(rangeStart == null)
+			rangeStart = 0;
+		else if(rangeStart instanceof Date)
+			rangeStart = rangeStart.getTime();
+		if(rangeEnd == null)
+			rangeEnd = new Date(2099, 12, 31).getTime();
+		else if(rangeEnd instanceof Date)
+			rangeEnd = rangeEnd.getTime();
+		
 		var calendarItems = [];
 		var events = getEvents();
-		var ratings = getRatings(scope, 0, 1000000);
+		var ratings = getRatings(UI.constants.SCOPE_PERSONAL, 0, 1000000);
 		
 		var itemTime;
 		
 		for(var i = 0; i < events.length; i++)
 		{			
 			//console.log(events[i]);
+			//console.log(rangeStart + " <= " + events[i].date + " < " + rangeEnd + " ? " + (events[i].date >= rangeStart && events[i].date < rangeEnd));
 			if(events[i].date >= rangeStart && events[i].date < rangeEnd)
 				calendarItems.push({
 					title: 		events[i].title,
 					date: 		events[i].date,
-					group: 		events[i].title,
+					group: 		true,
 					itemType: 	UI.constants.TYPE_EVENT,
 					item: 		events[i],
+					subItems: 	(events[i].ratings != null ? events[i].ratings.length : 0),
 				});
 		}
 		for(var i = 0; i < ratings.length; i++)
 		{
 			//console.log(ratings[i]);
+			//console.log(rangeStart + " <= " + ratings[i].date + " < " + rangeEnd + " ? " + (ratings[i].date >= rangeStart && ratings[i].date < rangeEnd));
 			if(ratings[i].date >= rangeStart && ratings[i].date < rangeEnd)
 				calendarItems.push({
 					title: 		ratings[i].product,
 					date: 		ratings[i].date,
-					group: 		ratings[i].event,
+					group: 		false,
 					itemType: 	UI.constants.TYPE_RATING,
 					item: 		ratings[i],
+					subItems: 	0,
 				});
 		}
 		

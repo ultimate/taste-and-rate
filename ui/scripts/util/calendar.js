@@ -1,5 +1,6 @@
-var Calendar = function(parent, showNav, firstDayOfWeek, items) {
-	
+var Calendar = function(parent, showNav, firstDayOfWeek, items, debug) {
+
+	this.debug = debug;
 	this.today = new Date();
 	this.items = [];
 	this.displayedItems = [];
@@ -73,8 +74,26 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items) {
 		this.update();
 	}
 	
-	this.addItems = function(items) {
-		this.items = items;
+	this.addItems = function(newItems) {
+		var added = 0;
+		for(var i = 0; i < newItems.length; i++)
+		{
+			var found = false;
+			for(var j = 0; j < this.items.length; j++)
+			{
+				if((this.items[j].item.id == newItems[i].item.id) && (this.items[j].itemType == newItems[i].itemType))
+				{
+					found = true;
+					break;
+				}
+			}
+			if(!found)
+			{
+				this.items.push(newItems[i]);
+				added++;
+			}
+		}
+		console.log("items added = " + added + " of " + newItems.length);
 		this.update();
 	};
 	
@@ -169,12 +188,14 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items) {
 					}
 				}
 				
-				console.log("displaying item: '" + (this.items[i].title.length <= 25 ? this.items[i].title : this.items[i].title.substring(0,25)) + "' (" + this.items[i].date + ") @ " + index);
+				if(debug)
+					console.log("displaying item: '" + (this.items[i].title.length <= 25 ? this.items[i].title : this.items[i].title.substring(0,25)) + "' (" + this.items[i].date + ") @ " + index);
 				this.displayedItems[index].push(this.items[i]);
 			}
 			else
 			{
-				console.log("skipping item: '" + (this.items[i].title.length <= 25 ? this.items[i].title : this.items[i].title.substring(0,25)) + "' (" + this.items[i].date + ") > out of range");
+				if(debug)
+					console.log("skipping item: '" + (this.items[i].title.length <= 25 ? this.items[i].title : this.items[i].title.substring(0,25)) + "' (" + this.items[i].date + ") > out of range");
 			}
 		}
 		
@@ -187,19 +208,45 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items) {
 			}
 			else
 			{
+				// separate into group and single items
+				var singleItems = [];
+				var groupItems = [];
 				for(var j = 0; j < this.displayedItems[index].length; j++)
 				{
-					var title = this.displayedItems[index].title;
-					var entryCount = 0;
-					if(this.displayedItems[index].ratings != null)
-						entryCount = this.displayedItems[index].ratings.length;
-					element = Elements.fromString("<div class='calendar_item'>\
-													<span class='title'>" + title + "</span>\
-													" + (entryCount != 0 ? "<span class='count'>" + entryCount + " <label key='calendar." + (entryCount != 1 ? "entries" : "entry") + "'></label></span>" : "") + "\
-												   </div>");
-												   // <span class='location'>" + this.displayedItems[index][j].location + "</span>
+					if(this.displayedItems[index][j].group)
+						groupItems.push(this.displayedItems[index][j]);
+					else						
+						singleItems.push(this.displayedItems[index][j]);
+				}
+				
+				if(singleItems.length > 0)
+				{
+					// add virtual group for single items
+					groupItems.push({
+						title: 		null,
+						date: 		null, // not used here
+						group: 		true,
+						itemType: 	null,
+						item: 		null,
+						subItems: 	groupItems.length,
+					});
+				}
+				
+				// display group items
+				for(var j = 0; j < groupItems.length; j++)
+				{
+					var title = groupItems[j].title;
+					var subItems = groupItems[j].subItems;
+					if(title != null || subItems > 0)
+					{
+						element = Elements.fromString("<div class='calendar_item'>\
+														<span class='title'>" + (title != null ? title : "<label key='rating.without_event'></label>") + "</span>\
+														" + (subItems != 0 ? "<span class='count'>" + subItems + " <label key='calendar." + (subItems != 1 ? "entries" : "entry") + "'></label></span>" : "") + "\
+													   </div>");
+													   // <span class='location'>" + this.displayedItems[index][j].location + "</span>
 
-					this.elements[index].append(element);
+						this.elements[index].append(element);
+					}
 				}
 			}				
 		}
@@ -214,6 +261,10 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items) {
 		this.currentYear = date.getFullYear();
 		this.currentMonth = date.getMonth() + this.MONTH_OFFSET;
 		this.update();
+	};	
+	
+	this.onPreviousMonth = function() {
+		// function to be overwritten by external function to support UI specific updating on navigation through months
 	};
 	
 	this.previousMonth = function() {
@@ -223,7 +274,12 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items) {
 			this.currentMonth = this.LAST_MONTH;
 			this.currentYear--;
 		}
+		this.onPreviousMonth();
 		this.update();
+	};
+
+	this.onNextMonth = function() {
+		// function to be overwritten by external function to support UI specific updating on navigation through months
 	};
 	
 	this.nextMonth = function() {
@@ -233,6 +289,7 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items) {
 			this.currentMonth = this.FIRST_MONTH;
 			this.currentYear++;
 		}
+		this.onNextMonth();
 		this.update();
 	};
 		

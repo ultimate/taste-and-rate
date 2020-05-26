@@ -13,6 +13,7 @@ var UI = function() {
 		ADVANCED_ADD: true,
 		ADVANCED_ADD_TIMEOUT: 1000,
 		RATINGS_PAGE_SIZE: 12,
+		CALENDAR_INIT_RANGE: 2,
 	};
 	
 	var labelManager;
@@ -24,10 +25,16 @@ var UI = function() {
 	var categories;
 	var defaultCategory = 0;
 	
-	var view = constants.VIEW_CALENDAR;
-	var viewRangeStart = 0;
-	var viewRangeEnd = 0;
-	var viewLoading = false;
+	var view;
+	
+	var ratingsRangeStart = 0;
+	var ratingsRangeEnd = 0;
+	var ratingsLoading = false;
+	
+	var calendarMonth = 0;
+	var calendarYear = 0;
+	var calendarRangeStart = 0;
+	var calendarRangeEnd = 0;
 	
 	var timers = {};
 	
@@ -312,18 +319,18 @@ var UI = function() {
 		var more = container.lastElementChild;
 		more.classList.remove("allLoaded");
 		
-		viewRangeStart = 0;
-		viewRangeEnd = 0;
+		ratingsRangeStart = 0;
+		ratingsRangeEnd = 0;
 		
 		var loadPage = function(list) {		
-			viewLoading = true;	
-			var page = app.getRatings(scope, viewRangeEnd, constants.RATINGS_PAGE_SIZE);
-			viewRangeEnd += page.length;
+			ratingsLoading = true;	
+			var page = app.getRatings(scope, ratingsRangeEnd, constants.RATINGS_PAGE_SIZE);
+			ratingsRangeEnd += page.length;
 			if(page.length > 0)
 				populateRatings(list, page);
 			if(page.length < constants.RATINGS_PAGE_SIZE)
 				list.parentElement.lastElementChild.classList.add("allLoaded");
-			viewLoading = false;
+			ratingsLoading = false;
 		};
 		
 		Events.addEventListener(Events.SCROLL, function(loadPage, list) {
@@ -333,7 +340,7 @@ var UI = function() {
 				if(bottomRemaining < container.lastElementChild.offsetHeight/2)
 				{
 					// more-element is scrolled into view
-					if(!viewLoading)
+					if(!ratingsLoading)
 					{
 						console.log("loading more content");
 						loadPage(list);
@@ -370,7 +377,9 @@ var UI = function() {
 		if(view == constants.VIEW_CALENDAR)
 		{
 			calendar.clearItems();
-			calendar.addItems(getCalendarItems());
+			calendarRangeStart 	= new Date(calendar.currentYear, calendar.currentMonth - constants.CALENDAR_INIT_RANGE, 1);	
+			calendarRangeEnd   	= new Date(calendar.currentYear, calendar.currentMonth + constants.CALENDAR_INIT_RANGE + 1, 0)
+			calendar.addItems(app.getCalendarItems(calendarRangeStart, calendarRangeEnd));
 		}
 		else if(view == constants.VIEW_PERSONAL_RATINGS)
 		{
@@ -704,11 +713,6 @@ var UI = function() {
 		return null;
 	};
 	
-	// deprecated
-	var getCalendarItems = function() {
-		return app.getCalendarItems(constants.SCOPE_PERSONAL, 0, new Date(2099, 12, 31).getTime());
-	};
-	
 	var selectCalendarItem = function(items)
 	{
 		console.log("calendar select:");
@@ -924,6 +928,16 @@ var UI = function() {
 		/* initialize calendar */
 		calendar = new Calendar("calendar", true, 1);
 		calendar.onUpdate = function() { labelManager.updateLabels(); };
+		calendar.onPreviousMonth = function() {
+			var oldStart = new Date(calendarRangeStart);
+			calendarRangeStart.setMonth(calendarRangeStart.getMonth() - 1);
+			calendar.addItems(app.getCalendarItems(calendarRangeStart, oldStart));
+		};
+		calendar.onNextMonth = function() {
+			var oldEnd = new Date(calendarRangeEnd);
+			calendarRangeEnd.setMonth(calendarRangeEnd.getMonth() + 1);
+			calendar.addItems(app.getCalendarItems(oldEnd, calendarRangeEnd));
+		};
 		calendar.onSelect = selectCalendarItem;
 				
 		/* initialize rating lists */
@@ -945,11 +959,10 @@ var UI = function() {
 		// constants
 		constants: constants,
 		// elements
-		searchInput: searchInput,
-		menu: menu,
-		calendar: calendar,
+		getMenu: function() { return menu; },
+		getCalendar: function() { return calendar; },
 		// utilities
-		labelManager: labelManager,
+		getLabelManager: function() { return labelManager; },
 		// show view elements
 		showView: showView,
 		showAdd: showAdd,
