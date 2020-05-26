@@ -369,7 +369,8 @@ var UI = function() {
 		// refresh view
 		if(view == constants.VIEW_CALENDAR)
 		{
-			calendar.update(getCalendarItems());
+			calendar.clearItems();
+			calendar.addItems(getCalendarItems());
 		}
 		else if(view == constants.VIEW_PERSONAL_RATINGS)
 		{
@@ -561,7 +562,7 @@ var UI = function() {
 			event.description = document.getElementById("event_description").value;		
 			app.saveEvent(event);	
 			// update calendar
-			calendar.update(getCalendarItems());
+			calendar.addItems([event]);
 		}
 		return valid;
 	};
@@ -921,7 +922,7 @@ var UI = function() {
 		*/
 		
 		/* initialize calendar */
-		calendar = new Calendar("calendar", true, 1, getCalendarItems());
+		calendar = new Calendar("calendar", true, 1);
 		calendar.onUpdate = function() { labelManager.updateLabels(); };
 		calendar.onSelect = selectCalendarItem;
 				

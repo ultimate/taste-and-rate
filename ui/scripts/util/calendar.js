@@ -1,10 +1,7 @@
 var Calendar = function(parent, showNav, firstDayOfWeek, items) {
 	
 	this.today = new Date();
-	if(items)
-		this.items = items;
-	else 
-		this.items = [];
+	this.items = [];
 	this.displayedItems = [];
 	
 	this.FIRST_DAY_OF_WEEK = firstDayOfWeek;
@@ -71,9 +68,17 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items) {
 		// function to be overwritten by external function to allow item displaying, when calendar day is selected
 	};
 	
-	this.update = function(items) {
-		if(items)
-			this.items = items;
+	this.clearItems = function() {
+		this.items = [];	
+		this.update();
+	}
+	
+	this.addItems = function(items) {
+		this.items = items;
+		this.update();
+	};
+	
+	this.update = function() {
 		// remove all items in calendar days
 		for(var i = 0; i < this.elements.length; i++)
 		{
