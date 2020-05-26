@@ -94,7 +94,8 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items, debug) {
 				added++;
 			}
 		}
-		console.log("items added = " + added + " of " + newItems.length);
+		if(this.debug)
+			console.log("items added = " + added + " of " + newItems.length);
 		this.update();
 	};
 	
@@ -159,7 +160,8 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items, debug) {
 		this.groupedItems = new Array(42);
 		
 		// get displayed items
-		console.log("range = " + new Date(rangeStart) + " to " + new Date(rangeEnd));
+		if(this.debug)
+			console.log("range = " + new Date(rangeStart) + " to " + new Date(rangeEnd));
 		var itemTime;
 		var itemDate;
 		var element;
@@ -191,13 +193,13 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items, debug) {
 					}
 				}
 				
-				if(debug)
+				if(this.debug)
 					console.log("displaying item: '" + (this.items[i].title.length <= 25 ? this.items[i].title : this.items[i].title.substring(0,25)) + "' (" + this.items[i].date + ") @ " + index);
 				this.displayedItems[index].push(this.items[i]);
 			}
 			else
 			{
-				if(debug)
+				if(this.debug)
 					console.log("skipping item: '" + (this.items[i].title.length <= 25 ? this.items[i].title : this.items[i].title.substring(0,25)) + "' (" + this.items[i].date + ") > out of range");
 			}
 		}
