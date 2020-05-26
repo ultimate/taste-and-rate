@@ -752,25 +752,19 @@ var UI = function() {
 					
 					for(var k = 0; k < subItems.length; k++)
 					{
-						var title;
-						if(subItems[k].title != null)
-						{
-							title = subItems[k].title;
-						}
-						else if(typeof(subItems[k]) == "number")
+						var rating;
+						if(typeof(subItems[k]) == "number")
 						{
 							console.log("loading nested rating: " + subItems[k]);
-							var rating = app.loadRating(subItems[k]);							
-							title = rating.product;
+							rating = app.loadRating(subItems[k]);
 						}
 						else
 						{
-							console.err("what do we have here?");
-							console.log(subItems[k]);
-						}
+							rating = subItems[k].item;
+						}							
 						
-						element = Elements.fromString("<li class='selectable subitem'>" + title + "</li>");
-						element.onclick = function(item) { return function() { updateRatingForm(item, true); document.getElementById("select_calendar_item").classList.add("hidden"); }; }(subItems[k].item);
+						element = Elements.fromString("<li class='selectable subitem'>" + rating.product + "</li>");
+						element.onclick = function(item) { return function() { updateRatingForm(item, true); document.getElementById("select_calendar_item").classList.add("hidden"); }; }(rating);
 						list.append(element);
 					}
 				}
