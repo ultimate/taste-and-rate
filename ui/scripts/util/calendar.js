@@ -4,6 +4,7 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items, debug) {
 	this.today = new Date();
 	this.items = [];
 	this.displayedItems = [];
+	this.groupedItems = [];
 	
 	this.FIRST_DAY_OF_WEEK = firstDayOfWeek;
 	this.WEEK_DAY_LABEL = "calendar.weekdays";
@@ -53,7 +54,7 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items, debug) {
 		{
 			index = w*7 + d;
 			element = Elements.fromString("<div class='calendar_day'></div>");
-			element.onclick = function(cal, index) { return function() { cal.onSelect(cal.displayedItems[index]); }; }(this, index);
+			element.onclick = function(cal, index) { return function() { cal.onSelect(cal.displayedItems[index], cal.groupedItems[index]); }; }(this, index);
 			this.elements[index] = element;
 			week.append(element);
 		}
@@ -154,6 +155,8 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items, debug) {
 		this.displayedItems = new Array(42);
 		for(var i = 0; i < this.displayedItems.length; i++)
 			this.displayedItems[i] = [];
+		// init cache for grouped items
+		this.groupedItems = new Array(42);
 		
 		// get displayed items
 		console.log("range = " + new Date(rangeStart) + " to " + new Date(rangeEnd));
@@ -210,11 +213,11 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items, debug) {
 			{
 				// separate into group and single items
 				var singleItems = [];
-				var groupItems = [];
+				var groupedItems = [];
 				for(var j = 0; j < this.displayedItems[index].length; j++)
 				{
 					if(this.displayedItems[index][j].group)
-						groupItems.push(this.displayedItems[index][j]);
+						groupedItems.push(this.displayedItems[index][j]);
 					else						
 						singleItems.push(this.displayedItems[index][j]);
 				}
@@ -222,21 +225,23 @@ var Calendar = function(parent, showNav, firstDayOfWeek, items, debug) {
 				if(singleItems.length > 0)
 				{
 					// add virtual group for single items
-					groupItems.push({
+					groupedItems.push({
 						title: 		null,
 						date: 		null, // not used here
 						group: 		true,
 						itemType: 	null,
-						item: 		null,
-						subItems: 	groupItems.length,
+						item: 		singleItems,
+						subItems: 	singleItems.length,
 					});
 				}
 				
+				this.groupedItems[index] = groupedItems;
+				
 				// display group items
-				for(var j = 0; j < groupItems.length; j++)
+				for(var j = 0; j < groupedItems.length; j++)
 				{
-					var title = groupItems[j].title;
-					var subItems = groupItems[j].subItems;
+					var title = groupedItems[j].title;
+					var subItems = groupedItems[j].subItems;
 					if(title != null || subItems > 0)
 					{
 						element = Elements.fromString("<div class='calendar_item'>\

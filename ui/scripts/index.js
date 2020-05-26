@@ -713,41 +713,71 @@ var UI = function() {
 		return null;
 	};
 	
-	var selectCalendarItem = function(items)
+	var selectCalendarItem = function(displayedItems, groupedItems)
 	{
 		console.log("calendar select:");
-		console.log(items);
+		console.log(displayedItems);
+		console.log(groupedItems);
 		
-		if(items.length == 1)
+		if(displayedItems.length == 1 && (displayedItems[0].itemType == constants.TYPE_RATING || displayedItems[0].item.ratings.length == 1))
 		{
-			var item = items[0];
+			var item = displayedItems[0];
 			if(item.itemType == constants.TYPE_EVENT)
 				updateEventForm(item.item, true);
 			else if(item.itemType == constants.TYPE_RATING)
 				updateRatingForm(item.item, true);
 		}
-		else if(items.length > 1)
+		else if(displayedItems.length > 0)
 		{
 			var list = document.getElementById("select_calendar_item_list");
 			Elements.removeChildren(list);
-			
+						
+			// display items by group
 			var element;
-			for(var i = 0; i < items.length; i++)
+			for(var j = 0; j < groupedItems.length; j++)
 			{
-				element = Elements.fromString("<li class='selectable'>" + items[i].title + "</li>");
-				if(items[i].itemType == constants.TYPE_EVENT)
-					element.onclick = function(item) { return function() { updateEventForm(item, true); document.getElementById("select_calendar_item").classList.add("hidden"); }; }(items[i].item);
-				else if(items[i].itemType == constants.TYPE_RATING)
-					element.onclick = function(item) { return function() { updateRatingForm(item, true); document.getElementById("select_calendar_item").classList.add("hidden"); }; }(items[i].item);
-				list.append(element);
-			}
-			
+				var title = groupedItems[j].title;
+				if(title != null || groupedItems[j].subItems > 0)
+				{					
+					element = Elements.fromString("<li class='selectable'>" + (title != null ? title : "<label key='rating.without_event'></label>") + "</li>");
+					if(title != null) // event
+						element.onclick = function(item) { return function() { updateEventForm(item, true); document.getElementById("select_calendar_item").classList.add("hidden"); }; }(groupedItems[j].item);
+					list.append(element);
+					
+					var subItems;
+					if(title != null)
+						subItems = groupedItems[j].item.ratings;
+					else
+						subItems = groupedItems[j].item;
+					
+					for(var k = 0; k < subItems.length; k++)
+					{
+						var title;
+						if(subItems[k].title != null)
+						{
+							title = subItems[k].title;
+						}
+						else if(typeof(subItems[k]) == "number")
+						{
+							console.log("loading nested rating: " + subItems[k]);
+							var rating = app.loadRating(subItems[k]);							
+							title = rating.product;
+						}
+						else
+						{
+							console.err("what do we have here?");
+							console.log(subItems[k]);
+						}
+						
+						element = Elements.fromString("<li class='selectable subitem'>" + title + "</li>");
+						element.onclick = function(item) { return function() { updateRatingForm(item, true); document.getElementById("select_calendar_item").classList.add("hidden"); }; }(subItems[k].item);
+						list.append(element);
+					}
+				}
+			}			
 			document.getElementById("select_calendar_item").classList.remove("hidden");
 		}
-		else
-		{
-			// nothing to display
-		}
+		labelManager.updateLabels();
 	};
 	
 	var initialize = function()
