@@ -229,3 +229,7 @@
     list-style-type: none;
     padding: 0.5em;
 }
+
+.window ul.select_list > li.selectable.subitem {
+	margin-left: 1em;
+}
