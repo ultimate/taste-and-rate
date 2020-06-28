@@ -46,11 +46,11 @@
                 <File name="ui\scripts\util\strings.js" />
             </Folder>
             <Folder name="test">
-                <File name="ui\scripts\test\rum.json" />
                 <File name="ui\scripts\test\app.js" />
-                <File name="ui\scripts\test\beer.json" />
-                <File name="ui\scripts\test\whiskey.json" />
                 <File name="ui\scripts\test\locale.js" />
+                <File name="ui\scripts\test\rum.json" />
+                <File name="ui\scripts\test\whiskey.json" />
+                <File name="ui\scripts\test\beer.json" />
             </Folder>
             <Folder name="syncnapsis">
                 <File name="ui\scripts\syncnapsis\Console.js" />
