@@ -50,9 +50,13 @@ Elements.isVisible = function(element, completeVisibilityRequired)
 		return elemTop < window.innerHeight && elemBottom >= 0;
 };
 
-Elements.fromString = function(html)
+Elements.fromString = function(html, namespace)
 {	
-    var container = document.createElement("container");
+	var container;
+	if(namespace)
+		container = document.createElementNS(namespace, "container");
+	else
+		container = document.createElement("container");
     container.innerHTML = html.trim();
 	if(container.childNodes.length == 1)
 		return container.childNodes[0];
@@ -74,9 +78,12 @@ Elements.createSVG = function(viewBox, classes, useID)
 	svg.setAttribute("viewBox", viewBox);
 	svg.setAttribute("class", classes);
 	
-	var use = document.createElementNS(this.SVG_NAMESPACE, "use");
-	use.setAttributeNS(this.SVG_XLINK_NAMESPACE, "xlink:href", useID);
-	svg.append(use);
+	if(useID)
+	{
+		var use = document.createElementNS(this.SVG_NAMESPACE, "use");
+		use.setAttributeNS(this.SVG_XLINK_NAMESPACE, "xlink:href", useID);
+		svg.append(use);
+	}
 	
 	console.log(svg);
 	
