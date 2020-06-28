@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<!--
+ - Copyright (c) 2017 J. Verkin
+-->
+<html>
+<head>
+<title>calendar</title>
+<meta charset="UTF-8">
+<!-- disable scrolling & scaling on mobile -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" /> 
+<!-- disable caching -->
+<meta http-equiv="cache-control" content="max-age=0" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+<meta http-equiv="pragma" content="no-cache" />
+<link rel="stylesheet" type="text/css" href="styles/calendar.css?1" />
+<script type="text/javascript" src="scripts/util/events.js?1"></script>
+<script type="text/javascript" src="scripts/util/elements.js?1"></script>
+<script type="text/javascript" src="scripts/util/calendar.js?1"></script>
+<script type="text/javascript" src="scripts/util/labels.js?1"></script>
+<script type="text/javascript" src="scripts/test/locale.js?1"></script>
+<script type="text/javascript">
+	// vars
+	var labelManager;
+	var calendar;
+	
+	var calendarMonth = 0;
+	var calendarYear = 0;
+	var calendarRangeStart = 0;
+	var calendarRangeEnd = 0;
+	
+	var items;
+	
+	// utils
+	var getString = function(key) {
+		if(key == null || key == "")
+			return key; // otherwise the following eval would fail!
+		return eval("lang." + key);
+	};
+	
+	var selectCalendarItem = function(displayedItems, groupedItems)
+	{
+		console.log("calendar select:");
+		console.log(displayedItems);
+		console.log(groupedItems);
+	};
+	
+	var getCalendarItems = function(rangeStart, rangeEnd) {
+		
+		console.log("loading items");
+		console.log("from: " + rangeStart);
+		console.log("to:   " + rangeEnd);
+		
+		if(rangeStart == null)
+			rangeStart = 0;
+		else if(rangeStart instanceof Date)
+			rangeStart = rangeStart.getTime();
+		if(rangeEnd == null)
+			rangeEnd = new Date(2099, 12, 31).getTime();
+		else if(rangeEnd instanceof Date)
+			rangeEnd = rangeEnd.getTime();
+			
+		var calendarItems = [];
+		var itemTime;
+		
+		for(var i = 0; i < items.length; i++)
+		{			
+			if(items[i].date >= rangeStart && items[i].date < rangeEnd)
+				calendarItems.push(items[i]);
+		}
+		
+		return calendarItems;
+	};	
+	
+	// init
+	var init = function() {
+		/* create dummy items */
+		items = [];
+		for(var i = 1; i <= 200; i++)
+		{
+			var d = new Date(Date.now() + (Math.random()*360-180)*24*3600*1000);
+			d.setSeconds(0);
+			d.setMilliseconds(0);
+			d = d.getTime();
+			
+			var group = Math.random() > 0.5;
+			
+			items.push({
+					title: 		(group ? "group #" : "single #") + i,
+					date: 		d,
+					group: 		group,
+					itemType: 	(group ? "group" : "single"),
+					item: 		{id: i},
+					subItems: 	[{id: i*1000 + 1}, {id: i*1000 + 2}],
+				});
+		}
+	
+		/* create LabelManager for updating locale dependent labels */
+		labelManager = new LabelManager(window, getString);
+		
+		/* initialize calendar */
+		calendar = new Calendar("calendar", true, 1);
+		calendar.onUpdate = function() { labelManager.updateLabels(); };
+		calendar.onPreviousMonth = function() {
+			var oldStart = new Date(calendarRangeStart);
+			calendarRangeStart.setMonth(calendarRangeStart.getMonth() - 1);
+			calendar.addItems(getCalendarItems(calendarRangeStart, oldStart));
+		};
+		calendar.onNextMonth = function() {
+			var oldEnd = new Date(calendarRangeEnd);
+			calendarRangeEnd.setMonth(calendarRangeEnd.getMonth() + 1);
+			calendar.addItems(getCalendarItems(oldEnd, calendarRangeEnd));
+		};
+		calendar.onSelect = selectCalendarItem;		
+
+		calendarRangeStart 	= new Date(calendar.currentYear, calendar.currentMonth - 2, 1);	
+		calendarRangeEnd   	= new Date(calendar.currentYear, calendar.currentMonth + 2 + 1, 0)
+		calendar.addItems(getCalendarItems(calendarRangeStart, calendarRangeEnd));		
+	};
+	
+	//document.addEventListener("DOM")
+</script>
+</head>
+<body onload="init();">
+	<div id="defines">
+		<svg xmlns="http://www.w3.org/2000/svg"	xmlns:xlink="http://www.w3.org/1999/xlink">
+			<filter id="primaryColor" x="-0.2" y="-0.2" width="1.4" height="1.4">
+				<!--																						r     g     b     a   -->
+				<feColorMatrix in="SourceGraphic" type="matrix" color-interpolation-filters="sRGB"  values="0.588 0.0   0.0   0.0 0.0
+																											0.0   0.333 0.0   0.0 0.0
+																											0.0   0.0   0.0   0.0 0.0
+																											0.0   0.0   0.0   1.0 0.0"/>
+			</filter>
+			<filter id="secondaryColor" x="-0.2" y="-0.2" width="1.4" height="1.4">
+				<!--																						r     g     b     a   -->
+				<feColorMatrix in="SourceGraphic" type="matrix" color-interpolation-filters="sRGB"  values="0.333 0.0   0.0   0.0 0.0
+																											0.0   0.333 0.0   0.0 0.0
+																											0.0   0.0   0.333 0.0 0.0
+																											0.0   0.0   0.0   1.0 0.0"/>
+			</filter>
+			<filter id="highlight" filterUnits="userSpaceOnUse">
+				<feGaussianBlur in="SourceGraphic" result="blurOut" stdDeviation="2" />´
+				<feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+			</filter>
+			<defs id="shapes">
+				<g id="shape_filter">
+					<polygon points="10,10 90,10 60,50 60,90 40,90 40,50"/>
+				</g>
+				<g id="shape_checkmark">
+					<polygon points="20,45 50,65 90,15 50,85"/>
+				</g>
+				<g id="shape_cross">
+					<line x1="20" y1="20" x2="80" y2="80"/>
+					<line x1="80" y1="20" x2="20" y2="80"/>
+				</g>
+				<g id="shape_magnifier">
+					<circle cx="60" cy="40" r="20" />
+					<line x1="20" y1="80" x2="45" y2="55"/>
+				</g>
+				<g id="shape_pen">
+					<polygon points="30,60 75,15 85,25 40,70"/>
+					<polygon points="22,72 28,78 20,80"/>
+				</g>
+				<g id="shape_plus">				
+					<line x1="50" y1="20" x2="50" y2="80"/>
+					<line x1="20" y1="50" x2="80" y2="50"/>
+				</g>
+				<g id="shape_menu">
+					<line x1="20" y1="25" x2="80" y2="25"/>
+					<line x1="20" y1="50" x2="80" y2="50"/>
+					<line x1="20" y1="75" x2="80" y2="75"/>
+				</g>
+				<g id="shape_head">
+					<path d="m 50,10 c -9.664983,0 -15,7.335017 -15,17 0,9.664983 5.335017,18 15,18 9.664983,0 15,-8.335017 15,-18 0,-9.664983 -5.335017,-17 -15,-17 z m 0,38 C 31.861684,48 25,70 20,90 l 60,0 C 75,70 68.138316,48 50,48 z"/>
+				</g>
+				<g id="shape_gear">
+					<path d="m 41.0625,11.03125 c -1.137941,0.262747 -2.305889,0.569822 -3.4375,0.9375 -1.131615,0.367688 -2.2062,0.793695 -3.28125,1.25 0.04337,2.710483 0.644161,6.288699 1.78125,10.15625 -2.718144,1.621339 -5.192534,3.389515 -7.15625,5.21875 C 25.634896,26.312698 22.440626,24.628646 19.875,23.75 c -0.766176,0.881432 -1.550623,1.787399 -2.25,2.75 -0.699374,0.962613 -1.304726,1.967693 -1.90625,2.96875 1.628268,2.167335 4.213036,4.695699 7.40625,7.15625 -1.274369,2.608623 -2.190805,5.684073 -2.71875,8.40625 -4.037913,0.114176 -7.626666,0.640294 -10.21875,1.4375 C 10.085741,47.632186 10,48.810151 10,50 c 0,1.189849 0.08574,2.367814 0.1875,3.53125 2.592084,0.797206 6.180837,1.323324 10.21875,1.4375 0.533134,3.302458 1.523218,5.650636 2.71875,8.40625 -3.199629,2.465796 -5.777796,5.018958 -7.40625,7.1875 0.601526,1.001052 1.206874,1.974892 1.90625,2.9375 0.699376,0.962608 1.483824,1.868573 2.25,2.75 2.565627,-0.878636 5.759899,-2.562695 9.09375,-4.84375 2.11133,2.085074 4.554857,3.789974 7.15625,5.21875 -1.139196,3.875567 -1.73844,7.444681 -1.78125,10.15625 1.075048,0.4563 2.149637,0.882316 3.28125,1.25 1.131614,0.367683 2.299561,0.674757 3.4375,0.9375 1.559186,-2.218869 3.174879,-5.476249 4.53125,-9.28125 2.920134,0.430792 5.894893,0.394935 8.8125,0 1.356371,3.805001 2.972064,7.062381 4.53125,9.28125 1.137939,-0.262743 2.305887,-0.569817 3.4375,-0.9375 1.131614,-0.367684 2.2062,-0.793699 3.28125,-1.25 -0.0428,-2.71157 -0.642055,-6.280685 -1.78125,-10.15625 2.735302,-1.41387 4.96863,-3.165104 7.15625,-5.21875 3.333851,2.281056 6.528125,3.965114 9.09375,4.84375 0.766176,-0.881427 1.550625,-1.787393 2.25,-2.75 0.699375,-0.962609 1.304723,-1.967696 1.90625,-2.96875 -1.628447,-2.168549 -4.206621,-4.690454 -7.40625,-7.15625 1.311513,-2.672691 2.168945,-5.480615 2.71875,-8.40625 4.037913,-0.114176 7.626666,-0.640294 10.21875,-1.4375 C 89.914259,52.367814 90,51.189849 90,50 90,48.810151 89.91426,47.632186 89.8125,46.46875 87.221271,45.672409 83.62339,45.144953 79.59375,45.03125 79.176973,41.903489 78.060901,39.362218 76.875,36.625 80.074629,34.159204 82.652796,31.637292 84.28125,29.46875 83.679724,28.467698 83.074375,27.462608 82.375,26.5 c -0.699376,-0.962608 -1.483824,-1.868573 -2.25,-2.75 -2.564425,0.878833 -5.76687,2.567175 -9.09375,4.84375 -2.263107,-2.008577 -4.813161,-3.842295 -7.15625,-5.21875 1.139201,-3.875565 1.73844,-7.444686 1.78125,-10.15625 -1.075052,-0.456298 -2.149633,-0.882319 -3.28125,-1.25 -1.131617,-0.36768 -2.299547,-0.674797 -3.4375,-0.9375 -1.558094,2.218319 -3.177885,5.483971 -4.53125,9.28125 -2.897793,-0.447049 -5.901518,-0.36279 -8.8125,0 -1.356375,-3.804999 -2.97207,-7.062373 -4.53125,-9.28125 z M 50,30 C 61.045695,30 70,38.954305 70,50 70,61.045695 61.045695,70 50,70 38.954305,70 30,61.045695 30,50 30,38.954305 38.954305,30 50,30 z"/>
+				</g>
+				<g id="shape_door">					
+					<path d="M 25 20 L 80 20 L 80 80 L 65 80"/>
+					<path d="M 25 20 L 25 80 L 65 90 L 65 30 L 25 20 z M 62 58 C 63.104569 58 64 58.895431 64 60 C 64 61.104569 63.104569 62 62 62 C 60.895431 62 60 61.104569 60 60 C 60 58.895431 60.895431 58 62 58 z "/>
+				</g>
+				<g id="shape_arrow_slim">
+					<path d="m 10,40 0,20 55,0 0,15 25,-25 -25,-25 0,15 z"/>
+				</g>
+				<g id="shape_arrow_bold">
+					<path d="m 10,35 0,30 40,0 0,25 40,-40 -40,-40 0,25 z"/>
+				</g>
+				<g id="shape_star">
+					<path d="M 50.000001,16.850071 60.828477,38.790929 85.041657,42.309326 67.520845,59.387917 71.656934,83.503263 50,72.117556 28.343064,83.503262 32.479155,59.387917 14.958344,42.309324 39.171522,38.790929 Z"/>
+				</g>
+				<g id="shape_circle">
+					<circle cx="50" cy="50" r="45" />
+				</g>
+				<g id="shape_calendar">
+					<rect x="5" y="10" width="90" height="80"/>
+					<line x1="5" y1="15" x2="95" y2="20"/>
+					<line x1="5" y1="20" x2="95" y2="20"/>
+					<!--<rect x="20" y="40" width="1" height="1"/>-->
+					<rect x="35" y="40" width="1" height="1"/>
+					<rect x="50" y="40" width="1" height="1"/>
+					<rect x="65" y="40" width="1" height="1"/>
+					<rect x="80" y="40" width="1" height="1"/>
+					<rect x="20" y="55" width="1" height="1"/>
+					<rect x="35" y="55" width="1" height="1"/>
+					<rect x="50" y="55" width="1" height="1"/>
+					<rect x="65" y="55" width="1" height="1"/>
+					<rect x="80" y="55" width="1" height="1"/>
+					<rect x="20" y="70" width="1" height="1"/>
+					<rect x="35" y="70" width="1" height="1"/>
+					<rect x="50" y="70" width="1" height="1"/>
+					<rect x="65" y="70" width="1" height="1"/>
+					<!--<rect x="80" y="70" width="1" height="1"/>-->
+				</g>
+				<g id="shape_globe2">
+					<circle cx="50" cy="50" r="45" />
+					<ellipse cx="50" cy="50" rx="22" ry="45" />
+					<line x1="50" y1="5" x2="50" y2="95" />
+					<line x1="5" y1="50" x2="95" y2="50" />
+				</g>
+				<g id="shape_globe">
+					<path d="M 45.558325,94.777324 C 39.194306,94.039574 34.491631,92.655312 29.019228,89.908927 13.974676,82.358655 4.3124898,66.75555 4.3124898,50.010933 c 0,-7.002216 1.534112,-13.348884 4.816719,-19.926913 C 14.21548,19.891618 22.747749,12.234993 33.753852,7.9865373 c 7.59942,-2.933446 17.343358,-3.697142 25.548223,-2.002381 14.021813,2.896283 25.854953,12.0788787 31.948398,24.7921677 3.664117,7.644771 5.076745,15.773951 4.171276,24.004226 -2.266874,20.604816 -18.584173,37.07433 -39.405273,39.772864 -2.657866,0.34448 -8.364222,0.46665 -10.458151,0.22391 z m 13.173092,-2.61692 c 5.438174,-1.178092 10.809271,-3.346655 15.089642,-6.092396 3.030456,-1.943955 3.793337,-3.592528 4.084879,-8.827345 l 0.187057,-3.358716 1.590574,-2.35004 1.590575,-2.350038 -0.146439,-1.652781 c -0.08054,-0.909028 -0.216076,-2.395279 -0.301188,-3.302778 -0.118361,-1.261975 -0.03016,-2.09652 0.375065,-3.548742 0.624441,-2.237841 0.66491,-3.130823 0.160845,-3.549159 -0.715981,-0.59421 -2.839554,-1.056862 -5.970056,-1.300666 -2.394571,-0.18649 -3.480513,-0.390575 -4.456986,-0.837618 -1.537262,-0.703783 -4.667494,-3.332082 -5.421598,-4.552244 -0.700115,-1.132808 -0.709327,-3.319123 -0.02854,-6.773099 0.279231,-1.416679 0.507693,-3.15361 0.507693,-3.859848 0,-1.691021 0.70028,-2.798731 2.495188,-3.94692 0.772685,-0.494279 1.881185,-1.337733 2.463336,-1.87434 2.134664,-1.967662 4.728116,-2.569719 8.708645,-2.021673 3.896181,0.536432 4.601873,0.749957 6.349647,1.921226 1.778751,1.192028 3.488328,1.912328 4.538772,1.912328 0.531525,0 0.607189,-0.09176 0.483153,-0.585965 -0.41198,-1.641455 -0.902342,-2.353211 -1.935176,-2.808898 -0.579435,-0.255645 -1.178306,-0.738689 -1.330827,-1.073433 -0.321978,-0.706664 -0.520621,-0.754085 -0.956875,-0.228431 -0.27451,0.330764 -0.422598,0.286191 -1.139011,-0.342827 -0.482409,-0.42356 -1.264572,-0.793555 -1.888465,-0.893319 -0.909173,-0.145383 -1.118967,-0.299491 -1.433939,-1.053327 -0.202925,-0.485663 -0.543317,-0.883026 -0.756429,-0.883026 -0.213111,0 -0.860525,-0.241332 -1.438698,-0.536296 -0.962915,-0.49124 -1.076699,-0.501457 -1.354447,-0.121612 -0.166772,0.228073 -0.375593,0.86726 -0.464046,1.420413 -0.271252,1.696313 -2.160673,2.402061 -4.115626,1.537292 -0.860881,-0.380808 -1.338766,-0.851199 -2.126909,-2.093557 -0.559101,-0.881316 -1.017631,-1.742247 -1.018959,-1.913182 -0.0031,-0.395507 1.313992,-1.084593 2.079215,-1.087844 0.924731,-0.0039 3.043978,-1.12228 3.967549,-2.093721 0.796907,-0.838215 0.830034,-0.944521 0.578363,-1.856003 -0.14683,-0.531774 -0.197632,-1.243101 -0.112893,-1.580727 0.172958,-0.68912 -0.215559,-1.05703 -1.122723,-1.063179 C 76.146378,18.535813 75.519414,18.18148 75.068527,17.75059 74.617643,17.3197 73.875455,16.811187 73.419225,16.620561 72.516095,16.24321 72.223528,15.694852 71.94916,13.865242 L 71.769887,12.669769 69.579491,11.569815 C 67.25634,10.403197 63.94416,9.1602223 61.406008,8.5025213 c -1.516091,-0.392858 -1.555125,-0.389516 -2.904172,0.248685 -0.880801,0.416685 -2.07812,1.3691357 -3.36448,2.6763977 -1.098379,1.116226 -2.181663,2.029502 -2.407297,2.029502 -1.014221,0 -2.625291,-3.6933817 -2.342138,-5.3693577 0.131645,-0.779191 0.08652,-0.976793 -0.223072,-0.976793 -0.213455,0 -0.45786,0.112875 -0.543125,0.250834 -0.08526,0.137959 -0.646198,0.538682 -1.246526,0.890497 -1.051078,0.615973 -1.131685,0.625485 -2.176487,0.256858 -0.648313,-0.228738 -1.974111,-0.382805 -3.294164,-0.382805 -2.027348,0 -2.303317,0.06235 -3.352897,0.757565 -1.327339,0.879193 -2.072565,2.0938237 -1.949249,3.1770487 0.132452,1.163484 1.162422,1.166915 2.739647,0.0091 0.684941,-0.502791 1.805935,-1.080642 2.491102,-1.284115 0.685166,-0.203473 1.453543,-0.59955 1.707501,-0.8801717 0.625327,-0.690976 0.973706,-0.644755 2.012081,0.2669507 1.102365,0.967888 1.284144,1.51794 0.875295,2.64859 -0.250209,0.691938 -0.253935,0.956926 -0.01678,1.19407 0.478323,0.478322 0.358517,1.5715 -0.275301,2.512022 -0.677599,1.005489 -1.189523,1.158672 -2.465201,0.737661 -0.859879,-0.283786 -1.035875,-0.247401 -2.326472,0.480965 -0.797707,0.450199 -1.768272,0.789585 -2.264156,0.791729 -2.147554,0.0093 -5.953235,1.254452 -9.910499,3.242583 l -2.380523,1.195971 -0.195206,1.65 c -0.389032,3.288362 -1.155266,3.891137 -2.073965,1.631526 -0.820659,-2.018475 -1.306991,-2.599174 -2.430066,-2.901587 -1.920798,-0.517216 -4.515008,0.435913 -6.168794,2.266457 -0.851431,0.942431 -0.935465,1.167385 -0.931928,2.494717 0.0021,0.802387 0.09691,1.60548 0.210594,1.784652 0.113689,0.179172 0.804197,0.420217 1.534463,0.535656 2.133875,0.337321 2.17177,0.529038 0.512909,2.594898 -0.503826,0.627439 -0.510893,0.707144 -0.128294,1.447008 0.222696,0.430645 0.407411,1.274147 0.410477,1.874445 0.0068,1.323799 0.741536,3.03245 1.546514,3.596277 1.1315,0.792533 2.467022,0.485991 3.936532,-0.903552 l 0.792468,-0.749341 3.142147,1.569688 c 1.728182,0.86333 3.663549,1.941323 4.300817,2.395542 0.637268,0.454219 1.584802,1.028066 2.105631,1.275216 1.60661,0.762386 4.063749,3.359845 5.004191,5.289965 0.931965,1.91273 2.812871,3.832073 4.013823,4.095844 1.174013,0.257857 3.513898,1.865339 4.10322,2.818879 0.425951,0.689205 0.509152,1.095307 0.373044,1.820827 -0.228499,1.218004 -0.780201,2.292588 -1.661364,3.23594 -0.391236,0.418846 -0.987175,1.446923 -1.324313,2.284615 -1.189622,2.955872 -2.910968,5.018825 -5.129728,6.147739 -1.963851,0.999217 -2.589581,1.558693 -3.959358,3.540147 -0.701948,1.015402 -2.209678,2.677941 -3.35051,3.694531 -4.668894,4.160422 -4.898447,4.518172 -4.85941,7.573285 0.01526,1.194102 0.162611,2.423102 0.327454,2.731111 0.842066,1.573417 9.475282,4.787072 15.49203,5.766801 3.353612,0.546081 12.076496,0.331708 15.348944,-0.377213 z M 28.677556,34.211485 27.535248,33.951014 28.550633,33.495957 c 1.386396,-0.621329 2.545595,-0.612498 3.182335,0.02424 0.284325,0.284325 0.448929,0.627018 0.365789,0.761538 -0.189884,0.30724 -1.921645,0.271679 -3.421201,-0.07025 z m -2.157692,-2.641161 c -0.279231,-0.06395 -1.114105,-0.234109 -1.855276,-0.378144 -1.173741,-0.228094 -1.337477,-0.332838 -1.269231,-0.811942 0.06897,-0.484216 0.230292,-0.547231 1.347584,-0.5264 1.330156,0.0248 4.467372,1.062794 4.531783,1.499412 0.03923,0.265932 -1.880855,0.417229 -2.75486,0.217074 z M 71.437678,21.207563 c -0.202297,-0.48417 -0.367815,-0.998208 -0.367815,-1.142307 0,-0.1441 -0.142789,-0.274143 -0.317308,-0.288983 -0.174519,-0.01484 -0.545769,-0.0434 -0.825,-0.06346 -0.300935,-0.02162 -0.537755,-0.246402 -0.581511,-0.551947 -0.09984,-0.697165 0.903472,-2.911452 1.319203,-2.911452 0.483562,0 2.310542,1.507019 3.060266,2.524316 1.215753,1.649649 0.612056,3.314142 -1.202008,3.314142 -0.579376,0 -0.789027,-0.16997 -1.085827,-0.880307 z M 58.250632,13.149135 c -1.7609,-0.619441 -1.843786,-1.29949 -0.244599,-2.006886 2.161787,-0.956262 3.208961,-0.252049 2.284253,1.536137 -0.425573,0.822968 -0.79561,0.908372 -2.039654,0.470749 z M 22.494724,82.312839 c -0.43675,-1.227308 -0.536202,-2.247436 -0.624868,-6.409612 -0.05999,-2.816049 0.02586,-6.317913 0.199153,-8.123073 0.289752,-3.018381 0.279094,-3.228764 -0.21862,-4.315382 -0.287772,-0.628269 -0.52573,-1.573904 -0.528796,-2.101409 -0.0048,-0.833435 -0.189625,-1.130399 -1.410258,-2.266466 -1.809861,-1.684474 -3.061408,-4.168228 -3.42457,-6.796225 -0.337874,-2.444992 -0.203866,-2.988849 1.377324,-5.589738 2.351841,-3.868524 2.398757,-4.23111 0.791164,-6.114452 -0.625728,-0.733059 -1.333481,-1.856138 -1.572785,-2.495728 -0.239304,-0.63959 -0.687861,-1.562699 -0.996793,-2.051352 -0.308933,-0.488654 -0.639428,-1.264699 -0.734435,-1.724547 -0.121579,-0.588463 -0.451152,-1.011837 -1.112796,-1.429516 -0.992542,-0.626563 -2.56858,-2.279085 -2.56858,-2.69323 0,-1.285555 -1.9774162,2.661652 -3.2472122,6.481908 -1.572274,4.730278 -1.948806,7.30519 -1.948806,13.326916 0,4.760095 0.07602,5.814597 0.594717,8.249995 1.664725,7.816193 5.2125112,14.771503 10.4619372,20.510266 1.518631,1.660196 5.127834,5.001259 5.402637,5.001259 0.04455,0 -0.152732,-0.656826 -0.438413,-1.459614 z"/>
+				</g>
+			</defs>
+			<defs id="intermediates">				
+				<g id="inter_rating2">
+					<use xlink:href="#shape_star" transform="scale(0.5)" style="stroke: #FFFFFF; stroke-width: 10; fill: #FFFFFF;"/>
+					<rect x="55" y="10" width="40" height="10" style="stroke: none; fill: #FFFFFF;"/>
+					<rect x="55" y="30" width="40" height="10" style="stroke: none; fill: #FFFFFF;"/>
+				</g>
+				<g id="inter_rating">
+					<use xlink:href="#shape_star" transform="translate(50,5) scale(0.25)" style="stroke: #FFFFFF; stroke-width: 10; fill: #FFFFFF;"/>
+					<use xlink:href="#shape_star" transform="translate(75,5) scale(0.25)" style="stroke: #FFFFFF; stroke-width: 10; fill: #FFFFFF;"/>
+					<rect x="15" y="15" width="20" height="20" style="stroke: #FFFFFF; stroke-width: 10; fill: #FFFFFF;"/>
+					<rect x="50" y="30" width="50" height="10" style="stroke: none; fill: #FFFFFF;"/>
+				</g>
+				<g id="inter_personal">
+					<use xlink:href="#shape_circle" style="stroke: none; fill: #FFFFFF; "/>
+					<use xlink:href="#shape_circle" style="stroke: #FFFFFF; stroke-width: 10; fill: none; " filter="url(#secondaryColor)"/>
+					<use xlink:href="#shape_head" transform="translate(20,20) scale(0.6)" style="stroke: #FFFFFF; stroke-width: 10; fill: #FFFFFF; " filter="url(#secondaryColor)"/>
+				</g>
+				<g id="inter_friends">
+					<use xlink:href="#shape_circle" style="stroke: none; fill: #FFFFFF; "/>
+					<use xlink:href="#shape_circle" style="stroke: #FFFFFF; stroke-width: 10; fill: none; " filter="url(#secondaryColor)"/>
+					<use xlink:href="#shape_head" transform="translate(0,20) scale(0.6)" style="stroke: #FFFFFF; stroke-width: 10; fill: #FFFFFF; " filter="url(#secondaryColor)"/>					
+					<use xlink:href="#shape_head" transform="translate(40,20) scale(0.6)" style="stroke: #FFFFFF; stroke-width: 10; fill: #FFFFFF; " filter="url(#secondaryColor)"/>
+				</g>
+				<g id="inter_globe">					
+					<use xlink:href="#shape_circle" style="stroke: none; fill: #FFFFFF; "/>
+					<use xlink:href="#shape_circle" style="stroke: #FFFFFF; stroke-width: 10; fill: none; " filter="url(#secondaryColor)"/>
+					<use xlink:href="#shape_globe" style="fill: #FFFFFF; " filter="url(#secondaryColor)"/>
+				</g>
+			</defs>
+			<defs id="images">
+				<g id="img_menu" filter="url(#primaryColor)">
+					<use xlink:href="#shape_menu" style="stroke: #FFFFFF; stroke-width: 10;"/>
+				</g>
+				<g id="img_search" filter="url(#primaryColor)">
+					<use xlink:href="#shape_magnifier" style="fill: none; stroke: #FFFFFF; stroke-width: 10;"/>
+				</g>
+				<g id="img_add" filter="url(#primaryColor)">
+					<use xlink:href="#shape_plus" style="stroke: #FFFFFF; stroke-width: 10;"/>
+				</g>			
+				<g id="img_filter_settings">
+					<use xlink:href="#shape_filter" style="stroke: #FFFFFF; stroke-width: 10; fill: none;" filter="url(#primaryColor)"/>
+					<use xlink:href="#shape_gear" transform="translate(60,30) scale(0.7)" style="fill: #FFFFFF; " filter="url(#secondaryColor)" stroke-linejoin="round"/>
+				</g>				
+				<g id="img_filter_active">
+					<use xlink:href="#shape_filter" style="stroke: #FFFFFF; stroke-width: 10; fill: #FFFFFF;" filter="url(#primaryColor)"/>
+					<use xlink:href="#shape_checkmark" transform="translate(60,30) scale(0.7)" style="stroke: #FFFFFF; stroke-width: 7; fill: #FFFFFF; " filter="url(#secondaryColor)" stroke-linejoin="round"/>
+				</g>
+				<g id="img_filter_inactive">
+					<use xlink:href="#shape_filter" style="stroke: #FFFFFF; stroke-width: 10; fill: none;" filter="url(#primaryColor)"/>
+					<use xlink:href="#shape_cross" transform="translate(70,40) scale(0.6)" style="stroke: #FFFFFF; stroke-width: 15; fill: #FFFFFF; " filter="url(#secondaryColor)" stroke-linecap="round"/>
+				</g>
+				<g id="img_profile">
+					<use xlink:href="#shape_head" style="stroke: #FFFFFF; stroke-width: 10; fill: none; " filter="url(#primaryColor)"/>
+				</g>
+				<g id="img_settings">
+					<use xlink:href="#shape_gear" style="fill: #FFFFFF; " filter="url(#primaryColor)"/>
+				</g>
+				<g id="img_exit">
+					<use xlink:href="#shape_door" style="stroke: #FFFFFF; stroke-width: 10; fill: none;" filter="url(#primaryColor)"/>
+				</g>
+				<g id="img_checkmark">
+					<use xlink:href="#shape_checkmark" style="stroke: #FFFFFF; stroke-width: 7; fill: #FFFFFF;" filter="url(#primaryColor)"/>
+				</g>
+				<g id="img_cross">
+					<use xlink:href="#shape_cross" style="stroke: #FFFFFF; stroke-width: 10; fill: none;" filter="url(#primaryColor)"/>
+				</g>
+				<g id="img_edit">
+					<use xlink:href="#shape_pen" style="stroke: #FFFFFF; stroke-width: 10; fill: none;" filter="url(#primaryColor)"/>
+				</g>
+				<g id="img_arrow_up">
+					<use xlink:href="#shape_arrow_bold" transform="translate(50,50) rotate(-90) translate(-50,-50)" style="fill: #FFFFFF;" filter="url(#primaryColor)"/>
+				</g>
+				<g id="img_arrow_down">
+					<use xlink:href="#shape_arrow_bold" transform="translate(50,50) rotate(90) translate(-50,-50)" style="fill: #FFFFFF;" filter="url(#primaryColor)"/>
+				</g>	
+				<g id="img_arrow_left">
+					<use xlink:href="#shape_arrow_bold" transform="translate(50,50) rotate(180) translate(-50,-50)" style="fill: #FFFFFF;" filter="url(#primaryColor)"/>
+				</g>
+				<g id="img_arrow_right">
+					<use xlink:href="#shape_arrow_bold" transform="translate(50,50) rotate(0) translate(-50,-50)" style="fill: #FFFFFF;" filter="url(#primaryColor)"/>
+				</g>			
+				<g id="img_star_active">
+					<use xlink:href="#shape_star" style="stroke: #FFFFFF; stroke-width: 10; fill: #FFFFFF;" filter="url(#primaryColor)"/>
+				</g>
+				<g id="img_star_inactive">
+					<use xlink:href="#shape_star" style="stroke: #FFFFFF; stroke-width: 10; fill: none; " filter="url(#primaryColor)"/>
+				</g>
+				<g id="img_calendar_personal">
+					<use xlink:href="#shape_calendar" style="stroke: #FFFFFF; stroke-width: 10; fill: none; " filter="url(#primaryColor)"/>
+					<use xlink:href="#inter_personal" transform="translate(80,40) scale(0.6)" />
+				</g>	
+				<g id="img_ratings_personal">
+					<use xlink:href="#inter_rating" filter="url(#primaryColor)"/>
+					<use xlink:href="#inter_rating" transform="translate(0,50)" filter="url(#primaryColor)"/>
+					<use xlink:href="#inter_personal" transform="translate(80,40) scale(0.6)" />
+				</g>	
+				<g id="img_ratings_friends">
+					<use xlink:href="#inter_rating" style="stroke: #FFFFFF; stroke-width: 10; fill: none; " filter="url(#primaryColor)"/>
+					<use xlink:href="#inter_rating" transform="translate(0,50)" filter="url(#primaryColor)"/>
+					<use xlink:href="#inter_friends" transform="translate(80,40) scale(0.6)" />
+				</g>	
+				<g id="img_ratings_global">
+					<use xlink:href="#inter_rating" style="stroke: #FFFFFF; stroke-width: 10; fill: none; " filter="url(#primaryColor)"/>
+					<use xlink:href="#inter_rating" transform="translate(0,50)" filter="url(#primaryColor)"/>
+					<use xlink:href="#inter_globe" transform="translate(80,40) scale(0.6)" />					
+				</g>	
+			</defs>
+		</svg>
+	</div>
+	<!--
+	<div id="main">	
+		<div id="content_calendar" class="fill hidden">
+	-->
+			<div id="calendar">
+				<!-- to be filled by js -->						
+			</div>
+	<!--
+		</div>
+	</div>
+	-->
+</body>
+</html>
