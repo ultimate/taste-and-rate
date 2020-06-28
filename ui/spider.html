@@ -52,8 +52,8 @@
 			container.appendChild(Elements.fromString(
 				"<div class='category' id='category_" + categories[i].id + "'>" +
 				"	<h1><label key='" + categories[i].key + ".title'></label></h1>" +
-				"	<div class='spider' id='spider_" + i + "'>" +
-				"	</div>" +
+				//"	<div class='spider' id='spider_" + categories[i].id + "'>" +
+				//"	</div>" +
 				"</div>"
 				));
 		
@@ -63,7 +63,7 @@
 				spiderValues.push(Math.round(Math.random()*10));
 			}	
 		
-			spider = new Spider("spider_" + i, categories[i].spider, spiderValues);				
+			spider = new Spider("category_" + categories[i].id, categories[i].spider, spiderValues, 300);				
 			
 			spiders.push(spider);
 		}
