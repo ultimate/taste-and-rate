@@ -35,14 +35,15 @@
                 <File name="ui\scripts\lib\jquery-3.2.1.js" />
             </Folder>
             <Folder name="util">
-                <File name="ui\scripts\util\autohide.js" />
-                <File name="ui\scripts\util\hide.js" />
-                <File name="ui\scripts\util\strings.js" />
-                <File name="ui\scripts\util\labels.js" />
                 <File name="ui\scripts\util\arrays.js" />
-                <File name="ui\scripts\util\events.js" />
+                <File name="ui\scripts\util\autohide.js" />
                 <File name="ui\scripts\util\calendar.js" />
                 <File name="ui\scripts\util\elements.js" />
+                <File name="ui\scripts\util\events.js" />
+                <File name="ui\scripts\util\hide.js" />
+                <File name="ui\scripts\util\labels.js" />
+                <File name="ui\scripts\util\spider.js" />
+                <File name="ui\scripts\util\strings.js" />
             </Folder>
             <Folder name="test">
                 <File name="ui\scripts\test\rum.json" />
@@ -68,9 +69,12 @@
             <File name="ui\styles\calendar.css" />
             <File name="ui\styles\index.css" />
             <File name="ui\styles\list.css" />
-            <File name="ui\styles\window.css" />
+            <File name="ui\styles\spider.css" />
             <File name="ui\styles\stars.css" />
+            <File name="ui\styles\window.css" />
         </Folder>
         <File name="ui\index.html" />
+        <File name="ui\calendar.html" />
+        <File name="ui\spider.html" />
     </Project>
 </NotepadPlus>
