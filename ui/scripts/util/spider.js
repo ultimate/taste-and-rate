@@ -12,11 +12,12 @@ var Spider = function(parent, definition, values, size) {
 	this.FILTER_SECONDARY = "secondaryColor";
 	this.FILTER_SUFFIX;
 	
-	var C = this.DRAWSIZE * 0.5; // center position
-	var R = this.DRAWSIZE * 0.4; // radius
-	var S = 3; // stroke
-	var F = 10; // font size
-	var D = 5; // dot size
+	var C 	= this.DRAWSIZE * 0.5; // center position
+	var LR 	= this.DRAWSIZE * 0.45; // line radius
+	var PR 	= this.DRAWSIZE * 0.4; // point radius
+	var S 	= 3; // stroke
+	var F 	= 10; // font size
+	var D 	= 5; // dot size
 	
 	if(typeof(parent) == "string")
 		parent = document.getElementById(parent);
@@ -46,12 +47,12 @@ var Spider = function(parent, definition, values, size) {
 		}
 		
 		// draw coordinate system
-		var lines = Elements.fromString("<g filter='url(#" + this.FILTER_SECONDARY + this.FILTER_SUFFIX + ")'   style='stroke: #FFFFFF; stroke-width: " + S + ";' />", Elements.SVG_NAMESPACE);
+		var lines = Elements.fromString("<g filter='url(#" + this.FILTER_SECONDARY + this.FILTER_SUFFIX + ")' style='stroke: #FFFFFF; stroke-width: " + S + ";' />", Elements.SVG_NAMESPACE);
 		var names = Elements.fromString("<g filter='url(#" + this.FILTER_SECONDARY + this.FILTER_SUFFIX + ")' style='font-size: " + F + "px;'/>", Elements.SVG_NAMESPACE);
 		for(var i = 0; i < this.definition.length; i++)
 		{
 			var angle = i*360/this.definition.length-90;
-			lines.appendChild(Elements.fromString("<line transform='rotate(" + angle + "," + C + "," + C + ")' x1='" + C + "' y1='" + C + "' x2='" + (C+R) + "' y2='" + C + "' />", Elements.SVG_NAMESPACE));
+			lines.appendChild(Elements.fromString("<line transform='rotate(" + angle + "," + C + "," + C + ")' x1='" + C + "' y1='" + C + "' x2='" + (C+LR) + "' y2='" + C + "' />", Elements.SVG_NAMESPACE));
 			var anchor;
 			var extraRotation;
 			var offset;
@@ -65,9 +66,9 @@ var Spider = function(parent, definition, values, size) {
 			{
 				offset = S;
 				anchor = "start";
-				extraRotation = " rotate(180," + (C+R) + "," + (C+offset) + ") ";
+				extraRotation = " rotate(180," + (C+LR) + "," + (C+offset) + ") ";
 			}
-			names.appendChild(Elements.fromString("<text transform='rotate(" + angle + "," + C + "," + C + ")" + extraRotation + "' x='" + (C+R) + "' y='" + (C+offset) + "' text-anchor='" + anchor + "'>" + this.definition[i].key + "</text>", Elements.SVG_NAMESPACE));
+			names.appendChild(Elements.fromString("<text transform='rotate(" + angle + "," + C + "," + C + ")" + extraRotation + "' x='" + (C+LR) + "' y='" + (C+offset) + "' text-anchor='" + anchor + "'>" + this.definition[i].key + "</text>", Elements.SVG_NAMESPACE));
 		}
 		this.svg.appendChild(lines);
 		this.svg.appendChild(names);
@@ -93,7 +94,7 @@ var Spider = function(parent, definition, values, size) {
 				continue;
 			
 			var angle = i*360/this.definition.length-90;
-			var V = this.values[i]*R / 10;
+			var V = this.values[i]*PR / 10;
 						
 			this.svgValues.appendChild(Elements.fromString("<circle transform='rotate(" + angle + "," + C + "," + C + ")' cx='" + (C+V) + "' cy='" + C + "' r='" + D + "' style='fill: #FFFFFF;'/>", Elements.SVG_NAMESPACE));
 			
