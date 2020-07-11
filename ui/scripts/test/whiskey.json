@@ -9,9 +9,9 @@ var TEST_CAT_WHISKEY = {
 	finish: true,
 	defaultImage: "images/default.png",
 	spider: [
-		{	id: 101,	key: "Smoke",		min: "not at all",	max: "intensive"	},
-		{	id: 102,	key: "Oak",			min: "mild",		max: "intensive"	},
-		{	id: 103,	key: "Color",		min: "bright",		max: "dark"			},
-		{	id: 104,	key: "Complexity",	min: "simple",		max: "complex"		},
+		{	id: 201,	key: "Smoke",		min: "not at all",	max: "intensive"	},
+		{	id: 202,	key: "Oak",			min: "mild",		max: "intensive"	},
+		{	id: 203,	key: "Color",		min: "bright",		max: "dark"			},
+		{	id: 204,	key: "Complexity",	min: "simple",		max: "complex"		},
 	]
 };

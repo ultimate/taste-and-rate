@@ -43,7 +43,7 @@
 		labelManager = new LabelManager(window, getString);
 		
 		/* initialize spider */
-		var container = document.getElementById("spiders");
+		var container = document.getElementById("spider_demo");
 		spiders = [];
 		var spider;
 		var category;
@@ -113,9 +113,18 @@
 			</defs>
 			<defs id="images">
 			</defs>
+			<defs id="spiders">
+				<g id="spider5" style="stroke: #F0F0F0; stroke-width: 10;">
+					<line x1="50" y1="50" x2="50" y2="10" transform="rotate(0,50,50)"/>
+					<line x1="50" y1="50" x2="50" y2="10" transform="rotate(72,50,50)"/>
+					<line x1="50" y1="50" x2="50" y2="10" transform="rotate(144,50,50)"/>
+					<line x1="50" y1="50" x2="50" y2="10" transform="rotate(216,50,50)"/>
+					<line x1="50" y1="50" x2="50" y2="10" transform="rotate(288,50,50)"/>
+				</g>
+			</defs>
 		</svg>
 	</div>
-	<div id="spiders">
+	<div id="spider_demo">
 		<!-- to be filled by js -->						
 	</div>
 </body>

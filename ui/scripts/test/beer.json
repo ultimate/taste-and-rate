@@ -9,8 +9,8 @@ var TEST_CAT_BEER = {
 	finish: true,
 	defaultImage: "images/default.png",
 	spider: [
-		{	id: 101,	key: "Bitterness",	min: "not at all",		max: "intensive"	},
-		{	id: 102,	key: "Head",		min: "short lasting",	max: "long lasting"	},
-		{	id: 103,	key: "Color",		min: "bright",			max: "dark"			},
+		{	id: 301,	key: "Bitterness",	min: "not at all",		max: "intensive"	},
+		{	id: 302,	key: "Head",		min: "short lasting",	max: "long lasting"	},
+		{	id: 303,	key: "Color",		min: "bright",			max: "dark"			},
 	]
 };
