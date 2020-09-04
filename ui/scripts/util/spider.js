@@ -68,6 +68,8 @@ var Spider = function(parent, definition, values, size) {
 				anchor = "start";
 				extraRotation = " rotate(180," + (C+LR) + "," + (C+offset) + ") ";
 			}
+			
+			// TODO localization #48
 			names.appendChild(Elements.fromString("<text transform='rotate(" + angle + "," + C + "," + C + ")" + extraRotation + "' x='" + (C+LR) + "' y='" + (C+offset) + "' text-anchor='" + anchor + "'>" + this.definition[i].key + "</text>", Elements.SVG_NAMESPACE));
 		}
 		this.svg.appendChild(lines);
